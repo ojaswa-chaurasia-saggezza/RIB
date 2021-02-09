@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Account Details</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
+
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css'>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.semanticui.min.css">
+  <link rel="stylesheet" href="./CSS/style.css">
+  <link rel="stylesheet" href="./CSS/CASA.css">
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+
+  <!-- ------------NavBar-------------------- -->
+  <nav class="navbar navbar-expand navbar-dark bg-primary shadow-lg">
+    <div class="btn click">
+      <span class="fas fa-bars"></span>
+    </div>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Demo Bank</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <span class="navbar-text text-light col-12 text-right">
+          Welcome Thiru
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div id="wrapper">
+    <!-- Wrapper class Starts-->
+
+    <!-- ----------------------Side Menu --------------- -->
+    <nav class="sidebar show">
+      <ul class="nav-shadow">
+        <li class="active"><a href="CASA.html">CASA</a></li>
+        <li><a href="Credit Card.html">CREDIT CARD</a></li>
+
+        <li>
+          <a href="#" class="drop-btn">FUND TRANSFER
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li><a href="AddBeneficiary.html">Add Beneficiary</a></li>
+            <li><a href="Edit Beneficiary.html">Edit Beneficiary</a></li>
+            <li><a href="Transfer within your account.html">Transfer within your accounts</a></li>
+            <li><a href="Transfer within bank benificery.html">Transfer to within Bank Beneficiary</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Bill Payment
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li><a href="Add Biller.html">Add Biller</a></li>
+            <li><a href="Edit Biller.html">Edit Biller</a></li>
+            <li><a href="Pay.html">Pay</a></li>
+
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Service Request
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li>
+              <a href="#" class="drop-btn">Check (Cheque) order
+                <span class="fas fa-caret-down"></span>
+              </a>
+              <ul>
+                <li><a href="Service Request - Check Order - Create New.html">Create New</a></li>
+                <li><a href="ViewExisting.html">View Existing</a></li>
+              </ul>
+            </li>
+            <li>
+            <li><a href="CreditLimitIncrease copy.html">Credit Limit Increase</a></li>
+            <li><a href="Service Request - Reset Password.html">Reset Password</a></li>
+
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Product Opening
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li><a href="CasaType.html">Open New CASA Account</a></li>
+            <li><a href="Card Type.html">Open New Credit Card</a></li>
+          </ul>
+        </li>
+
+        <!-- <li><a href="#">Feedback</a></li> -->
+      </ul>
+    </nav>
+
+    <!-- ----------------------Main Content--------------- -->
+    <div class="content" style="text-align: left;">
+      <div class="container">
+        <div class="header">
+          Account Details
+        </div>
+
+        <div class="summary">
+          <div class="row">
+            <div class="col">
+              <Span class="summary_label">Account Number </Span> :&emsp; <span class="summary_text" >
+                <select
+                  class="form-select" style="width: auto; display: inline;"  aria-label="">
+                  <option selected>10000001&emsp;</option>
+                  <option value="1">10000002&emsp;</option>
+                  <option value="2">10000003&emsp;</option>
+                  <option value="3">10000004&emsp;</option>
+                </select>
+              </span> <br>
+            </div>
+            <div class="col">
+              <Span class="summary_label">Balance </Span> : <span class="summary_text"> &emsp; Rs. 12500000</span> <br>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col">
+              <span class="summary_label">Account Type </span> : <span class="summary_text"> &emsp; Checking
+                Account</span>
+            </div>
+            <div class="col">
+              <span class="summary_label">Segment </span> : <span class="summary_text"> &emsp;Platinum</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="table_div" style="overflow:auto; padding: 20px;">
+          <table id="CASA_Table" class="ui celled table " style="width:100%">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Narration</th>
+                <th>Category</th>
+                <th>Withdrawal</th>
+                <th>Deposite</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>123</td>
+                <td>01/01/2021</td>
+                <td>Transaction to 2839850- UPI 3209/3/323928839</td>
+                <td>Food</td>
+                <td>₹500</td>
+                <td>-</td>
+                <td>₹23000</td>
+              </tr>
+              <tr>
+                <td>223</td>
+                <td>10/12/2020</td>
+                <td>Transaction to 2843549850- UPI 32093245/324928839 sdf dsak 32094</td>
+                <td>Bill</td>
+                <td>₹1500</td>
+                <td>-</td>
+                <td>₹2000</td>
+              </tr>
+              <tr>
+                <td>563</td>
+                <td>21/10/2001</td>
+                <td>Transaction to 2839fds850- Bank Transfer 3sda/daf3s/3asdf839</td>
+                <td>Bill</td>
+                <td>₹5342</td>
+                <td>-</td>
+                <td>₹12000</td>
+              </tr>
+              <tr>
+                <td>023</td>
+                <td>23/02/2004</td>
+                <td>Transaction to 2832419850- UPI 32432059/43/3243928839</td>
+                <td>Food</td>
+                <td>₹500</td>
+                <td>-</td>
+                <td>₹23000</td>
+              </tr>
+              <tr>
+                <td>123</td>
+                <td>01/01/2021</td>
+                <td>Transaction to 2839850- UPI 3209/3/323928839</td>
+                <td>Food</td>
+                <td>₹500</td>
+                <td>-</td>
+                <td>₹23000</td>
+              </tr>
+              <tr>
+                <td>1233</td>
+                <td>04/07/2043</td>
+                <td>Transaction to 28dsf3ds9850- Bank Transfer 32ds0f9/3/sdaf323928839</td>
+                <td>Travel</td>
+                <td>₹21500</td>
+                <td>-</td>
+                <td>₹2332000</td>
+              </tr>
+              <tr>
+                <td>1233</td>
+                <td>04/07/2043</td>
+                <td>Transaction to 28dsf3ds9850- Bank Transfer 32ds0f9/3/sdaf323928839</td>
+                <td>Travel</td>
+                <td>₹21500</td>
+                <td>-</td>
+                <td>₹2332000</td>
+              </tr>
+              <tr>
+                <td>133</td>
+                <td>03/03/2003</td>
+                <td>Transaction to 28dsf3sdds9850- Bank Transfer 32ds0df9/3/sdaf323928839</td>
+                <td>Travel</td>
+                <td>₹215</td>
+                <td>-</td>
+                <td>₹2332</td>
+              </tr>
+              <tr>
+                <td>1243</td>
+                <td>04/02/2008</td>
+                <td>Interest Credit</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹342</td>
+                <td>₹22000</td>
+              </tr>
+              <tr>
+                <td>1243</td>
+                <td>04/02/2008</td>
+                <td>Interest Credit</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹2332</td>
+                <td>₹254000</td>
+              </tr>
+              <tr>
+                <td>1243</td>
+                <td>04/02/2008</td>
+                <td>Interest Credit</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹342</td>
+                <td>₹22000</td>
+              </tr>
+              <tr>
+                <td>1323</td>
+                <td>14/12/2002</td>
+                <td>Interest Credit</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹34322</td>
+                <td>₹220032</td>
+              </tr>
+              <tr>
+                <td>1243</td>
+                <td>04/02/2008</td>
+                <td>Transfer From 3289479232894 - UPI 09438539/32//2343/4324324j dksjf dlfadjfldf</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹342</td>
+                <td>₹22003240</td>
+              </tr>
+              <tr>
+                <td>503</td>
+                <td>03/02/2028</td>
+                <td>Transfer From 78453244 - UPI 0942//4/35/42343/4324324j frhtngrynfbgfdf</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹300000</td>
+                <td>₹2200342</td>
+              </tr>
+              <tr>
+                <td>043</td>
+                <td>03/03/2018</td>
+                <td>Transfer From 6190000291092094 - UPI 987968798989868894popipopipipoklkfadjfldf</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹3243242</td>
+                <td>₹92200240</td>
+              </tr>
+              <tr>
+                <td>1243</td>
+                <td>04/02/2008</td>
+                <td>Transfer From 3289479232894 - UPI 09438539/32//2343/4324324j dksjf dlfadjfldf</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹43225324</td>
+                <td>₹435354325</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--End Of Content-->
+
+
+
+  </div><!-- Wrapper Class End-->
+
+
+  <!-- ----------------Java Script Files------------------------------------------------------------------------------------------------------------- -->
+  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js'></script>
+  <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+  <script src='https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/1.10.23/js/dataTables.semanticui.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+  <script src="./JS/script.js"></script>
+  <script src="./JS/CASA.js"></script>
+
+</body>
+
+</html>
