@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fund Transfer- Within bank beneficiary</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
+
+  <link rel="stylesheet" href="./CSS/style.css">
+  <link rel="stylesheet" href="./CSS/style1.css">
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+
+  <!-- ------------NavBar-------------------- -->
+  <nav class="navbar navbar-expand navbar-dark bg-primary shadow-lg">
+    <div class="btn click">
+      <span class="fas fa-bars"></span>
+    </div>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Demo Bank</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <span class="navbar-text text-light col-12 text-right">
+          Welcome Admin
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div id="wrapper">
+    <!-- Wrapper class Starts-->
+
+    <!-- ----------------------Side Menu --------------- -->
+    <nav class="sidebar show">
+      <ul class="nav-shadow">
+        <li class="active"><a href="#">Service Request</a></li>
+        <li><a href="#">Credit Limit Request</a></li>
+        <li><a href="#">CASA/Credit Account Opening</a></li>
+        <!-- <li><a href="#">Feedback</a></li> -->
+      </ul>
+    </nav>
+
+    <!-- ----------------------Main Content--------------- -->
+    <div class="content" style="top: 50px;">
+        <h1 class="title ">Admin service Request</h1>
+        <br><br><br>
+        <div class="container" style="text-align: left;">
+          <div class="contact-form row">
+            <table id="example" class="table table-striped table-bordered" style="width:100%; text-align: center;">
+              <thead>
+                <tr>
+                  <th>Request Id</th>
+                  <th>Accept</th>
+                  <th>Reject</th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+                <tr>
+                  <td>8342</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+
+                <tr>
+                  <td>1290</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+                <tr>
+                  <td>2313</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+                <tr>
+                  <td>1092</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+                <tr>
+                  <td>2423</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+                <tr>
+                  <td>7342</td>
+                  <td> <input class="form-check-input btn-outline-success" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+                  <td> <input class="form-check-input btn-outline-danger" type="checkbox" value=""
+                      id="flexCheckDefault"> </td>
+
+                </tr>
+              </tbody>
+
+            </table>
+
+
+          </div>
+        </div>
+    </div>
+  </div>
+
+  </div><!-- Wrapper Class End-->
+
+
+  <!-- ----------------Java Script Files------------------------------------------------------------------------------------------------------------- -->
+  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js'></script>
+  <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src='https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js'></script>
+  <script src="./JS/script.js"></script>
+  <script>
+    $('#example').DataTable({
+      lengthMenu: [5, 10, 15, 25, 30],
+      stateSave: true,
+    });
+
+    $('.form-check-input').change(function () {
+      $(this).css('background-color', 'black');
+      $(this).parent().parent().children().children().attr("disabled", true);
+    });
+  </script>
+
+</body>
+
+</html>

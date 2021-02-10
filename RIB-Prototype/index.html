@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Snippet - BBBootstrap</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='./' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+        body {
+            margin: 0;
+            color: #6a6f8c;
+            background: #c8c8c8;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-box {
+            width: 100%;
+            margin: auto;
+            max-width: 525px;
+            min-height: 670px;
+            position: relative;
+
+            box-shadow: 0 12px 15px 0 hsla(120, 60%, 70%, 0.3), 0 17px 50px 0 rgba(0, 0, 0, .19)
+        }
+
+        .login-snip {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            padding: 90px 70px 50px 70px;
+            background: black;
+        }
+
+        .login-snip .login,
+        .login-snip .sign-up-form {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            transition: all .4s linear
+        }
+
+        .login-snip .sign-in,
+        .login-snip .sign-up,
+        .login-space .group .check {
+            display: none
+        }
+
+        .login-snip .tab,
+        .login-space .group .label,
+        .login-space .group .button {
+            text-transform: uppercase
+        }
+
+        .login-snip .tab {
+            font-size: 22px;
+            margin-right: 15px;
+            padding-bottom: 5px;
+            margin: 0 15px 10px 0;
+            display: inline-block;
+            border-bottom: 2px solid transparent
+        }
+
+        .login-snip .sign-in:checked+.tab,
+        .login-snip .sign-up:checked+.tab {
+            color: #fff;
+            border-color: #1161ee
+        }
+
+        .login-space {
+            min-height: 345px;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d
+        }
+
+        .login-space .group {
+            margin-bottom: 15px
+        }
+
+        .login-space .group .label,
+        .login-space .group .input,
+        .login-space .group .button {
+            width: 100%;
+            color: #fff;
+            display: block
+        }
+
+        .login-space .group .input,
+        .login-space .group .button {
+            border: none;
+            padding: 15px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, .1)
+        }
+
+        .login-space .group .label {
+            color: #fff;
+            font-size: 12px
+        }
+
+        .login-space .group .button {
+            background: #1161ee
+        }
+
+        .login-space .group label .icon {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+            position: relative;
+            display: inline-block;
+            background: rgba(255, 255, 255, .1)
+        }
+
+        .login-space .group label .icon:before,
+        .login-space .group label .icon:after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background: #fff;
+            position: absolute;
+            transition: all .2s ease-in-out 0s
+        }
+
+        .login-space .group label .icon:before {
+            left: 3px;
+            width: 5px;
+            bottom: 6px;
+            transform: scale(0) rotate(0)
+        }
+
+        .login-space .group label .icon:after {
+            top: 6px;
+            right: 0;
+            transform: scale(0) rotate(0)
+        }
+
+        .login-space .group .check:checked+label {
+            color: #fff
+        }
+
+        .login-space .group .check:checked+label .icon {
+            background: #1161ee
+        }
+
+        .login-space .group .check:checked+label .icon:before {
+            transform: scale(1) rotate(45deg)
+        }
+
+        .login-space .group .check:checked+label .icon:after {
+            transform: scale(1) rotate(-45deg)
+        }
+
+        .login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
+            transform: rotate(0)
+        }
+
+        .login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
+            transform: rotate(0)
+        }
+
+        *,
+        :after,
+        :before {
+            box-sizing: border-box
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: '';
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both;
+            display: block
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .hr {
+            height: 2px;
+            margin: 60px 0 50px 0;
+            background: rgba(255, 255, 255, .2)
+        }
+
+        .foot {
+            text-align: center;
+            color: #fff;
+        }
+
+        .card {
+            width: 500px;
+            left: 100px
+        }
+
+        ::placeholder {
+            color: #b3b3b3
+        }
+    </style>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript'
+        src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript'></script>
+</head>
+
+<body oncontextmenu='return false' class='snippet-body'>
+    <div class="row">
+        <div class="col-md-6 mx-auto p-0">
+            <div class="card">
+                <div class="login-box">
+                    <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label
+                            for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab"
+                            class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-space">
+                            <div class="login">
+                                <div class="group"> <label for="user" class="label">Username</label> <input id="userlogin"
+                                        type="text" class="input" placeholder="Enter your username"> </div>
+                                <div class="group"> <label for="pass" class="label">Password</label> <input id="passlogin"
+                                        type="password" class="input" data-type="password"
+                                        placeholder="Enter your password"> </div>
+
+                                <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
+                                <div class="hr"></div>
+                                <div class="foot"> <a href="#">Forgot Username?</a> </div>
+                                <br>
+
+                                <div class="foot"> <a href="#">Forgot Password?</a> </div>
+
+                            </div>
+                            <div class="sign-up-form">
+                                <div class="group"> <label for="user" class="label">Username</label> <input id="usersignup"
+                                        type="text" class="input" placeholder="Create your Username"> </div>
+                                <div class="group"> <label for="pass" class="label">Password</label> <input id="passsignup"
+                                        type="password" class="input" data-type="password"
+                                        placeholder="Create your password"> </div>
+
+                                <div class="group"> <button type="submit" class="btn btn-primary button" value="Sign Up"
+                                        data-toggle="modal" data-target="#exampleModal"
+                                        data-whatever="@mdo">Submit</button>
+                                </div>
+                                <div class="hr"></div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Enter the OTP</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">OTP : </label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("input[value='Sign In']").click(() => {
+
+            if($('#passlogin').val()=='pass' && $('#userlogin').val()=='admin')
+                window.location.href = "Admin Requests.html";
+            else
+                window.location.href = "CASA.html";
+                
+
+        });
+    </script>
+</body>
+
+
+
+</html>
