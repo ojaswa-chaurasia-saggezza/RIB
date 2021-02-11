@@ -7,6 +7,7 @@
     <title>Snippet - BBBootstrap</title>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="./CSS/ErrorStyling.css">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
@@ -247,16 +248,20 @@
 
                             </div>
                             <div class="sign-up-form">
-                                <div class="group"> <label for="user" class="label">Username</label> <input
-                                        id="usersignup" type="text" class="input" placeholder="Create your Username">
+                                <div class="group">
+                                    <label for="user" class="label">Username</label>
+                                    <input id="usersignup" type="text" class="input" placeholder="Create your Username">
+                                    <div class='text-danger errorText'></div>
                                 </div>
-                                <div class="group"> <label for="pass" class="label">Password</label> <input
-                                        id="passsignup" type="password" class="input" data-type="password"
-                                        placeholder="Create your password"> </div>
+                                <div class="group">
+                                    <label for="pass" class="label">Password</label>
+                                    <input id="passsignup" type="password" class="input" data-type="password"
+                                        placeholder="Create your password">
+                                    <div class='text-danger errorText'></div>
+                                </div>
 
-                                <div class="group"> <button type="submit" class="btn btn-primary button" value="Sign Up"
-                                        data-toggle="modal" data-target="#exampleModal"
-                                        data-whatever="@mdo">Submit</button>
+                                <div class="group">
+                                    <button type="submit" class="btn btn-primary button" value="Sign Up">Submit</button>
                                 </div>
                                 <div class="hr"></div>
 
@@ -299,8 +304,10 @@
     </div>
 
     <script>
+        //These are the Hardcoded Users
         var LoginUsers = [{ Username: 'Nayan', Password: "1234", Role: 'User' }, { Username: 'Ojaswa', Password: "1234", Role: 'User' }, { Username: 'Shanti', Password: "1234", Role: 'User' }, { Username: 'Thiru', Password: "1234", Role: 'Admin' }];
 
+        // This event handler handles what happen after the SignIn button is clicked ( Validate and redirect )
         $("input[value='Sign In']").click(() => {
 
             if ($('#userlogin').val() == '') $("#userlogin + .errorText").text('*Please enter your Username');
@@ -309,8 +316,8 @@
             if ($('#passlogin').val() == '') $("#passlogin + .errorText").text('*Please enter your Password');
             else $("#passlogin + .errorText").text('');
 
-            if($('#passlogin').val() == '' || $('#userlogin').val() == '')
-                return ;
+            if ($('#passlogin').val() == '' || $('#userlogin').val() == '')
+                return;
 
             var user = LoginUsers.find(({ Username }) => Username == $('#userlogin').val());
             console.log(user);
@@ -325,11 +332,37 @@
                         window.location.href = "CASA.html";
                 else
                     alert('Username/Password combination Wrong');
-
             }
-
-
         });
+
+        // This event handler handles what happen after the SignUp button is clicked ( Validate and if validated, open modal )
+        $("button[value='Sign Up']").click(() => {
+
+            if ($('#usersignup').val() == '') $("#usersignup + .errorText").text('*Please enter your Username');
+            else $("#usersignup + .errorText").text('');
+
+            if ($('#passsignup').val() == '') $("#passsignup + .errorText").text('*Please enter your Password');
+            else $("#passsignup + .errorText").text('');
+
+            if ($('#passsignup').val() == '' || $('#usersignup').val() == '')
+                return;
+
+            var user = LoginUsers.find(({ Username }) => Username == $('#usersignup').val());
+            //The modal will be called through javascript not button
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+
+            if (user == undefined)
+                alert('Username/Password combination Wrong');
+            else {
+                if ($('#passsignup').val() == user.Password)
+                    myModal.show();
+                else
+                    alert('Username/Password combination Wrong');
+            }
+        });
+
+
+
     </script>
 </body>
 
