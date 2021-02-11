@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <title>Edit Beneficiary</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
   <link rel="stylesheet" href="./CSS/style.css">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
 
 </head>
 
@@ -38,7 +38,7 @@
     <!-- ----------------------Side Menu --------------- -->
     <nav class="sidebar show">
       <ul class="nav-shadow">
-        <li ><a href="CASA.html">CASA</a></li>
+        <li><a href="CASA.html">CASA</a></li>
         <li><a href="Credit Card.html">CREDIT CARD</a></li>
 
         <li>
@@ -106,7 +106,7 @@
 
             <div class="form-field col-lg-6">
               <label for="beneficiary" class="label drop-label text-primary">Beneficiary</label>
-              <select id="beneficiary"class="form-select" aria-label="Default select example">
+              <select id="beneficiary" class="form-select" aria-label="Default select example">
                 <option selected>Thiru</option>
                 <option value="1">Shanti</option>
                 <option value="2">Nayan</option>
@@ -120,7 +120,7 @@
             </div>
 
             <div class="form-field col-lg-6">
-              <input id="name" class="input-text" type="text" name="" value="Ojaswa" readonly>
+              <input id="name" class="input-text" type="text" name="" value="Thiru" readonly>
               <label for="name" class="label text-primary">Name</label>
             </div>
 
@@ -128,10 +128,16 @@
               <input id="ifsc" class="input-text" type="number" name="">
               <label for="ifsc" class="label text-primary">IFSC</label>
             </div>
-
-            <div class="form-field col-lg-12">
-              <input class="submit-btn bg-success" type="submit" value="submit" name="">
+            <div class="row justify-content-center">
+              <div class="form-field col-lg-4">
+                <input class="submit-btn bg-success" type="submit" value="submit" name="">
+              </div>
+              <div class="form-field col-lg-4">
+                <input class="submit-btn bg-danger" type="submit" value="Delete" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal" name="">
+              </div>
             </div>
+
 
           </div>
         </div>
@@ -139,6 +145,26 @@
     </div>
 
   </div><!-- Wrapper Class End-->
+
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Beneficiary</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete the Beneficiary
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- ----------------Java Script Files------------------------------------------------------------------------------------------------------------- -->
@@ -148,11 +174,16 @@
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
   <script>
-    
-    $('#beneficiary').change(()=>{
-      $('#name').attr('value',$('#beneficiary option:selected').text());
+
+    $('#beneficiary').change(() => {
+      $('#name').attr('value', $('#beneficiary option:selected').text());
     })
   </script>
+
+
+
+
+
 
 </body>
 

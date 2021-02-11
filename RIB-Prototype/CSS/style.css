@@ -1,3 +1,5 @@
+/*This page contains the default styling of all the pages in the dashboard (both user and admin)*/
+
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 ::-webkit-scrollbar {
   width: 10px;
@@ -23,7 +25,12 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-.btn{
+
+.errorText{
+  font-size:12px;
+}
+
+nav .btn{
   position: relative;
   display: none;
   left: -10px;
@@ -33,12 +40,12 @@
   cursor: pointer;
   transition: left 0.4s ease;
 }
-.btn span{
+nav .btn span{
   color: white;
   font-size: 28px;
   line-height: 45px;
 }
-.btn.click span:before{
+nav .btn.click span:before{
   content: '\f00d';
 }
 .sidebar{
