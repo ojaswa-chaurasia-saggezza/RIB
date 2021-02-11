@@ -106,20 +106,20 @@
             <div class="form-field col-lg-6">
               <label for="from-account" class="label drop-label text-primary">From account</label>
               <select id="from-account"class="form-select" aria-label="Default select example">
-                <option selected>123456789034</option>
+                <!-- <option selected>123456789034</option>
                 <option value="1">987654321033</option>
                 <option value="2">234567897654</option>
-                <option value="3">065996564596</option>
+                <option value="3">065996564596</option> -->
               </select>
             </div>
 
             <div class="form-field col-lg-6">
               <label for="leaf" class="label drop-label text-primary">Leaf</label>
               <select id="leaf"class="form-select" aria-label="Default select example">
-                <option selected>10</option>
+                <!-- <option selected>10</option>
                 <option value="1">25</option>
                 <option value="2">50</option>
-                <option value="3">100</option>
+                <option value="3">100</option> -->
               </select>
             </div>
            
@@ -142,6 +142,31 @@
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
   <script>
+
+    //For account number dropdown
+    var select = document.getElementById("from-account"); 
+    var options = ["123456789034", "987654321033", "234567897654", "065996564596"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //For Leaf dropdown
+    select = document.getElementById("leaf"); 
+    var options = ["10", "25", "50", "100"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
     $("#from-account option").each(function () {
      var currVal = $(this).text();
       var str = currVal;

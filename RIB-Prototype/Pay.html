@@ -108,20 +108,20 @@
             <div class="form-field col-lg-6">
               <label for="from-account" class="label drop-label text-primary">From account</label>
               <select id="from-account" class="form-select" aria-label="Default select example">
-                <option selected id="firstAccount">123456789034</option>
+                <!-- <option selected id="firstAccount">123456789034</option>
                 <option value="1">987654321033</option>
                 <option value="2">234567897654</option>
-                <option value="3">065996564596</option>
+                <option value="3">065996564596</option> -->
               </select>
             </div>
 
             <div class="form-field col-lg-6">
               <label for="description" class="label drop-label text-primary">Description</label>
               <select id="description" class="form-select" aria-label="Default select example">
-                <option selected>Airtel bill payment</option>
+                <!-- <option selected>Airtel bill payment</option>
                 <option value="1">Indane Gas bill payment</option>
                 <option value="2">Credit Card bill payment</option>
-                <option value="3">Electricity bill payment</option>
+                <option value="3">Electricity bill payment</option> -->
               </select>
             </div>
 
@@ -149,6 +149,32 @@
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
   <script>
+
+    //For account number dropdown
+    var select = document.getElementById("from-account"); 
+    var options = ["123456789034", "987654321033", "234567897654", "065996564596"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //For description dropdown
+    select = document.getElementById("description"); 
+    var options = ["Airtel bill payment", "Indane Gas bill payment", "Credit Card bill payment", "Electricity bill payment"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //Mask from-account
     $("#from-account option").each(function () {
      var currVal = $(this).text();
       var str = currVal;

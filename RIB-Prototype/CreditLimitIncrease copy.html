@@ -109,8 +109,8 @@
                       <div class="form-field col-lg-6">
                         <label for="CreditCardNumber" class="label drop-label text-primary">Credit Card Number</label>
                         <select id="CreditCardNumber" class="form-select" aria-label="Default select example">
-                          <option selected>234576287354</option>
-                          <option value="1">887634245121</option>
+                          <!-- <option selected>234576287354</option>
+                          <option value="1">887634245121</option> -->
                         </select>
                       </div>
                         <div class="form-field col-lg-6">
@@ -142,6 +142,19 @@
     <script src="./JS/script.js"></script>
 
     <script>
+
+      //For credit card dropdown
+      var select = document.getElementById("CreditCardNumber"); 
+      var options = ["123456789034", "987654321033", "234567897654", "065996564596"];
+      console.log(options);
+      for(var i = 0; i < options.length; i++) {
+          var opt = options[i];
+          var el = document.createElement("option");
+          el.textContent = opt;
+          el.value = opt;
+          select.appendChild(el);
+      }
+
       $("#CreditCardNumber option").each(function () {
        var currVal = $(this).text();
         var str = currVal;

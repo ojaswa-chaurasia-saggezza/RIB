@@ -107,10 +107,10 @@
             <div class="form-field col-lg-6">
               <label for="beneficiary" class="label drop-label text-primary">Beneficiary</label>
               <select id="beneficiary" class="form-select" aria-label="Default select example">
-                <option selected>Thiru</option>
+                <!-- <option selected>Thiru</option>
                 <option value="1">Shanti</option>
                 <option value="2">Nayan</option>
-                <option value="3">Ojaswa</option>
+                <option value="3">Ojaswa</option> -->
               </select>
             </div>
 
@@ -175,6 +175,19 @@
   <script src="./JS/script.js"></script>
   <script>
 
+    //For beneficiary dropdown
+    var select = document.getElementById("beneficiary"); 
+    var options = ["Thiru", "Shanti", "Nayan", "Ojaswa"]; 
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //To fill in name of selected beneficiary in name field
     $('#beneficiary').change(() => {
       $('#name').attr('value', $('#beneficiary option:selected').text());
     })

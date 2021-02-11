@@ -107,10 +107,10 @@
             <div class="form-field col-lg-6">
               <label for="description" class="label drop-label text-primary">Description</label>
               <select id="description" class="form-select" aria-label="Default select example">
-                <option selected>Airtel bill payment</option>
+                <!-- <option selected>Airtel bill payment</option>
                 <option value="1">Indane Gas bill payment</option>
                 <option value="2">Credit Card bill payment</option>
-                <option value="3">Electricity bill payment</option>
+                <option value="3">Electricity bill payment</option> -->
               </select>
             </div>
 
@@ -167,6 +167,21 @@
   <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
+
+  <script>
+
+    //For description dropdown
+    var select = document.getElementById("description"); 
+    var options = ["Airtel bill payment", "Indane Gas bill payment", "Credit Card bill payment", "Electricity bill payment"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+  </script>
 
 </body>
 
