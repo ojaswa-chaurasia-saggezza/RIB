@@ -107,17 +107,17 @@
           <div class="contact-form row">
 
             <div class="form-field col-lg-6">
-              <label for="Account type" class="label drop-label text-primary">Account type</label>
-              <select id="Account type" class="form-select" aria-label="Default select example">
-                <option selected>Savings</option>
-                <option value="1">Checking</option>
+              <label for="account-type" class="label drop-label text-primary">Account type</label>
+              <select id="account-type" class="form-select" aria-label="Default select example">
+                <!-- <option selected>Savings</option>
+                <option value="1">Checking</option> -->
               </select>
             </div>
             <div class="form-field col-lg-6">
-              <label for="FromAccountNumber" class="label drop-label text-primary">From Account Number</label>
-              <select id="FromAccountNumber" class="form-select" aria-label="Default select example">
-                <option selected>234576287354</option>
-                <option value="1">887634245121</option>
+              <label for="account" class="label drop-label text-primary">From Account Number</label>
+              <select id="account" class="form-select" aria-label="Default select example">
+                <!-- <option selected>234576287354</option>
+                <option value="1">887634245121</option> -->
               </select>
             </div>
             <div class="form-field col-lg-12">
@@ -139,7 +139,33 @@
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
   <script>
-    $("#FromAccountNumber option").each(function () {
+
+    // For biller dropdown
+    var select = document.getElementById("account-type"); 
+    var options = ["Savings", "Checking"]; 
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //For account number dropdown
+    select = document.getElementById("account"); 
+    var options = ["123456789034", "987654321033", "234567897654", "065996564596"];
+    console.log(options);
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
+
+    //To mask account number
+    $("#account option").each(function () {
      var currVal = $(this).text();
       var str = currVal;
       str = str.replace(/\d(?=\d{4})/g, "X");
