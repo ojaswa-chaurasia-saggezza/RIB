@@ -6,8 +6,12 @@
   <title>Credit Card details</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css"
+    integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA=="
+    crossorigin="anonymous" />
   <link rel="stylesheet" href="./CSS/style.css">
   <link rel="stylesheet" href="./CSS/Credit Card.css">
 
@@ -41,7 +45,7 @@
     <!-- ----------------------Side Menu --------------- -->
     <nav class="sidebar show">
       <ul class="nav-shadow">
-        <li ><a href="CASA.html">CASA</a></li>
+        <li><a href="CASA.html">CASA</a></li>
         <li class="active"><a href="Credit Card.html">CREDIT CARD</a></li>
 
         <li>
@@ -108,20 +112,20 @@
         </div>
 
         <div class="row summary">
-          <div class="col-6">
+          <div class="col-7">
             <div class="row">
               <div class="col">
                 <Span class="summary_label">Credit Card Number </Span> : <span class="summary_text"> &emsp;
-                  <select
-                  class="form-select" style="width: auto; display: inline;"  aria-label="">
-                  <option selected>10000001&emsp;</option>
-                  <option value="1">10000002&emsp;</option>
-                  <option value="2">10000003&emsp;</option>
-                  <option value="3">10000004&emsp;</option>
-                </select></span> <br>
+                  <select class="form-select" style="width: auto; display: inline;" aria-label="">
+                    <option selected>10000001&emsp;</option>
+                    <option value="1">10000002&emsp;</option>
+                    <option value="2">10000003&emsp;</option>
+                    <option value="3">10000004&emsp;</option>
+                  </select></span> <br>
               </div>
               <div class="col">
-                <Span class="summary_label">Out-Standing Balance </Span> : <span class="summary_text"> &emsp; ₹12500000</span> <br>
+                <Span class="summary_label">Out-Standing Balance </Span> : <span class="summary_text"> &emsp;
+                  ₹12500000</span> <br>
               </div>
 
             </div>
@@ -136,7 +140,15 @@
             </div>
 
           </div>
-          <div class="col" id='Credit_Card_Pie'>
+          <div class="col ">
+            <div  class='col' id='Credit_Card_Pie'></div>
+            <div class="row justify-content-center">
+              <div class="col " style="font-size: smaller;"> Select Range : <span id="reportrange"
+                  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width:max-content; margin-left: 10px; white-space:nowrap;">
+                  <span class="me-1"></span>
+              </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -320,12 +332,25 @@
 
   <script src='https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js'></script>
   <script src='https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js'></script>
-  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"
+    integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ=="
+    crossorigin="anonymous"></script>
+
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  
+
 
   <script src="./JS/script.js"></script>
   <script src="./JS/Credit Card.js"></script>
+
+  <script>
+
+
+
+  </script>
 
 </body>
 

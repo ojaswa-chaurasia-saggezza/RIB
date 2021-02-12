@@ -200,7 +200,8 @@ nav ul ul ul li a{
   padding-bottom: 20px;
   color: #4389ca;
   background: linear-gradient(to right,#0275d8 0%, #0157a3 50%);
-  -webkit-background-clip: text;
+  /* Ignore warning */
+  -webkit-background-clip: text; 
   -webkit-text-fill-color: transparent;
 }
 .transfer-form .form-field{
