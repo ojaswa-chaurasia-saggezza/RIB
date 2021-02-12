@@ -139,8 +139,33 @@
           </div>
         </div>
 
-        <div id="table_div" style="overflow:auto; padding: 20px;">
-          <table id="CASA_Table" class="table table-striped table-bordered " style="width:100%">
+        <div id="table_div" style="overflow:auto; padding: 30px 10px;">
+          <!-- Table to be used for searching -->
+          <div>
+            <table class="summary_text" style="margin: 0 1em -2.5em auto;z-index: 200;">
+              <tbody>
+                <tr id="filter_global">
+                  <td >Search: </td>
+                  <td >    
+                    <div class="input-group input-group-sm ms-2">
+                      <select class="form-select col-5" aria-label="Default select example">
+                        <option value="-1" selected>Global Search</option>
+                        <option value="0">Transaction ID</option>
+                        <option value="1">Date</option>
+                        <option value="2">Narration</option>
+                        <option value="3">Category</option>
+                        <option value="4">Withdrawal</option>
+                        <option value="5">Deposit</option>
+                      </select>
+                      <input type="search"  placeholder="Search here" class="form-control ds-input global_filter" id="global_filter">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- The Main Table to Be displayed -->
+          <table id="Credit_Card_and_CASA_Table" class="table table-striped table-bordered " style="width:100%">
             <thead>
               <tr>
                 <th>Transaction ID</th>
@@ -148,7 +173,7 @@
                 <th>Narration</th>
                 <th>Category</th>
                 <th>Withdrawal</th>
-                <th>Deposite</th>
+                <th>Deposit</th>
                 <th>Balance</th>
               </tr>
             </thead>
@@ -321,7 +346,7 @@
   <script src='https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js'></script>
   
   <script src="./JS/script.js"></script>
-  <script src="./JS/CASA.js"></script>
+  <script src="./JS/Credit Card and CASA.js"></script>
 
 </body>
 
