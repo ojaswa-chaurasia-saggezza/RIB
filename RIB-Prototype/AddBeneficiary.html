@@ -2,146 +2,191 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Add Beneficiary</title>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="./CSS/style.css">
-    <link rel="stylesheet" href="./CSS/style1.css">
-    
+  <meta charset="UTF-8">
+  <title>Add Beneficiary</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="./CSS/style.css">
+  <link rel="stylesheet" href="./CSS/style1.css">
+
 
 
 </head>
 
 <body>
-    <!-- partial:index.partial.html -->
+  <!-- partial:index.partial.html -->
 
-    <!-- ------------NavBar-------------------- -->
-    <nav class="navbar navbar-expand navbar-dark bg-primary shadow-lg">
-        <div class="btn click">
-            <span class="fas fa-bars"></span>
-        </div>
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Demo Bank</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <span class="navbar-text text-light col-12 text-right">
-                    Welcome Thiru
-                </span>
-            </div>
-        </div>
+  <!-- ------------NavBar-------------------- -->
+  <nav class="navbar navbar-expand navbar-dark bg-primary shadow-lg">
+    <div class="btn click">
+      <span class="fas fa-bars"></span>
+    </div>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Demo Bank</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <span class="navbar-text text-light col-12 text-right">
+          Welcome Thiru
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div id="wrapper">
+    <!-- Wrapper class Starts-->
+
+    <!-- ----------------------Side Menu --------------- -->
+    <nav class="sidebar show">
+      <ul class="nav-shadow">
+        <li><a href="CASA.html">CASA</a></li>
+        <li><a href="Credit Card.html">CREDIT CARD</a></li>
+
+        <li>
+          <a href="#" class="drop-btn">FUND TRANSFER
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul class="show">
+            <li class="active"><a href="AddBeneficiary.html">Add Beneficiary</a></li>
+            <li><a href="Edit Beneficiary.html">Edit Beneficiary</a></li>
+            <li><a href="Transfer within your account.html">Transfer within your accounts</a></li>
+            <li><a href="Transfer within bank benificery.html">Transfer to within Bank Beneficiary</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Bill Payment
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li><a href="Add Biller.html">Add Biller</a></li>
+            <li><a href="Edit Biller.html">Edit Biller</a></li>
+            <li><a href="Pay.html">Pay</a></li>
+
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Service Request
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li>
+              <a href="#" class="drop-btn">Check (Cheque) order
+                <span class="fas fa-caret-down"></span>
+              </a>
+              <ul>
+                <li><a href="Service Request - Check Order - Create New.html">Create New</a></li>
+                <li><a href="ViewExisting.html">View Existing</a></li>
+              </ul>
+            </li>
+            <li>
+            <li><a href="CreditLimitIncrease copy.html">Credit Limit Increase</a></li>
+            <li><a href="Service Request - Reset Password.html">Reset Password</a></li>
+
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="drop-btn">Product Opening
+            <span class="fas fa-caret-down"></span>
+          </a>
+          <ul>
+            <li><a href="CasaType.html">Open New CASA Account</a></li>
+            <li><a href="Card Type.html">Open New Credit Card</a></li>
+          </ul>
+        </li>
+
+        <!-- <li><a href="#">Feedback</a></li> -->
+      </ul>
     </nav>
 
-    <div id="wrapper">
-        <!-- Wrapper class Starts-->
+    <!-- ----------------------Main Content--------------- -->
+    <div class="content">
+      <section class="add-beneficiary">
+        <h1 class="title bg-primary">Add beneficiary</h1>
+        <div class="container">
+          <div class="contact-form row">
+            <div class="form-field col-lg-6">
+              <input id="account" class="input-text" type="text">
+              <label for="account" class="label text-primary">Account Number</label>
+            </div>
+            <div class="form-field col-lg-6">
+              <input id="name" class="input-text" type="text" name="">
+              <label for="name" class="label text-primary">Name</label>
+            </div>
+            <div class="form-field col-lg-6">
+              <input id="ifsc" class="input-text" type="text" name="">
+              <label for="ifsc" class="label text-primary">IFSC CODE</label>
+            </div>
+            <div class="form-field col-lg-12">
+              <input class="submit-btn bg-success" type="submit" value="submit" name="">
+            </div>
+          </div>
+      </section>
+    </div>
 
-        <!-- ----------------------Side Menu --------------- -->
-        <nav class="sidebar show">
-            <ul class="nav-shadow">
-              <li><a href="CASA.html">CASA</a></li>
-              <li><a href="Credit Card.html">CREDIT CARD</a></li>
-      
-              <li>
-                <a href="#" class="drop-btn">FUND TRANSFER
-                  <span class="fas fa-caret-down"></span>
-                </a>
-                <ul class="show">
-                  <li class="active"><a href="AddBeneficiary.html">Add Beneficiary</a></li>
-                  <li><a href="Edit Beneficiary.html">Edit Beneficiary</a></li>
-                  <li><a href="Transfer within your account.html">Transfer within your accounts</a></li>
-                  <li><a href="Transfer within bank benificery.html">Transfer to within Bank Beneficiary</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#" class="drop-btn">Bill Payment
-                  <span class="fas fa-caret-down"></span>
-                </a>
-                <ul>
-                  <li><a href="Add Biller.html">Add Biller</a></li>
-                  <li><a href="Edit Biller.html">Edit Biller</a></li>
-                  <li><a href="Pay.html">Pay</a></li>
-      
-                </ul>
-              </li>
-              <li>
-                <a href="#" class="drop-btn">Service Request
-                  <span class="fas fa-caret-down"></span>
-                </a>
-                <ul>
-                  <li>
-                    <a href="#" class="drop-btn">Check (Cheque) order
-                      <span class="fas fa-caret-down"></span>
-                    </a>
-                    <ul>
-                      <li><a href="Service Request - Check Order - Create New.html">Create New</a></li>
-                      <li><a href="ViewExisting.html">View Existing</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                  <li><a href="CreditLimitIncrease copy.html">Credit Limit Increase</a></li>
-                  <li><a href="Service Request - Reset Password.html">Reset Password</a></li>
-      
-                </ul>
-              </li>
-              <li>
-                <a href="#" class="drop-btn">Product Opening
-                  <span class="fas fa-caret-down"></span>
-                </a>
-                <ul>
-                  <li><a href="CasaType.html">Open New CASA Account</a></li>
-                  <li><a href="Card Type.html">Open New Credit Card</a></li>
-                </ul>
-              </li>
-      
-              <!-- <li><a href="#">Feedback</a></li> -->
-            </ul>
-          </nav>
-
-        <!-- ----------------------Main Content--------------- -->
-        <div class="content">
-            <section class="add-beneficiary">
-                <h1 class="title bg-primary">Add beneficiary</h1>
-                <div class="container">
-                    <div class="contact-form row">
-                        <div class="form-field col-lg-6">
-                            <input id="Account-Number" class="input-text" type="text">
-                            <label for="Account-Number" class="label text-primary">Account Number</label>
-                        </div>
-                        <div class="form-field col-lg-6">
-                            <input id="Name" class="input-text" type="text" name="">
-                            <label for="Name" class="label text-primary">Name</label>
-                        </div>
-                        <div class="form-field col-lg-6">
-                            <input id="IFSC CODE" class="input-text" type="text" name="">
-                            <label for="IFSC CODE" class="label text-primary">IFSC CODE</label>
-                        </div>
-                        <div class="form-field col-lg-12">
-                            <input class="submit-btn bg-success" type="submit" value="submit" name="">
-                        </div>
-                    </div>
-            </section>
-        </div>
-
-    </div><!-- Wrapper Class End-->
+  </div><!-- Wrapper Class End-->
 
 
-    <!-- ----------------Java Script Files------------------------------------------------------------------------------------------------------------- -->
-    <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js'></script>
-    <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js" integrity="sha512-d4KkQohk+HswGs6A1d6Gak6Bb9rMWtxjOa0IiY49Q3TeFd5xAzjWXDCBW9RS7m86FQ4RzM2BdHmdJnnKRYknxw==" crossorigin="anonymous"></script>
-    <script src="./JS/script.js"></script>
+  <!-- ----------------Java Script Files------------------------------------------------------------------------------------------------------------- -->
+  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js'></script>
+  <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"
+    integrity="sha512-d4KkQohk+HswGs6A1d6Gak6Bb9rMWtxjOa0IiY49Q3TeFd5xAzjWXDCBW9RS7m86FQ4RzM2BdHmdJnnKRYknxw=="
+    crossorigin="anonymous"></script>
+  <script src="./JS/script.js"></script>
 
-    <script>
-        $(document).ready(function($){
-            $("#Account-Number").mask("9999-9999-9999",{placeholder:"xxxx-xxxx-xxxx"});
-        });
-        
-    </script>
+  <script>
+    $(document).ready(function ($) {
+      $("#account").mask("9999-9999-9999", { placeholder: "xxxx-xxxx-xxxx" });
+    });
+
+    var good = [false, false, false];
+
+    var fieldValidator = function (selector, index) {
+      var val = selector.substring(1);
+      if ($(selector).val() == '') {
+        $(selector).addClass('border-danger');
+        $("label[for='" + val + "']").addClass('text-danger');
+        $("label[for='" + val + "']").attr('title', "Enter the " + val);
+        good[index] = false;
+      }
+      else {
+        $(selector).removeClass('border-danger');
+        $("label[for='" + val + "']").removeClass('text-danger');
+        $("label[for='" + val + "']").removeAttr('title');
+        good[index] = true;
+      };
+    }
+
+    var isOk = function () {
+      for (var i = 0; i < good.length; i++) {
+        if (good[i] == false)
+          return false;
+      }
+      return true;
+    }
+
+    var callOnChange = function (selector, index) {
+      $(selector).on('input', () => fieldValidator(selector, index));
+    }
+
+    callOnChange('#account', 0);
+    callOnChange('#name', 1);
+    callOnChange('#ifsc', 2);
+
+    $("input[value='submit']").click(() => {
+      fieldValidator('#account', 0);
+      fieldValidator('#name', 1);
+      fieldValidator('#ifsc', 2);
+      if (isOk()) {
+        window.location.href = "test.html";
+      }
+    });
+
+  </script>
 
 </body>
 

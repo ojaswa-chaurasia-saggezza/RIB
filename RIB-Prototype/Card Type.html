@@ -8,6 +8,7 @@
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
   <link rel="stylesheet" href="./CSS/style.css">
   <link rel="stylesheet" href="./CSS/style1.css">
+  <link rel="stylesheet" href="./CSS/ErrorStyling.css">
 
 </head>
 
@@ -107,9 +108,10 @@
           <div class="contact-form row">
 
             <div class="form-field col-lg-6">
-              <label for="Card Product type" class="label drop-label text-primary">Card Product type</label>
-              <select id="Card Product type" class="form-select" aria-label="Default select example">
-                <option selected>General</option>
+              <label for="productType" class="label drop-label text-primary">Card Product type</label>
+              <select id="productType" class="form-select" aria-label="Default select example">
+                <option disabled selected value> -- Select card product type -- </option>
+                <option >General</option>
                 <option value="1">Travel</option>
               </select>
             </div>
@@ -131,6 +133,40 @@
   <script src='https://code.jquery.com/jquery-3.4.1.js'></script>
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <script src="./JS/script.js"></script>
+
+  <script>
+    var good = [false];
+
+    var dropValidator = function (selector) {
+      var val = selector.substring(1);
+      if ($(selector+' option:selected').prop('disabled') == true) {
+        $(selector).addClass('errorDrop');
+        $("label[for='"+val+"']").addClass('text-danger');
+        good[0] = false;
+      }
+      $(selector).change(function () {
+        $(selector).removeClass('errorDrop');
+        $("label[for='"+val+"']").removeClass('text-danger');
+        good[0] = true;
+      });
+    }
+
+    var isOk = function () {
+      for (var i = 0; i < good.length; i++) {
+        if (good[i] == false)
+          return false;
+      }
+      return true;
+    }
+
+    $("input[value='submit']").click(() => {
+      dropValidator('#productType');
+      if (isOk()) {
+        window.location.href = "test.html";
+      }
+
+    });
+  </script>
 
 </body>
 
