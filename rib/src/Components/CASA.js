@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
-import { CssBaseline, Grid, FormControl } from '@material-ui/core';
+import { CssBaseline, Grid, FormControl, Input, InputLabel } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +18,7 @@ import Tables from '../Elements/Tables';
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: 75,
+        marginBottom: theme.spacing(3),
     },
     bullet: {
         display: 'inline-block',
@@ -31,18 +32,18 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 12,
     },
     paper: {
-        padding: theme.spacing(4),
+        padding: theme.spacing(3),
         textAlign: 'left',
         boxShadow: 'none',
         display: 'flex',
-        justifyContent: 'space-around',
+        // justifyContent: 'space-between',
     },
     accountNumber: {
         minWidth: 200,
         maxHeight: 30,
         padding: 5,
-        border:'1px solid',
-        ' :hover':{
+        border: '1px solid',
+        ' :hover': {
             borderBottom: '0px',
         }
     }
@@ -67,9 +68,9 @@ export default function CASA() {
                 />
                 <CardContent>
                     <Grid container spacing={1}>
-                        <Grid container item xs={12} spacing={3}>
+                        <Grid container item xs={12} spacing={1}>
                             <Grid item xs={6}>
-                                <Paper className={classes.paper}><strong>Account Number : {''}</strong>
+                                <Paper className={classes.paper}><strong>Account Number : &emsp;&emsp;&emsp;</strong>
                                     <FormControl variant="">
                                         <Select
                                             labelId="demo-simple-select-outlined-label"
@@ -88,15 +89,28 @@ export default function CASA() {
                                 </Paper>
                             </Grid>
                             <Grid item xs={6}>
-                                <Paper className={classes.paper}>item</Paper>
+                                <Paper className={classes.paper}><strong>Balance : &emsp;&emsp;&emsp;</strong>
+                                    <Typography variant="body2" gutterBottom>
+                                        12500000
+                                    </Typography>
+                                </Paper>
+
                             </Grid>
                         </Grid>
-                        <Grid container item xs={12} spacing={3}>
+                        <Grid container item xs={12} spacing={1}>
                             <Grid item xs={6}>
-                                <Paper className={classes.paper}>item</Paper>
+                                <Paper className={classes.paper}><strong>Account Type : &emsp;&emsp;&emsp;</strong>
+                                    <Typography variant="body2" gutterBottom>
+                                        Checking Account
+                                    </Typography>
+                                </Paper>
                             </Grid>
                             <Grid item xs={6}>
-                                <Paper className={classes.paper}>item</Paper>
+                                <Paper className={classes.paper}><big><strong>Segment : &emsp;&emsp;&emsp;</strong></big>
+                                    <Typography variant="body2" gutterBottom>
+                                        Platinum
+                                    </Typography>
+                                </Paper>
                             </Grid>
                         </Grid>
 
@@ -117,5 +131,6 @@ export default function CASA() {
 
             </Card>
         </CssBaseline>
+
     );
 }
