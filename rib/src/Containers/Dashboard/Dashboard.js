@@ -21,8 +21,12 @@ import PersonIcon from '@material-ui/icons/Person';
 import Toolbar from '@material-ui/core/Toolbar';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const drawerWidth = 250;
 
@@ -68,10 +72,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+var AccordionStyle =withStyles({
+    root:{
+      margin:0,
+      boxShadow:"none",
+      width: '100%',	
+      '& ListItemText':{
+        color: '#ff0000',
+        fontSize:10,
+      },
+    },
+    
+})(Accordion);
+
 function Dashboard(props) {
 
     const { window } = props;
     const classes = useStyles();
+    
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,29 +116,108 @@ function Dashboard(props) {
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
-                <ListItem button key={'FUND TRANSFER'}>
-                    <ListItemText primary={'FUND TRANSFER'} />
+                <ListItem button key={'FUND TRANSFER'} style={{padding:0,}}>
+                    <AccordionStyle>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >FUND TRANSFER</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                        <List>
+                                <ListItem>
+                                    <ListItemText primary={'Add Beneficiary'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Edit Beneficiary'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Transfer within your accounts'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Transfer to within Bank Beneficiary'}/>
+                                </ListItem>
+                            </List>
+                        </AccordionDetails>
+                    </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'BILL PAYMENT'}>
-                    <ListItemText primary={'BILL PAYMENT'} />
+                <ListItem button key={'BILL PAYMENT'} style={{padding:0,}}>
+                <AccordionStyle>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >BILL PAYMENT</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <List>
+                                <ListItem>
+                                    <ListItemText primary={'Add Biller'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Edit Biller'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Pay'}/>
+                                </ListItem>
+                            </List>
+                            
+                        </AccordionDetails>
+                    </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'SERVICE REQUEST'}>
-                    <ListItemText primary={'SERVICE REQUEST'} />
+                <ListItem button key={'SERVICE REQUEST'} style={{padding:0,}}>
+                <AccordionStyle>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >SERVICE REQUEST</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                        <List>
+                                <ListItem>
+                                    <ListItemText primary={'Check(Cheque) Order'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Credit Limit Increase'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Reset Password'}/>
+                                </ListItem>
+                            </List>
+                        </AccordionDetails>
+                    </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'PRODUCT OPENING'}>
-                    <ListItemText primary={'PRODUCT OPENING'} />
+                <ListItem button key={'PRODUCT OPENING'} style={{padding:0,}}>
+                <AccordionStyle>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography >PRODUCT OPENING</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                        <List>
+                                <ListItem>
+                                    <ListItemText primary={'Open New Casa Account'}/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary={'Open New Credit Card'}/>
+                                </ListItem>
+                                
+                            </List>
+                        </AccordionDetails>
+                    </AccordionStyle>
                 </ListItem>
 
             </List>
             <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
+            
         </div>
     );
 
