@@ -27,6 +27,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// This below imports are for Routing perpose
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
@@ -131,16 +132,17 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                         <List>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Add Beneficiary'>
                                     <ListItemText primary={'Add Beneficiary'}/>
                                 </ListItem>
-                                <ListItem>
+                                
+                                <ListItem button component={Link} to='/Edit Beneficiary'>
                                     <ListItemText primary={'Edit Beneficiary'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Transfer within your accounts'>
                                     <ListItemText primary={'Transfer within your accounts'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Transfer to within Bank Beneficiary'>
                                     <ListItemText primary={'Transfer to within Bank Beneficiary'}/>
                                 </ListItem>
                             </List>
@@ -158,13 +160,13 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Add Biller'>
                                     <ListItemText primary={'Add Biller'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Edit Biller'>
                                     <ListItemText primary={'Edit Biller'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Pay'>
                                     <ListItemText primary={'Pay'}/>
                                 </ListItem>
                             </List>
@@ -183,13 +185,13 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                         <List>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Check(Cheque) Order'>
                                     <ListItemText primary={'Check(Cheque) Order'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Credit Limit Increase'>
                                     <ListItemText primary={'Credit Limit Increase'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Reset Password'>
                                     <ListItemText primary={'Reset Password'}/>
                                 </ListItem>
                             </List>
@@ -207,10 +209,10 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                         <List>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Edit Beneficiary'>
                                     <ListItemText primary={'Open New Casa Account'}/>
                                 </ListItem>
-                                <ListItem>
+                                <ListItem button component={Link} to='/Edit Beneficiary'>
                                     <ListItemText primary={'Open New Credit Card'}/>
                                 </ListItem>
                                 
@@ -317,7 +319,7 @@ function Dashboard(props) {
 
                     <Switch>
                         <Route path='/CASA' component={CASA}></Route>
-
+                        
                     </Switch>
                 </main>
             </Router>
