@@ -107,7 +107,7 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         component={RouteLink} 
-                        to={'/Login'}
+                        to={'/'}
                         className={classes.submit}
                     >
                         Change Password
@@ -115,7 +115,7 @@ export default function SignUp() {
                 </form>
             </div>
             <Box mt={5}>
-                <Copyright />
+                {/* <Copyright /> */}
             </Box>
         </Container>
     );

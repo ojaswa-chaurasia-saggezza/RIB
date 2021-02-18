@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import { Link } from 'react-router-dom';
+import { Link ,useHistory} from 'react-router-dom';
+import { ContactSupportOutlined, HistoryRounded, LaptopWindows } from '@material-ui/icons';
 
 function Copyright() {
   return (
@@ -50,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const users={ username: 'thiru' , password:'1234'};
+  const [whereTo, changeWhereTo]= useState('');
+  const [user_name,changeusername]= useState('');
+  const [pass_word,changepassword]= useState('');
+  const HISTORY= useHistory();
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -67,11 +74,12 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="UserName"
+              name="UserName"
+              autoComplete="username"
               autoFocus
+              onChange={(val)=>{changeusername(val.target.value)}}
             />
             <TextField
               variant="outlined"
@@ -82,6 +90,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              onChange={(val)=>{changepassword(val.target.value)}}
               autoComplete="current-password"
             />
 
@@ -91,19 +100,26 @@ export default function SignIn() {
               variant="contained"
               color="primary"
               component={Link}
-              to={'/CASA'}
+              to={`/${whereTo}`}
               className={classes.submit}
+              onClick={()=>{ 
+
+                if(user_name==users.username && pass_word==users.password)
+                  window.location.href='/CASA';
+                  
+                  
+              }}
             >
               Login
           </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="/ForgotPassword" >
                   Forgot password?
               </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/SignUp" >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -111,7 +127,7 @@ export default function SignIn() {
           </form>
         </div>
         <Box mt={8}>
-          <Copyright />
+          {/* <Copyright /> */}
         </Box>
     </Container>
   );

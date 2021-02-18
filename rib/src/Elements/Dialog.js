@@ -11,11 +11,13 @@ export default function FormDialog() {
   const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    let oldOpen=open;
+    setOpen(!oldOpen);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    let oldOpen=open;
+    setOpen(!open);
   };
 
   return (
@@ -30,9 +32,9 @@ export default function FormDialog() {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="otp"
+            label="Enter OTP"
+            type="text"
             fullWidth
           />
         </DialogContent>
@@ -41,7 +43,7 @@ export default function FormDialog() {
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Subscribe
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
     const classes = useStyles();
-    const [dialogVariable, setdialogVariable] = React.useState(null);
+    const [dialogVariable, setdialogVariable] = React.useState([]);
 
 
     return (
@@ -101,22 +101,22 @@ export default function SignUp() {
                         component={RouteLink}
                         to={'/ResetPassword'}
                         onClick={() => {
-                            setdialogVariable(<Dialog />)
+                            setdialogVariable([<Dialog />]);
                         }}
                     >
                         Sign Up
           </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <RouteLink to="/">
                                 Already have an account? Sign in
-              </Link>
+              </RouteLink>
                         </Grid>
                     </Grid>
                 </form>
             </div>
             <Box mt={5}>
-                <Copyright />
+                {/* <Copyright /> */}
             </Box>
         </Container>
     );
