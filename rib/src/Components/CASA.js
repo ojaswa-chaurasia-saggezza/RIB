@@ -14,7 +14,7 @@ import Tables from '../Elements/Tables';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: 275,
+        minWidth: 75,
     },
     bullet: {
         display: 'inline-block',
@@ -49,7 +49,7 @@ export default function CASA() {
             </Card>
             <Card className={classes.root} variant="outlined">
                 <CardHeader
-                    title="Account Summary"
+                    title="Transaction Details"
                 />
                 <CardContent>
                     <Tables />

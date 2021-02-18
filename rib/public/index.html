@@ -13,14 +13,10 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
-  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js'></script>
-  <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
-  <script src='https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js'></script>
-  <script src='https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js'></script>
-
+  
 
 
 
@@ -50,78 +46,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 </body>
-
-
-
-
-<script>
-  // To initialise the Table
-  var table = $('#Credit_Card_and_CASA_Table').DataTable({
-    lengthMenu: [5, 10, 15, 25, 30],
-    stateSave: true,
-    "dom": "lrtip",
-  });
-
-  function filterGlobal() {
-    if ($("#filter_global select").val() == "-1")
-      table.search(
-        $('#global_filter').val(),
-        false,  //This is for Regex search
-        true,   // This is for smart search
-      ).draw();
-    else
-      filterColumn($("#filter_global select").val());
-
-
-  }
-
-  function filterColumn(i) {
-    table.column(Number(i)).search(
-      $('#global_filter').val(),
-      false,  //This is for Regex search
-      true,   // This is for smart search
-    ).draw();
-  }
-
-  $(document).ready(function () {
-    $('input.global_filter').on('keyup click', function () {
-      filterGlobal();
-    });
-
-    $('input.column_filter').on('keyup click', function () {
-      filterColumn($(this).parents('tr').attr('data-column'));
-    });
-  });
-
-  // To Initialise the date  Range picker
-  $(function () {
-
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-
-    function cb(start, end) {
-      $('#reportrange span').html('<i class="fa fa-calendar me-1"></i>&nbsp;' + start.format('DD/MM/YYYY') + ' - ' + '<i class="fa fa-calendar me-1"></i>&nbsp;' + end.format('DD/MM/YYYY'));
-      console.log(start.day(), end);
-    }
-
-    $('#reportrange').daterangepicker({
-      startDate: start,
-      endDate: end,
-      showDropdowns: true,
-      opens: 'left',
-      locale: {
-        separator: ' to ',
-        format: 'DD-MM-YYYY'
-      }
-
-    }, cb);
-
-    cb(start, end);
-
-  });
-
-
-</script>
-
 
 </html>

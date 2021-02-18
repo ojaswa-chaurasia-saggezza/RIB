@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "bootstrap": "^4.6.0",
+    "datatables.net": "^1.10.23",
     "datatables.net-dt": "^1.10.23",
     "jquery": "^3.5.1",
     "react": "^17.0.1",
