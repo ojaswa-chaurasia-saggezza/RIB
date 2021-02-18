@@ -1,40 +1,65 @@
 import React from 'react';
 
 
-// //Bootstrap and jQuery libraries
-// import 'jquery/dist/jquery.min.js';
+//Bootstrap and jQuery libraries
+import 'jquery/dist/jquery.min.js';
 
-// //Datatable Modules
-// import "datatables.net-dt/js/dataTables.dataTables"
-// import "datatables.net-dt/css/"
-// import $ from 'jquery';
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+import $ from 'jquery';
 
 
 class Tables extends React.Component {
-    // componentDidMount() {
-    //     //initialize datatable
-    //     $(function () {
-    //         var table = $('#Credit_Card_and_CASA_Table').DataTable({
-    //             lengthMenu: [5, 10, 15, 25, 30],
-    //             stateSave: true,
-    //             dom: "lrtip",
-    //         });
-    //     });
-    // }
+    componentDidMount() {
+        //initialize datatable
+        $(function () {
+            var table = $('#Credit_Card_and_CASA_Table').DataTable({
+                lengthMenu: [5, 10, 15, 25, 30],
+                stateSave: true,
+                dom: "ltip",
+                responsive: true,
+            });
+            function filterGlobal() {
+                if ($("#filter_global select").val() == "-1")
+                    table.search(
+                        $('#global_filter').val(),
+                        false,  //This is for Regex search
+                        true,   // This is for smart search
+                    ).draw();
+                else
+                    filterColumn($("#filter_global select").val());
+
+
+            }
+            function filterColumn(i) {
+                table.column(Number(i)).search(
+                    $('#global_filter').val(),
+                    false,  //This is for Regex search
+                    true,   // This is for smart search
+                ).draw();
+            }
+            $('input.global_filter').on('keyup click', function () {
+                filterGlobal();
+            });
+
+            
+        });
+    }
     render() {
         //Datatable HTML
         return (
-            <div id={"table_div"} style={{ overflow: 'auto', padding: '0px 10px' }}>
+            <div id={"table_div"} style={{ padding: ' 10px' }}>
                 {/* <!-- Table to be used for searching --> */}
                 <div>
-                    <table className="summary_text" style={{ margin: '0 1em -2em auto', zIndex: 200 }}>
+                    <table className="summary_text" style={{ margin: '0 1em -1em auto',zIndex: 200, }}>
                         <tbody>
                             <tr id="filter_global">
                                 <td >Search: </td>
                                 <td >
                                     <div className="input-group input-group-sm ms-2">
                                         <select className="form-select col-5" aria-label="Default select example">
-                                            <option value="-1" selected>Global Search</option>
+                                            <option value="-1" defaultValue>Global Search</option>
                                             <option value="0">Transaction ID</option>
                                             <option value="1">Date</option>
                                             <option value="2">Narration</option>
@@ -50,7 +75,7 @@ class Tables extends React.Component {
                     </table>
                 </div>
                 {/* </div>The Main Table to Be displayed */}
-                <table id={"Credit_Card_and_CASA_Table"} className="table table-striped table-bordered " style={{ width: '100%' }}>
+                <table id={"Credit_Card_and_CASA_Table"} className="table table-striped table-responsive table-bordered " style={{ width: '100%' }}>
                     <thead>
                         <tr>
                             <th>Transaction ID</th>
