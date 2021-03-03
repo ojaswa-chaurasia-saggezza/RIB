@@ -1,5 +1,7 @@
 
 package com.rib.rib.controller;
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,12 @@ import com.rib.rib.repository.CustomerRepository;
 @RestController
 @RequestMapping("/api/v1/")
 public class CustomerController {
-@Autowired	
-private CustomerRepository customerRepository;
-@GetMapping("/Customer")
-public List<Customer>getallCustomers()
-{
-	return customerRepository.findAll();
-}
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@GetMapping("/Customer")
+	public List<Customer> getallCustomers() {
+		return customerRepository.findAll();
+	}
 
 }

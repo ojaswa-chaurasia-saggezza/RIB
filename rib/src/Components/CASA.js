@@ -54,14 +54,15 @@ const useStyles = makeStyles((theme) => ({
 export default function CASA() {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
-    const [age, setAge] = React.useState('');
+    const [account, setAccount] = React.useState('');
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setAccount(event.target.value);
     };
 
     return (
         <CssBaseline>
+            {/* This Card is for account summary.*/}
             <Card className={classes.root} variant="outlined">
                 <CardHeader
                     title="Account Details"
@@ -75,11 +76,11 @@ export default function CASA() {
                                         <Select
                                             labelId="demo-simple-select-outlined-label"
                                             id="demo-simple-select-outlined"
-                                            value={age}
+                                            value={account}
                                             displayEmpty={true}
                                             className={classes.accountNumber}
                                             onChange={handleChange}
-                                            label="Age"
+                                            label="Account Number"
                                         >
                                             <MenuItem value={897653443526}>897653443526</MenuItem>
                                             <MenuItem value={987653426578}>987653426578</MenuItem>
