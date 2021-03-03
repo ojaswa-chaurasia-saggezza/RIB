@@ -1,13 +1,22 @@
 package com.rib.rib.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "account")
 public class Account {
+	
+	@OneToMany
+	@JoinColumn(name = "account_number")
+	List<Transaction> transactions;
+	
 	@Id
 	private Long accountNumber;
 	@Column
@@ -81,6 +90,15 @@ public class Account {
 
 	public void setIFSC(String iFSC) {
 		IFSC = iFSC;
+	}
+	
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	public Account(Long accountNumber, Long balance, String type, Long outStandingBalance, Long outStandingDueDate,
