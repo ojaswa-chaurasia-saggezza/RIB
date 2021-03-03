@@ -1,5 +1,7 @@
 package com.rib.rib.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,19 +16,39 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+     
 	@Column
 	private String accountStatus;
 	@Column
-	private String phoneNumber;
+	private String name;
+	@Column()
+	private Long phoneNumber;
 	@Column
-	private String DOB;
+	private Date DOB;
 	@Column
 	private String email;
 	@Column
 	private String username;
 	@Column
 	private String password;
+	@Column
+	private String LoginStatus;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLoginStatus() {
+		return LoginStatus;
+	}
+
+	public void setLoginStatus(String loginStatus) {
+		LoginStatus = loginStatus;
+	}
 
 	public Customer() {
 
@@ -48,19 +70,19 @@ public class Customer {
 		this.accountStatus = accountStatus;
 	}
 
-	public String getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getDOB() {
+	public Date getDOB() {
 		return DOB;
 	}
 
-	public void setDOB(String dOB) {
+	public void setDOB(Date dOB) {
 		DOB = dOB;
 	}
 
@@ -88,8 +110,8 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Customer(String accountStatus, String phoneNumber, String dOB, String email, String username,
-			String password) {
+	public Customer(String accountStatus, Long phoneNumber, Date dOB, String email, String username,
+			String password,String name,String LoginStatus) {
 		super();
 		this.accountStatus = accountStatus;
 		this.phoneNumber = phoneNumber;
@@ -97,6 +119,8 @@ public class Customer {
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.name=name;
+		this.LoginStatus=LoginStatus;
 	}
 
 }
