@@ -3,6 +3,7 @@ package com.rib.rib.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +20,14 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Account.class)
 	@JoinColumn(name = "customer_id")
 	private List<Account> accounts;
-     
+
 	@Column
 	private String accountStatus;
+
 	public List<Account> getAccounts() {
 		return accounts;
 	}
@@ -125,8 +127,8 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Customer(String accountStatus, Long phoneNumber, Date dOB, String email, String username,
-			String password,String name,String LoginStatus) {
+	public Customer(String accountStatus, Long phoneNumber, Date dOB, String email, String username, String password,
+			String name, String LoginStatus) {
 		super();
 		this.accountStatus = accountStatus;
 		this.phoneNumber = phoneNumber;
@@ -134,8 +136,8 @@ public class Customer {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.name=name;
-		this.LoginStatus=LoginStatus;
+		this.name = name;
+		this.LoginStatus = LoginStatus;
 	}
 
 }

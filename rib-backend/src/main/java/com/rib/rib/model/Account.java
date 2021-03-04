@@ -1,7 +1,9 @@
 package com.rib.rib.model;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,11 +14,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "account")
 public class Account {
-	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Transaction.class)
 	@JoinColumn(name = "account_number")
 	List<Transaction> transactions;
-	
+
 	@Id
 	private Long accountNumber;
 	@Column
@@ -26,14 +28,14 @@ public class Account {
 	@Column
 	private Long outStandingBalance;
 	@Column
-	private Long outStandingDueDate;
+	private Date outStandingDueDate;
 	@Column
 	private String Segment;
 	@Column
 	private String IFSC;
-	
+
 	public Account() {
-		
+
 	}
 
 	public Long getAccountNumber() {
@@ -68,11 +70,11 @@ public class Account {
 		this.outStandingBalance = outStandingBalance;
 	}
 
-	public Long getOutStandingDueDate() {
+	public Date getOutStandingDueDate() {
 		return outStandingDueDate;
 	}
 
-	public void setOutStandingDueDate(Long outStandingDueDate) {
+	public void setOutStandingDueDate(Date outStandingDueDate) {
 		this.outStandingDueDate = outStandingDueDate;
 	}
 
@@ -91,7 +93,6 @@ public class Account {
 	public void setIFSC(String iFSC) {
 		IFSC = iFSC;
 	}
-	
 
 	public List<Transaction> getTransactions() {
 		return transactions;
@@ -101,7 +102,7 @@ public class Account {
 		this.transactions = transactions;
 	}
 
-	public Account(Long accountNumber, Long balance, String type, Long outStandingBalance, Long outStandingDueDate,
+	public Account(Long accountNumber, Long balance, String type, Long outStandingBalance, Date outStandingDueDate,
 			String segment, String iFSC) {
 		super();
 		this.accountNumber = accountNumber;
@@ -112,7 +113,5 @@ public class Account {
 		Segment = segment;
 		IFSC = iFSC;
 	}
-	
-	
-	
+
 }
