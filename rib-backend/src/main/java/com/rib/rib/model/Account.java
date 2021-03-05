@@ -98,8 +98,9 @@ public class Account {
 		return transactions;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
+	public Account setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+		return this;
 	}
 
 	public Account(Long accountNumber, Long balance, String type, Long outStandingBalance, Date outStandingDueDate,

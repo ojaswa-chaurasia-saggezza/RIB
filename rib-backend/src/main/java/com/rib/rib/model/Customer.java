@@ -32,8 +32,9 @@ public class Customer {
 		return accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public Customer setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
+		return this;
 	}
 
 	@Column
