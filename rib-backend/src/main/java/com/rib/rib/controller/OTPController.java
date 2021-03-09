@@ -45,11 +45,7 @@ public class OTPController {
 		replacements.put("otpnum", String.valueOf(otp));	
 		String message = template.getTemplate(replacements);
 		try {
-<<<<<<< HEAD
 			emailService.sendOtpMessage("ojaswa.chaurasia@saggezza.com", "OTP - RIB", message);
-=======
-			emailService.sendOtpMessage("Shanti.mukati@saggezza.com", "OTP -SpringBoot", otp+" gfhgfdhgf");
->>>>>>> 879dd6ef04ae30e85caafc38530dd8f4a2cf0e5e
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
