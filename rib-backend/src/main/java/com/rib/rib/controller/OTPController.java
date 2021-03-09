@@ -11,16 +11,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.EmailTemplate;
 import com.rib.rib.security.services.EmailService;
 import com.rib.rib.security.services.OTPService;
 
-@Controller
+@RestController
 public class OTPController {
 	
 	@Autowired
@@ -43,7 +45,7 @@ public class OTPController {
 		replacements.put("otpnum", String.valueOf(otp));
 		String message = template.getTemplate(replacements);
 		try {
-			emailService.sendOtpMessage("Logged in Users EmailAddres", "OTP -SpringBoot", message);
+			emailService.sendOtpMessage("Shanti.mukati@saggezza.com", "OTP -SpringBoot", otp+" gfhgfdhgf");
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
@@ -51,8 +53,8 @@ public class OTPController {
 		return "otppage";
 	}
 	
-	@RequestMapping(value ="/validateOtp", method = RequestMethod.GET)
-	public @ResponseBody String validateOtp(@RequestParam("otpnum") int otpnum) {
+	@GetMapping("/validateOtp/{otpnum}")
+	public @ResponseBody String validateOtp(@PathVariable int otpnum) {
 		
 		final String SUCCESS = "Entered Otp is valid";
 		final String FAIL = "Entered Otp is not valid. Please Retry!";
