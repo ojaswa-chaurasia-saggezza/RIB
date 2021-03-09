@@ -13,7 +13,7 @@ import com.google.common.cache.CacheLoader;
 public class OTPService {
 	//Assigning the expiry time of OTP to 3 minutes
 	private static final Integer EXPIRE_MINS = 3;
-	private LoadingCache<String ,Integar> otpCache;
+	private LoadingCache<String ,Integer> otpCache;
 	
 	public OTPService()
 	{
@@ -22,7 +22,8 @@ public class OTPService {
 				expireAfterWrite(EXPIRE_MINS, TimeUnit.MINUTES)
 				.build(new CacheLoader<String, Integer>()
 				{
-			  public Integar load(String Key)
+			  public Integer load(String Key)
+			  {
 			  return 0;
 				}
 	});
@@ -30,11 +31,11 @@ public class OTPService {
 }
 
 //Generate and return OTP value
-public int generateOTP(String Key)
+public int generateOTP(String key)
 {
 	Random random = new Random();
 	int otp = 100000 + random.nextInt(900000);
-	otpCache.put(key, otp); //Storing the OTP and username
+	otpCache.put(key, otp); 
 	return otp;
 	
 }
@@ -53,7 +54,7 @@ public int getOtp(String key)
 }
 
 // Remove OTP
-public Void ClearOTP(String Key)
+public void clearOTP(String key)
 {
 	otpCache.invalidate(key);
 }
