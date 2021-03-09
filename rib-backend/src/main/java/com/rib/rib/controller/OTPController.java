@@ -3,6 +3,8 @@ package com.rib.rib.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.rib.rib.EmailTemplate;
+import com.rib.rib.security.services.EmailService;
+import com.rib.rib.security.services.OTPService;
 
 @Controller
 public class OTPController {
@@ -36,7 +42,11 @@ public class OTPController {
 		replacements.put("user", username);
 		replacements.put("otpnum", String.valueOf(otp));
 		String message = template.getTemplate(replacements);
-		emailService.sendOtpMessage("Logged in Users EmailAddres", "OTP -SpringBoot", message);
+		try {
+			emailService.sendOtpMessage("Logged in Users EmailAddres", "OTP -SpringBoot", message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		
 		return "otppage";
 	}
