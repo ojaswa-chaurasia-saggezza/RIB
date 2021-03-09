@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +34,16 @@ public class CustomerController {
 	@Autowired
 	private TransactionRepositary transactionRepositary;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@GetMapping("/Customer") // Retrieve all Customers
 	public List<Customer> getallCustomers() {
 		return customerRepository.findAll();
 	}
 
 	@GetMapping("/Customer/{username}")
-	public List<Customer> getCustomerByUsername(@PathVariable String username) {
+	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
 	}
 
@@ -128,11 +132,11 @@ public class CustomerController {
 
 		// Creating Customers and setting their accounts;
 		Customer nayan = new Customer("Active", 7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com",
-				"Nayan", "Nayan", "Nayan Verma", "LoggedIn").setAccounts(nayanAccount);
+				"Nayan", passwordEncoder.encode("Nayan"), "Nayan Verma", "LoggedIn").setAccounts(nayanAccount);
 		Customer shanti = new Customer("Active", 6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com",
-				"Shanti", "Shanti", "Shanti Mukati", "LoggedIn").setAccounts(shantiAccount);
+				"Shanti", passwordEncoder.encode("Shanti"), "Shanti Mukati", "LoggedIn").setAccounts(shantiAccount);
 		Customer ojaswa = new Customer("Active", 7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com",
-				"Ojaswa", "Ojaswa", "Ojaswa Chaurasia", "LoggedIn").setAccounts(ojaswaAccount);
+				"Ojaswa", passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia", "LoggedIn").setAccounts(ojaswaAccount);
 
 		// Saving the Customers and returning their data
 		return customerRepository.saveAll(Arrays.asList(nayan, shanti, ojaswa));
