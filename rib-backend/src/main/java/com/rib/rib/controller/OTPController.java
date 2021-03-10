@@ -58,6 +58,7 @@ public class OTPController {
 		
 		final String SUCCESS = "Entered Otp is valid";
 		final String FAIL = "Entered Otp is not valid. Please Retry!";
+		int invalidAttempts = 0;
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -73,15 +74,18 @@ public class OTPController {
 					return (SUCCESS);
 				}
 				else {
-					return FAIL;
+					invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
+					return FAIL+" Invalid Attempts: "+invalidAttempts;
 				}
 			}
 			else {
-				return FAIL;
+				invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
+				return FAIL+" Invalid Attempts: "+invalidAttempts;
 			}
 		}
 		else {
-			return FAIL;
+			invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
+			return FAIL+" Invalid Attempts: "+invalidAttempts;
 		}
 		
 	}
