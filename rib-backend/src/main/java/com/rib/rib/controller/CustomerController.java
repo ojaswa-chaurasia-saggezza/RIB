@@ -47,6 +47,22 @@ public class CustomerController {
 		return customerRepository.findByUsername(username);
 	}
 
+	@GetMapping("/Customer/{username}/enableLoginStatus")
+	public void enableloginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+
+		customer.setLoginStatus("Registered");
+		customerRepository.save(customer);
+
+	}
+
+	@GetMapping("/Customer/{username}/disableLoginStatus")
+	public void disableLoginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		customer.setLoginStatus("Unregistered");
+		customerRepository.save(customer);
+	}
+
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {
 		return accountRepository.findAll();
@@ -132,11 +148,12 @@ public class CustomerController {
 
 		// Creating Customers and setting their accounts;
 		Customer nayan = new Customer("Active", 7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com",
-				"Nayan", passwordEncoder.encode("Nayan"), "Nayan Verma", "LoggedIn").setAccounts(nayanAccount);
+				"Nayan", passwordEncoder.encode("Nayan"), "Nayan Verma", "Unregistered").setAccounts(nayanAccount);
 		Customer shanti = new Customer("Active", 6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com",
-				"Shanti", passwordEncoder.encode("Shanti"), "Shanti Mukati", "LoggedIn").setAccounts(shantiAccount);
+				"Shanti", passwordEncoder.encode("Shanti"), "Shanti Mukati", "Unregistered").setAccounts(shantiAccount);
 		Customer ojaswa = new Customer("Active", 7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com",
-				"Ojaswa", passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia", "LoggedIn").setAccounts(ojaswaAccount);
+				"Ojaswa", passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia", "Unregistered")
+						.setAccounts(ojaswaAccount);
 
 		// Saving the Customers and returning their data
 		return customerRepository.saveAll(Arrays.asList(nayan, shanti, ojaswa));

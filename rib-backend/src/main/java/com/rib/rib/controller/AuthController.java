@@ -66,6 +66,11 @@ public class AuthController {
 		if(userDetails.getAccountStatus().equals("DISABLE")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 		}
+		if(userDetails.getLoginStatus().equals("Unregistered")) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Your account is not Registered. Please Sign in first."));
+		}
+		
+		
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
@@ -75,46 +80,24 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (customerRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(signUpRequest.getUsername(), signUpRequest.getPassword()));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+
+		CustomerDetailsImpl userDetails = (CustomerDetailsImpl) authentication.getPrincipal();
+		if(userDetails.getAccountStatus().equals("DISABLE")) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 		}
-
-		if (customerRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+		if(userDetails.getLoginStatus().equals("Registered")) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account aready registered please Login."));
 		}
+		
+		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+				.collect(Collectors.toList());
 
-		// Create new user's account
-		Customer customer = new Customer("Running", 99999L, new Date(), signUpRequest.getEmail(),
-				signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()), "name", "Loggedin");
-
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		customer.setRoles(roles);
-		customerRepository.save(customer);
-
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-	}
+		return ResponseEntity.ok(
+				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));	}
 
 }

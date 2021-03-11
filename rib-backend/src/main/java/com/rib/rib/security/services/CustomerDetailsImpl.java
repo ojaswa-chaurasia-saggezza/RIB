@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rib.rib.model.Customer;
 
-public class CustomerDetailsImpl implements UserDetails{
-	
+public class CustomerDetailsImpl implements UserDetails {
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -21,43 +21,47 @@ public class CustomerDetailsImpl implements UserDetails{
 	private String username;
 
 	private String email;
-	
-  private String accountStatus;
+
+	private String accountStatus;
+	private String loginStatus;
+
+	public String getLoginStatus() {
+		return loginStatus;
+	}
+
+	public void setLoginStatus(String loginStatus) {
+		this.loginStatus = loginStatus;
+	}
 
 	@JsonIgnore
 	private String password;
-	
+
 	private Collection<? extends GrantedAuthority> authorities;
-	
+
 	public CustomerDetailsImpl(Long id, String username, String email, String password, String accountStatus,
-			Collection<? extends GrantedAuthority> authorities) {
+			String loginStatus, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
 		this.accountStatus = accountStatus;
+		this.loginStatus = loginStatus;
 	}
-	
+
 	public static CustomerDetailsImpl build(Customer customer) {
 		List<GrantedAuthority> authorities = customer.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
-		
-		return new CustomerDetailsImpl(
-				customer.getId(), 
-				customer.getUsername(), 
-				customer.getEmail(),
-				customer.getPassword(),
-				customer.getAccountStatus(),
-				authorities);
+				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+
+		return new CustomerDetailsImpl(customer.getId(), customer.getUsername(), customer.getEmail(),
+				customer.getPassword(), customer.getAccountStatus(),customer.getLoginStatus(), authorities);
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -66,8 +70,7 @@ public class CustomerDetailsImpl implements UserDetails{
 		return email;
 	}
 
-	public String getAccountStatus()
-	{
+	public String getAccountStatus() {
 		return accountStatus;
 	}
 
