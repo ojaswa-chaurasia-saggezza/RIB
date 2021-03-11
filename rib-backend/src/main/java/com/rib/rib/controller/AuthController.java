@@ -63,6 +63,9 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
 		CustomerDetailsImpl userDetails = (CustomerDetailsImpl) authentication.getPrincipal();
+		if(userDetails.getAccountStatus().equals("DISABLE")) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
+		}
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 

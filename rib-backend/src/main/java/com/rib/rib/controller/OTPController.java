@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.EmailTemplate;
+import com.rib.rib.model.Customer;
+import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.security.services.EmailService;
 import com.rib.rib.security.services.OTPService;
 
@@ -30,6 +32,9 @@ public class OTPController {
 	
 	@Autowired
 	public EmailService emailService;
+	
+	@Autowired
+	public CustomerRepository customerRepository;
 
 	@GetMapping("/generateOtp")
 	public String generateOTP() {
@@ -63,7 +68,7 @@ public class OTPController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		String username = auth.getName();
-		
+		Customer cus = customerRepository.findByUsername(username).orElseThrow(null);	
 		if(otpnum >= 0) {
 			int serverOtp = otpService.getOtp(username);
 			
@@ -74,16 +79,31 @@ public class OTPController {
 					return (SUCCESS);
 				}
 				else {
+					if(otpService.getInvalidAttempts(username)>=3)
+					{
+						cus.setAccountStatus("DISABLE");
+						customerRepository.save(cus);
+					}
 					invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
 					return FAIL+" Invalid Attempts: "+invalidAttempts;
 				}
 			}
 			else {
+				if(otpService.getInvalidAttempts(username)>=3)
+				{
+					cus.setAccountStatus("DISABLE");
+					customerRepository.save(cus);
+				}
 				invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
 				return FAIL+" Invalid Attempts: "+invalidAttempts;
 			}
 		}
 		else {
+			if(otpService.getInvalidAttempts(username)>=3)
+			{
+				cus.setAccountStatus("DISABLE");
+				customerRepository.save(cus);
+			}
 			invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username)+1);
 			return FAIL+" Invalid Attempts: "+invalidAttempts;
 		}
