@@ -38,7 +38,7 @@ public class Customer {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@Column
+	@Column(columnDefinition = "ENABLE")
 	private String accountStatus;
 
 	public List<Account> getAccounts() {

@@ -1,6 +1,5 @@
 package com.rib.rib.security.services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -22,19 +21,22 @@ public class CustomerDetailsImpl implements UserDetails{
 	private String username;
 
 	private String email;
+	
+  private String accountStatus;
 
 	@JsonIgnore
 	private String password;
 	
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	public CustomerDetailsImpl(Long id, String username, String email, String password,
+	public CustomerDetailsImpl(Long id, String username, String email, String password, String accountStatus,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.accountStatus = accountStatus;
 	}
 	
 	public static CustomerDetailsImpl build(Customer customer) {
@@ -46,7 +48,8 @@ public class CustomerDetailsImpl implements UserDetails{
 				customer.getId(), 
 				customer.getUsername(), 
 				customer.getEmail(),
-				customer.getPassword(), 
+				customer.getPassword(),
+				customer.getAccountStatus(),
 				authorities);
 	}
 
@@ -61,6 +64,11 @@ public class CustomerDetailsImpl implements UserDetails{
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getAccountStatus()
+	{
+		return accountStatus;
 	}
 
 	@Override
