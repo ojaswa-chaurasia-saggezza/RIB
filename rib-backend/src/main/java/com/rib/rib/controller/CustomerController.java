@@ -133,11 +133,11 @@ public class CustomerController {
 				.setTransactions(ojaswaTransaction.subList(10, 20)));
 
 		// Creating Customers and setting their accounts;
-		Customer nayan = new Customer("Active", 7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com",
+		Customer nayan = new Customer(7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com",
 				"Nayan", passwordEncoder.encode("Nayan"), "Nayan Verma", "LoggedIn").setAccounts(nayanAccount);
-		Customer shanti = new Customer("Active", 6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com",
+		Customer shanti = new Customer(6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com",
 				"Shanti", passwordEncoder.encode("Shanti"), "Shanti Mukati", "LoggedIn").setAccounts(shantiAccount);
-		Customer ojaswa = new Customer("Active", 7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com",
+		Customer ojaswa = new Customer(7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com",
 				"Ojaswa", passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia", "LoggedIn").setAccounts(ojaswaAccount);
 
 		// Saving the Customers and returning their data

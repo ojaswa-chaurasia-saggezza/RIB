@@ -38,8 +38,8 @@ public class Customer {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@Column(columnDefinition = "ENABLE")
-	private String accountStatus;
+	@Column
+	private String accountStatus = "ENABLE";
 
 	public List<Account> getAccounts() {
 		return accounts;
@@ -149,10 +149,9 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Customer(String accountStatus, Long phoneNumber, Date dOB, String email, String username, String password,
+	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
 			String name, String LoginStatus) {
 		super();
-		this.accountStatus = accountStatus;
 		this.phoneNumber = phoneNumber;
 		DOB = dOB;
 		this.email = email;
