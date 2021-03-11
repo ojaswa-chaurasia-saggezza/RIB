@@ -70,7 +70,7 @@ public class Customer {
 	@Column
 	private String password;
 	@Column
-	private String LoginStatus;
+	private String LoginStatus = "Unregistered";
 
 	public String getName() {
 		return name;
@@ -149,15 +149,14 @@ public class Customer {
 	}
 
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
-			String name, String LoginStatus) {
+			String name) {
 		super();
 		this.phoneNumber = phoneNumber;
-		DOB = dOB;
+		this.DOB = dOB;
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		this.LoginStatus = LoginStatus;
 	}
 
 }
