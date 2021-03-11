@@ -58,8 +58,6 @@ public class Customer {
 	}
 
 	@Column
-	private String accountStatus;
-	@Column
 	private String name;
 	@Column
 	private Long phoneNumber;
