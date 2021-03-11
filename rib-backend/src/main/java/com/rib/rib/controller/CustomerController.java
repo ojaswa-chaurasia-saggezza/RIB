@@ -49,6 +49,22 @@ public class CustomerController {
 		return customerRepository.findByUsername(username);
 	}
 
+	@GetMapping("/Customer/{username}/enableLoginStatus")
+	public void enableloginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+
+		customer.setLoginStatus("Registered");
+		customerRepository.save(customer);
+
+	}
+
+	@GetMapping("/Customer/{username}/disableLoginStatus")
+	public void disableLoginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		customer.setLoginStatus("Unregistered");
+		customerRepository.save(customer);
+	}
+
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {
 		return accountRepository.findAll();
