@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,7 +21,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import Toolbar from '@material-ui/core/Toolbar';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -31,6 +31,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
+
+import AuthService from "../../Services/Auth.service";
+import CustomerService from "../../Services/Customer.service";
 
 const drawerWidth = 250;
 
@@ -77,24 +80,52 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-var AccordionStyle =withStyles({
-    root:{
-      margin:0,
-      boxShadow:"none",
-      width: '100%',	
-      '& ListItemText':{
-        color: '#ff0000',
-        fontSize:10,
-      },
+var AccordionStyle = withStyles({
+    root: {
+        margin: 0,
+        boxShadow: "none",
+        width: '100%',
+        '& ListItemText': {
+            color: '#ff0000',
+            fontSize: 10,
+        },
     },
-    
+
 })(Accordion);
 
 function Dashboard(props) {
 
+    const [Customer, setCustomer] = useState(undefined);
+    const [ErrorMessage, setErrorMessage] = useState("Please Login first");
+
+    useEffect(() => {
+        const currentCustomer = AuthService.getCurrentUser();
+
+        if (currentCustomer)
+            CustomerService.getCustomerDetails(currentCustomer.username).then(
+                (response) => {
+                    setCustomer(response.data);
+                    console.log(response.data);
+                },
+                (error) => {
+                    const _content =
+                        (error.response && error.response.data) ||
+                        error.message ||
+                        error.toString();
+                    setCustomer(undefined);
+                    setErrorMessage(_content);
+                    console.log(_content);
+                }
+            );
+        else
+            setCustomer(undefined);
+
+    }, []);
+
+
     const { window } = props;
     const classes = useStyles();
-    
+
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -111,6 +142,12 @@ function Dashboard(props) {
         setAnchorEl(null);
     };
 
+    const handleLogOut = () => { 
+        AuthService.logout(); 
+        handleClose(); 
+        props.history.push("/")
+    }
+
     const drawer = (
         <div>
             <div className={classes.toolbar} />
@@ -122,7 +159,7 @@ function Dashboard(props) {
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
-                <ListItem button key={'FUND TRANSFER'} style={{padding:0,}}>
+                <ListItem button key={'FUND TRANSFER'} style={{ padding: 0, }}>
                     <AccordionStyle>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -132,26 +169,26 @@ function Dashboard(props) {
                             <Typography >FUND TRANSFER</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                        <List>
+                            <List>
                                 <ListItem button component={Link} to='/Add Beneficiary'>
-                                    <ListItemText primary={'Add Beneficiary'}/>
+                                    <ListItemText primary={'Add Beneficiary'} />
                                 </ListItem>
-                                
+
                                 <ListItem button component={Link} to='/Edit Beneficiary'>
-                                    <ListItemText primary={'Edit Beneficiary'}/>
+                                    <ListItemText primary={'Edit Beneficiary'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Transfer within your accounts'>
-                                    <ListItemText primary={'Transfer within your accounts'}/>
+                                    <ListItemText primary={'Transfer within your accounts'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Transfer to within Bank Beneficiary'>
-                                    <ListItemText primary={'Transfer to within Bank Beneficiary'}/>
+                                    <ListItemText primary={'Transfer to within Bank Beneficiary'} />
                                 </ListItem>
                             </List>
                         </AccordionDetails>
                     </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'BILL PAYMENT'} style={{padding:0,}}>
-                <AccordionStyle>
+                <ListItem button key={'BILL PAYMENT'} style={{ padding: 0, }}>
+                    <AccordionStyle>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -162,21 +199,21 @@ function Dashboard(props) {
                         <AccordionDetails>
                             <List>
                                 <ListItem button component={Link} to='/Add Biller'>
-                                    <ListItemText primary={'Add Biller'}/>
+                                    <ListItemText primary={'Add Biller'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Edit Biller'>
-                                    <ListItemText primary={'Edit Biller'}/>
+                                    <ListItemText primary={'Edit Biller'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Pay'>
-                                    <ListItemText primary={'Pay'}/>
+                                    <ListItemText primary={'Pay'} />
                                 </ListItem>
                             </List>
-                            
+
                         </AccordionDetails>
                     </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'SERVICE REQUEST'} style={{padding:0,}}>
-                <AccordionStyle>
+                <ListItem button key={'SERVICE REQUEST'} style={{ padding: 0, }}>
+                    <AccordionStyle>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -185,22 +222,22 @@ function Dashboard(props) {
                             <Typography >SERVICE REQUEST</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                        <List>
+                            <List>
                                 <ListItem button component={Link} to='/Check(Cheque) Order'>
-                                    <ListItemText primary={'Check(Cheque) Order'}/>
+                                    <ListItemText primary={'Check(Cheque) Order'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Credit Limit Increase'>
-                                    <ListItemText primary={'Credit Limit Increase'}/>
+                                    <ListItemText primary={'Credit Limit Increase'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Reset Password'>
-                                    <ListItemText primary={'Reset Password'}/>
+                                    <ListItemText primary={'Reset Password'} />
                                 </ListItem>
                             </List>
                         </AccordionDetails>
                     </AccordionStyle>
                 </ListItem>
-                <ListItem button key={'PRODUCT OPENING'} style={{padding:0,}}>
-                <AccordionStyle>
+                <ListItem button key={'PRODUCT OPENING'} style={{ padding: 0, }}>
+                    <AccordionStyle>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -209,14 +246,14 @@ function Dashboard(props) {
                             <Typography >PRODUCT OPENING</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                        <List>
+                            <List>
                                 <ListItem button component={Link} to='/Edit Beneficiary'>
-                                    <ListItemText primary={'Open New Casa Account'}/>
+                                    <ListItemText primary={'Open New Casa Account'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Edit Beneficiary'>
-                                    <ListItemText primary={'Open New Credit Card'}/>
+                                    <ListItemText primary={'Open New Credit Card'} />
                                 </ListItem>
-                                
+
                             </List>
                         </AccordionDetails>
                     </AccordionStyle>
@@ -224,7 +261,7 @@ function Dashboard(props) {
 
             </List>
             <Divider />
-            
+
         </div>
     );
 
@@ -275,7 +312,7 @@ function Dashboard(props) {
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
                                 </ListItemIcon>Last Login : 12/01/2021</MenuItem>
-                            <MenuItem onClick={handleClose} className={classes.MenuItem}>
+                            <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
                                 </ListItemIcon>
@@ -317,11 +354,16 @@ function Dashboard(props) {
 
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
+                    {
+                        Customer ?
+                            (<Switch>
+                                <Route path='/CASA' component={CASA}></Route>
 
-                    <Switch>
-                        <Route path='/CASA' component={CASA}></Route>
-                        
-                    </Switch>
+                            </Switch>) :
+
+                            (<div>{ErrorMessage}</div>)
+                    }
+
                 </main>
             </Router>
         </div>

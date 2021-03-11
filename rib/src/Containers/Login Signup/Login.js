@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import { Link ,useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 import { ContactSupportOutlined, HistoryRounded, LaptopWindows } from '@material-ui/icons';
+
+import AuthService from "../../Services/Auth.service";
+import CustomerService from "../../Services/Customer.service";
 
 function Copyright() {
   return (
@@ -28,6 +33,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,86 +55,138 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-  const classes = useStyles();
-  const users={ username: 'thiru' , password:'1234'};
-  const [whereTo, changeWhereTo]= useState('');
-  const [user_name,changeusername]= useState('');
-  const [pass_word,changepassword]= useState('');
-  const HISTORY= useHistory();
-  
+// This is the main login funciton that is being exported
+export default function Login(props) {
+
+
+  const classes = useStyles();  // for styling
+
+  const [whereTo, changeWhereTo] = useState('');
+  const [user_name, changeusername] = useState(''); //The Username in the input
+  const [usernameError, setUsernameError] = useState({ error: false, errorText: "" });
+
+  const [pass_word, changepassword] = useState(''); // The password in the input
+  const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
+
+  const HISTORY = useHistory();
+
+  const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
+  const [message, setMessage] = useState(""); // Message to be displayed
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setMessage("");
+    setLoading(true);
+
+    if (user_name == "") {
+      setUsernameError({ error: true, errorText: "Username should not be empty" });
+    }
+    if (pass_word == "") {
+      setPasswordError({ error: true, errorText: "Password should not be empty" });
+    }
+
+    if (user_name != "" && pass_word != "") {
+      AuthService.login(user_name, pass_word).then(
+        () => {
+          props.history.push("/CASA");
+          //window.location.reload(); //No need to reload the window
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setLoading(false);
+          setMessage(resMessage);
+          setUsernameError({ error: false, errorText: "" });
+          setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+          console.log(resMessage);
+        }
+      );
+
+    }
+
+    setLoading(false);
+  };
+
 
   return (
     <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <AccountBalanceIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <AccountBalanceIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
         </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="UserName"
-              name="UserName"
-              autoComplete="username"
-              autoFocus
-              onChange={(val)=>{changeusername(val.target.value)}}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onChange={(val)=>{changepassword(val.target.value)}}
-              autoComplete="current-password"
-            />
+        <form className={classes.form} >
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="UserName"
+            name="UserName"
+            autoComplete="username"
+            autoFocus
+            onChange={(val) => { changeusername(val.target.value) }}
+            onKeyPress={() => { if (user_name != "") setUsernameError({ error: false, errorText: "" }) }}
+            error={usernameError.error}
+            helperText={usernameError.errorText}
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              component={Link}
-              to={`/${whereTo}`}
-              className={classes.submit}
-              onClick={()=>{ 
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            onChange={(val) => { changepassword(val.target.value) }}
+            onKeyPress={() => { if (pass_word != "") setPasswordError({ error: false, errorText: "" }) }}
+            autoComplete="current-password"
+            error={passwordError.error}
+            helperText={passwordError.errorText}
+          />
 
-                if(user_name==users.username && pass_word==users.password)
-                  window.location.href='/CASA';
-                  
-                  
-              }}
-            >
-              Login
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={`/${whereTo}`}
+            className={classes.submit}
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            Login
           </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link to="/ForgotPassword" >
-                  Forgot password?
+          <Grid container>
+            <Grid item xs>
+              <Link to="/ForgotPassword" >
+                Forgot password?
               </Link>
-              </Grid>
-              <Grid item>
-                <Link to="/SignUp" >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
             </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          {/* <Copyright /> */}
-        </Box>
+            <Grid item>
+              <Link to="/SignUp" >
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        {/* <Copyright /> */}
+      </Box>
     </Container>
   );
 }
