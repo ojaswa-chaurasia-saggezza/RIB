@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Dialog from '../../Elements/Dialog';
 import {Link as RouteLink} from 'react-router-dom';
+import FormDialog from '../../Elements/FormDialog'
 
 function Copyright() {
     return (
@@ -51,6 +51,17 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
     const [dialogVariable, setdialogVariable] = React.useState([]);
+    const [open, setOpen] = React.useState(false);
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+    
 
 
     return (
@@ -65,7 +76,7 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Sign up
         </Typography>
-                <form className={classes.form} noValidate>
+                <div className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         
                         <Grid item xs={12}>
@@ -98,14 +109,11 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        component={RouteLink}
-                        to={'/ResetPassword'}
-                        onClick={() => {
-                            setdialogVariable([<Dialog />]);
-                        }}
+                        onClick={handleClickOpen}
                     >
                         Sign Up
           </Button>
+          <FormDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose}/>
                     <Grid container justify="flex-end">
                         <Grid item>
                             <RouteLink to="/">
@@ -113,7 +121,7 @@ export default function SignUp() {
               </RouteLink>
                         </Grid>
                     </Grid>
-                </form>
+                </div>
             </div>
             <Box mt={5}>
                 {/* <Copyright /> */}

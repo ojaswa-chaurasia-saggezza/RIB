@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Dialog from '../../Elements/Dialog';
+import FormDialog from '../../Elements/FormDialog';
 import {Link as RouteLink}  from "react-router-dom";
 
 function Copyright() {
