@@ -19,24 +19,29 @@ class Tables extends React.Component {
     }
     componentDidMount() {
         //initialize datatable
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'INR',
+
+        });
         this.setState({ data: this.props.data });
-        
-        var DATA= this.props.data.map((val)=> {
-            var data=[];
+
+        var DATA = this.props.data.map((val) => {
+            var data = [];
             data.push(val.transactionId);
             data.push("Date : " + val.date.split("T").join(" Time : ").split('.')[0]);
             data.push(val.narration);
             data.push(val.category);
-            data.push(val.withdraw);
-            data.push(val.deposit);
-            data.push(val.closingBalance);
+            data.push(formatter.format(val.withdraw));
+            data.push(formatter.format(val.deposit));
+            data.push(formatter.format(val.closingBalance));
             return data;
         });
 
         console.log(DATA);
 
-        $( () => {
-            var table = $('#Credit_Card_and_CASA_Table'+this.props.accountNumber).DataTable({
+        $(() => {
+            var table = $('#Credit_Card_and_CASA_Table' + this.props.accountNumber).DataTable({
                 lengthMenu: [5, 10, 15, 25, 30],
                 stateSave: false,
                 dom: "ltip",
@@ -49,7 +54,7 @@ class Tables extends React.Component {
                     { title: "Category." },
                     { title: "Withdrawal" },
                     { title: "Deposit" },
-                    { title: "Balance"}
+                    { title: "Balance" }
                 ]
 
             });
@@ -72,7 +77,7 @@ class Tables extends React.Component {
                     true,   // This is for smart search
                 ).draw();
             }
-            $('input').on('change',".global_filter",  ()=> {
+            $('input.global_filter').on('keyup click', function () {
                 filterGlobal();
             });
 
@@ -108,7 +113,7 @@ class Tables extends React.Component {
                     </table>
                 </div>
                 {/* </div>The Main Table to Be displayed */}
-                <table id={"Credit_Card_and_CASA_Table"+this.props.accountNumber} className="table table-striped table-responsive table-bordered " style={{ width: '100%' }}>
+                <table id={"Credit_Card_and_CASA_Table" + this.props.accountNumber} className="table table-striped table-responsive table-bordered " style={{ width: '100%' }}>
                     {/* <thead>
                         <tr>
                             <th>Transaction ID</th>
