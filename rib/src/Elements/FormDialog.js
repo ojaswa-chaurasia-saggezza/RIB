@@ -9,20 +9,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function FormDialog(props) {
 
-  const [Otp, setOtp] = useState(0);
+  
+  console.log(props.error);
 
-  const [error, setError] = useState({ error: false, errorText: "" });
-  const verify = () => {
-
-    if (Otp < 1000000 && Otp > 100000) {
-      console.log("jlkdsjfl");
-      props.handleClose();
-    }
-    else
-      setError({ error: true, errorText: "The Otp is not in the defined range" })
-
-  }
-
+  
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={props.handleClickOpen}>
@@ -35,9 +25,9 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="name"
-            error={error.error}
-            helperText={error.errorText}
-            onChange={(e) => { setOtp(Number(e.target.value)) }}
+            error={props.error.error}
+            helperText={props.error.errorText}
+            onChange={(e) => { props.setOtp(Number(e.target.value)) }}
             label="Otp"
             fullWidth
           />
@@ -47,7 +37,7 @@ export default function FormDialog(props) {
             Cancel
           </Button>
           <Button onClick={() => {
-            verify();
+            props.verify();
           }} color="primary">
             Verify
           </Button>

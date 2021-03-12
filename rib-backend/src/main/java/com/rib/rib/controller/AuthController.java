@@ -63,7 +63,7 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
 		CustomerDetailsImpl userDetails = (CustomerDetailsImpl) authentication.getPrincipal();
-		if(userDetails.getAccountStatus().equals("DISABLE")) {
+		if (userDetails.getAccountStatus().equals("DISABLE")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 		}
 		if(userDetails.getLoginStatus().equals("Unregistered")) {
@@ -78,7 +78,7 @@ public class AuthController {
 				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
-	@PostMapping("/signup")
+	@PostMapping("/signUp")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(signUpRequest.getUsername(), signUpRequest.getPassword()));
