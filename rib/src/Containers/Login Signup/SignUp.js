@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link as RouteLink} from 'react-router-dom';
-import FormDialog from '../../Elements/FormDialog'
+import { Link as RouteLink } from 'react-router-dom';
+import FormDialog from '../../Elements/FormDialog';
+
+import AuthService from "../../Services/Auth.service";
+import CustomerService from "../../Services/Customer.service";
 
 function Copyright() {
     return (
@@ -48,20 +51,112 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
     const classes = useStyles();
     const [dialogVariable, setdialogVariable] = React.useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+
+    const [Otp, setOtp] = useState(0);
+
+
+    const [username, setUsername] = useState('');
+    const [usernameError, setUsernameError] = useState({ error: false, errorText: "" });
+
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
+
+    const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
+    const [message, setMessage] = useState(""); // Message to be displayed
+
+    const [otpError, setOtpError] = useState({ error: false, errorText: "" });
+    const verify = () => {
+
+        if (Otp < 1000000 && Otp > 100000) {
+            
+
+            CustomerService.validateOTP(Otp).then((response)=>{
+                if(response.data.split(":")[0] == "True "){
+                    handleClose();
+                    props.history.push("/ResetPassword");
+                }
+                else{
+                    setOtpError({error: true, errorText: response.data});
+
+                }
+
+            },
+            (error)=>{
+
+            });
+
+            
+        }
+        else
+            setOtpError({ error: true, errorText: "The Otp is not in the defined range" })
+
+    }
+
+
 
 
     const handleClickOpen = () => {
         setOpen(true);
-      };
+    };
 
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
-      };
-    
+    };
+
+    const handleSignUp = () => {
+
+        setMessage("");
+        setLoading(true);
+
+        if (username == "") {
+            setUsernameError({ error: true, errorText: "Username should not be empty" });
+        }
+        if (password == "") {
+            setPasswordError({ error: true, errorText: "Password should not be empty" });
+        }
+
+        if (username != "" && password != "")
+            AuthService.signUp(username, password).then((response) => {
+                if (response.data.accessToken) {
+
+                    localStorage.setItem("SignUpToken", JSON.stringify(response.data));
+
+                    const signUpCredentials = JSON.parse(localStorage.getItem('SignUpToken'));
+                    console.log(signUpCredentials);
+
+
+                    CustomerService.generateOTP().then(() => {
+                        handleClickOpen();
+                    });
+
+                }
+
+
+            }, (error) => {
+
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setLoading(false);
+                setMessage(resMessage);
+                setUsernameError({ error: false, errorText: "" });
+                setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+                console.log(resMessage);
+
+            });
+
+        setLoading(false);
+
+    }
+
 
 
     return (
@@ -78,21 +173,27 @@ export default function SignUp() {
         </Typography>
                 <div className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        
+
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
+                                error={usernameError.error}
+                                helperText={username.errorText}
                                 required
                                 fullWidth
                                 id="username"
                                 label="Username"
                                 name="username"
                                 autoComplete="username"
+                                onKeyPress={() => { if (username != "") setUsernameError({ error: false, errorText: "" }) }}
+                                onChange={(e) => { setUsername(e.target.value) }}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
+                                error={passwordError.error}
+                                helperText={passwordError.errorText}
                                 required
                                 fullWidth
                                 name="password"
@@ -100,6 +201,9 @@ export default function SignUp() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onKeyPress={() => { if (password != "") setPasswordError({ error: false, errorText: "" }) }}
+            
+                                onChange={(e) => { setPassword(e.target.value) }}
                             />
                         </Grid>
                     </Grid>
@@ -109,11 +213,11 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={handleClickOpen}
+                        onClick={handleSignUp}
                     >
                         Sign Up
           </Button>
-          <FormDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose}/>
+                    <FormDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} verify={verify} error={otpError} setOtp={setOtp}/>
                     <Grid container justify="flex-end">
                         <Grid item>
                             <RouteLink to="/">

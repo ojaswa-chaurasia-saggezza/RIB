@@ -71,7 +71,7 @@ export default function CASA() {
         const currentCustomer = AuthService.getCurrentUser();
 
         if (currentCustomer)
-            CustomerService.getCustomerDetails(currentCustomer.username).then(
+            CustomerService.getCustomerDetails().then(
                 (response) => {
                     setCustomer(response.data);
                     var accountList = response.data.accounts.map((val) => val.accountNumber);

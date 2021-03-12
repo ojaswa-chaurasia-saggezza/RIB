@@ -86,7 +86,7 @@ export default function Login(props) {
       setPasswordError({ error: true, errorText: "Password should not be empty" });
     }
 
-    if (user_name != "" && pass_word != "") {
+    if (user_name != "" && pass_word != "") 
       AuthService.login(user_name, pass_word).then(
         () => {
           props.history.push("/CASA");
@@ -108,7 +108,7 @@ export default function Login(props) {
         }
       );
 
-    }
+  
 
     setLoading(false);
   };
