@@ -41,13 +41,13 @@ public class OTPController {
 	public CustomerRepository customerRepository;
 
 	@GetMapping("/generateOtp")
-	public ResponseEntity<?>  generateOTP() {
+	public ResponseEntity<?> generateOTP() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
 
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
-		
+
 //		if (customer.getAccountStatus()=="DISABLE")
 //				return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 //						
@@ -70,7 +70,6 @@ public class OTPController {
 
 	@GetMapping("/validateOtp/{otpnum}")
 	public @ResponseBody String validateOtp(@PathVariable int otpnum) {
-		
 
 		final String SUCCESS = "Entered Otp is valid";
 		final String FAIL = "Entered Otp is not valid. Please Retry!";
@@ -81,10 +80,10 @@ public class OTPController {
 
 		String username = auth.getName();
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
-		
-		if(customer.getAccountStatus().equals("DISABLE"))
+
+		if (customer.getAccountStatus().equals("DISABLE"))
 			return DISABLEACCOUNT;
-		
+
 		if (otpnum >= 0) {
 			int serverOtp = otpService.getOtp(username);
 
@@ -92,7 +91,7 @@ public class OTPController {
 
 				if (otpnum == serverOtp) {
 					otpService.clearOTP(username);
-					return ("True : " +SUCCESS);
+					return ("True : " + SUCCESS);
 				}
 			}
 		}
