@@ -98,7 +98,7 @@ var AccordionStyle = withStyles({
 
 function Dashboard(props) {
 
-    const [Customer, setCustomer] = useState(undefined);
+    const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
     useEffect(() => {
@@ -115,13 +115,13 @@ function Dashboard(props) {
                         (error.response && error.response.data) ||
                         error.message ||
                         error.toString();
-                    setCustomer(undefined);
+                    setCustomer({});
                     setErrorMessage(_content);
                     console.log(_content);
                 }
             );
         else
-            setCustomer(undefined);
+            setCustomer({});
 
     }, []);
 
@@ -289,7 +289,7 @@ function Dashboard(props) {
                             Demo Bank
                 </Typography>
                         <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
-                            Welcome Thiru
+                            Welcome { Customer.name ? Customer.name.split(" ")[0]: ""}
                 </Button>
                         <Menu
                             id="menu-appbar"
@@ -310,7 +310,7 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <PersonIcon fontSize="small" />
-                                </ListItemIcon>Thirumurugan Thiyagarajan</MenuItem>
+                                </ListItemIcon>{Customer.name}</MenuItem>
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
@@ -358,7 +358,7 @@ function Dashboard(props) {
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     {
-                        Customer ?
+                        Customer.username ?
                             (<Switch>
                                 <Route path='/CASA' component={CASA}></Route>
 

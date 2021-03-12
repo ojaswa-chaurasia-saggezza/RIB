@@ -11,6 +11,10 @@ const getCustomerDetails = (username) => {
   return axios.get(API_URL + "Customer/" + username, { headers: authHeader() });
 };
 
+const getAccountDetails = (accountNumber) => {
+  return axios.get(API_URL + "Account/" + accountNumber, { headers: authHeader() });
+}
+
 
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
@@ -19,5 +23,6 @@ const getAdminBoard = () => {
 export default {
   getPublicContent,
   getCustomerDetails,
+  getAccountDetails,
   getAdminBoard,
 };
