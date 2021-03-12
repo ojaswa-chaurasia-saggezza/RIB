@@ -9,21 +9,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
+import com.rib.rib.payload.request.LoginRequest;
+import com.rib.rib.payload.response.JwtResponse;
+import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.TransactionRepositary;
+import com.rib.rib.security.services.CustomerDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -47,6 +60,31 @@ public class CustomerController {
 	@GetMapping("/Customer/{username}")
 	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
+	}
+
+	@GetMapping("/Customer/{username}/enableLoginStatus")
+	public void enableloginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+
+		customer.setLoginStatus("Registered");
+		customerRepository.save(customer);
+
+	}
+
+	@PostMapping("/resetPassword")
+	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+
+		Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
+		
+		customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+		customerRepository.save(customer);
+	}
+
+	@GetMapping("/Customer/{username}/disableLoginStatus")
+	public void disableLoginStatus(@PathVariable String username) {
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		customer.setLoginStatus("Unregistered");
+		customerRepository.save(customer);
 	}
 
 	@GetMapping("/Account") // Retrieve all Accounts
@@ -133,12 +171,12 @@ public class CustomerController {
 				.setTransactions(ojaswaTransaction.subList(10, 20)));
 
 		// Creating Customers and setting their accounts;
-		Customer nayan = new Customer("Active", 7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com",
-				"Nayan", passwordEncoder.encode("Nayan"), "Nayan Verma", "LoggedIn").setAccounts(nayanAccount);
-		Customer shanti = new Customer("Active", 6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com",
-				"Shanti", passwordEncoder.encode("Shanti"), "Shanti Mukati", "LoggedIn").setAccounts(shantiAccount);
-		Customer ojaswa = new Customer("Active", 7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com",
-				"Ojaswa", passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia", "LoggedIn").setAccounts(ojaswaAccount);
+		Customer nayan = new Customer(7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com", "Nayan",
+				passwordEncoder.encode("Nayan"), "Nayan Verma").setAccounts(nayanAccount);
+		Customer shanti = new Customer(6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com", "Shanti",
+				passwordEncoder.encode("Shanti"), "Shanti Mukati").setAccounts(shantiAccount);
+		Customer ojaswa = new Customer(7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
+				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount);
 
 		// Saving the Customers and returning their data
 		return customerRepository.saveAll(Arrays.asList(nayan, shanti, ojaswa));

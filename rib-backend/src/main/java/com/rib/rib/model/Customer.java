@@ -33,11 +33,12 @@ public class Customer {
 	private List<Account> accounts;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(	name = "user_roles", 
+			joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
 	@Column
-	private String accountStatus;
+	private String accountStatus = "ENABLE";
 
 	public List<Account> getAccounts() {
 		return accounts;
@@ -58,7 +59,7 @@ public class Customer {
 
 	@Column
 	private String name;
-	@Column()
+	@Column
 	private Long phoneNumber;
 	@Column
 	private Date DOB;
@@ -69,7 +70,7 @@ public class Customer {
 	@Column
 	private String password;
 	@Column
-	private String LoginStatus;
+	private String LoginStatus = "Unregistered";
 
 	public String getName() {
 		return name;
@@ -147,17 +148,15 @@ public class Customer {
 		this.password = password;
 	}
 
-	public Customer(String accountStatus, Long phoneNumber, Date dOB, String email, String username, String password,
-			String name, String LoginStatus) {
+	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
+			String name) {
 		super();
-		this.accountStatus = accountStatus;
 		this.phoneNumber = phoneNumber;
-		DOB = dOB;
+		this.DOB = dOB;
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		this.LoginStatus = LoginStatus;
 	}
 
 }

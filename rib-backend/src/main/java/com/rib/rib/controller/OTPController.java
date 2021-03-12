@@ -42,8 +42,8 @@ public class OTPController {
 
 		String username = auth.getName();
 
-		customerRepository.findByUsername(username);
-		
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		String email = customer.getEmail();
 		int otp = otpService.generateOTP(username);
 
 		EmailTemplate template = new EmailTemplate("SendOtp.html");
@@ -52,7 +52,7 @@ public class OTPController {
 		replacements.put("otpnum", String.valueOf(otp));
 		String message = template.getTemplate(replacements);
 		try {
-			emailService.sendOtpMessage("ojaswa.chaurasia@saggezza.com", "OTP - RIB", message);
+			emailService.sendOtpMessage(email, "OTP - RIB", message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,7 @@ public class OTPController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
-		Customer cus = customerRepository.findByUsername(username).orElseThrow(null);
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 		if (otpnum >= 0) {
 			int serverOtp = otpService.getOtp(username);
 
