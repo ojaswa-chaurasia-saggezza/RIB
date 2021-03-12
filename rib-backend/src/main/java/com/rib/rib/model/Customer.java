@@ -31,14 +31,12 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Account.class)
 	@JoinColumn(name = "customer_id")
 	private List<Account> accounts;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "customer_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@Column(columnDefinition = "ENABLE")
+	@Column
 	private String accountStatus;
 
 	public List<Account> getAccounts() {
