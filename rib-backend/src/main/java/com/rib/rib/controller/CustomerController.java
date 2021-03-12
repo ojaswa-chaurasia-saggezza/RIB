@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +33,6 @@ import com.rib.rib.model.Account;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.LoginRequest;
-import com.rib.rib.payload.response.JwtResponse;
-import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.TransactionRepositary;
@@ -97,6 +97,14 @@ public class CustomerController {
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
+	}
+	@PostMapping("/resetPassword")
+	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+
+	Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
+
+	customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+	customerRepository.save(customer);
 	}
 
 	@GetMapping("/Account") // Retrieve all Accounts
