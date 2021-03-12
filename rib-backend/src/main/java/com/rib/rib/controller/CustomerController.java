@@ -10,17 +10,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
+import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.TransactionRepositary;
@@ -63,6 +68,14 @@ public class CustomerController {
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
+	}
+	@PostMapping("/resetPassword")
+	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+
+	Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
+
+	customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+	customerRepository.save(customer);
 	}
 
 	@GetMapping("/Account") // Retrieve all Accounts
