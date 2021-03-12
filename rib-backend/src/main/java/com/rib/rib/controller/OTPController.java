@@ -6,10 +6,12 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.EmailTemplate;
 import com.rib.rib.model.Customer;
+import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.security.services.EmailService;
 import com.rib.rib.security.services.OTPService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class OTPController {
 
@@ -37,12 +41,16 @@ public class OTPController {
 	public CustomerRepository customerRepository;
 
 	@GetMapping("/generateOtp")
-	public String generateOTP() {
+	public ResponseEntity<?>  generateOTP() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
 
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		
+//		if (customer.getAccountStatus()=="DISABLE")
+//				return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
+//						
 		String email = customer.getEmail();
 		int otp = otpService.generateOTP(username);
 
@@ -57,21 +65,26 @@ public class OTPController {
 			e.printStackTrace();
 		}
 
-		return "otppage";
+		return ResponseEntity.ok("OTP sent");
 	}
 
 	@GetMapping("/validateOtp/{otpnum}")
 	public @ResponseBody String validateOtp(@PathVariable int otpnum) {
+		
 
 		final String SUCCESS = "Entered Otp is valid";
 		final String FAIL = "Entered Otp is not valid. Please Retry!";
-		final String DISABLEACCOUNT = "Your account is disabled";
+		final String DISABLEACCOUNT = "Your account is disabled. Please contact customer care!";
 		int invalidAttempts = 0;
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		
+		if(customer.getAccountStatus().equals("DISABLE"))
+			return DISABLEACCOUNT;
+		
 		if (otpnum >= 0) {
 			int serverOtp = otpService.getOtp(username);
 
@@ -79,7 +92,7 @@ public class OTPController {
 
 				if (otpnum == serverOtp) {
 					otpService.clearOTP(username);
-					return (SUCCESS);
+					return ("True : " +SUCCESS);
 				}
 			}
 		}

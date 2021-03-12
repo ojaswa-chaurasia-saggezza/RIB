@@ -61,6 +61,18 @@ public class CustomerController {
 	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
 	}
+	
+	@GetMapping("/CustomerDetails")
+	public Optional<Customer> getCustomerByUsernameAuthentication() {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		String username = auth.getName();
+
+		
+		return customerRepository.findByUsername(username);
+	}
+
 
 	@GetMapping("/Customer/{username}/enableLoginStatus")
 	public void enableloginStatus(@PathVariable String username) {
