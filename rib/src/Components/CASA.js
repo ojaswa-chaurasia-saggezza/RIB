@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormHelperText, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,6 +14,10 @@ import TextField from '@material-ui/core/TextField';
 
 import Wrap from '../HOC/Wrap';
 import Tables from '../Elements/Tables';
+
+import AuthService from "../Services/Auth.service";
+import CustomerService from "../Services/Customer.service";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,9 +60,60 @@ export default function CASA() {
     const bull = <span className={classes.bullet}>•</span>;
     const [account, setAccount] = React.useState('');
 
+    const [Customer, setCustomer] = useState({});
+    const [ErrorMessage, setErrorMessage] = useState("Please Login first");
+
+    const [Accounts, setAccounts] = useState([]);
+    const [selectedAccount, setSelectedAccount] = useState({});
+    const [listOfTransactions , setListOfTransactions] = useState([]);
+
+    useEffect(() => {
+        const currentCustomer = AuthService.getCurrentUser();
+
+        if (currentCustomer)
+            CustomerService.getCustomerDetails(currentCustomer.username).then(
+                (response) => {
+                    setCustomer(response.data);
+                    var accountList = response.data.accounts.map((val) => val.accountNumber);
+
+                    setAccounts(accountList);
+                },
+                (error) => {
+                    const _content =
+                        (error.response && error.response.data) ||
+                        error.message ||
+                        error.toString();
+                    setCustomer({});
+                    setErrorMessage(_content);
+                    console.log(_content);
+                }
+            );
+        else
+            setCustomer({});
+
+    }, []);
+
+
     const handleChange = (event) => {
         setAccount(event.target.value);
     };
+
+    const handleAccountChange = (accountNumber) => {
+        CustomerService.getAccountDetails(accountNumber).then(response => {
+            console.log(response.data);
+            setSelectedAccount(response.data);
+            setListOfTransactions(response.data.transactions);
+        }, error => {
+
+            const _content =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+            setCustomer({});
+            setErrorMessage(_content);
+            console.log(_content);
+        })
+    }
 
     return (
         <CssBaseline>
@@ -82,9 +137,8 @@ export default function CASA() {
                                             onChange={handleChange}
                                             label="Account Number"
                                         >
-                                            <MenuItem value={897653443526}>897653443526</MenuItem>
-                                            <MenuItem value={987653426578}>987653426578</MenuItem>
-                                            <MenuItem value={123457687689}>123457687689</MenuItem>
+                                            {Accounts.map((accountNumber) => <MenuItem key={accountNumber} value={accountNumber} onClick={() => handleAccountChange(accountNumber)}>{accountNumber}</MenuItem>)}
+
                                         </Select>
                                     </FormControl>
                                 </Paper>
@@ -92,7 +146,7 @@ export default function CASA() {
                             <Grid item xs={6}>
                                 <Paper className={classes.paper}><strong>Balance : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
-                                        12500000
+                                        { selectedAccount.balance }
                                     </Typography>
                                 </Paper>
 
@@ -102,14 +156,14 @@ export default function CASA() {
                             <Grid item xs={6}>
                                 <Paper className={classes.paper}><strong>Account Type : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
-                                        Checking Account
+                                        { selectedAccount.type}
                                     </Typography>
                                 </Paper>
                             </Grid>
                             <Grid item xs={6}>
                                 <Paper className={classes.paper}><big><strong>Segment : &emsp;&emsp;&emsp;</strong></big>
                                     <Typography variant="body2" gutterBottom>
-                                        Platinum
+                                        {selectedAccount.segment}
                                     </Typography>
                                 </Paper>
                             </Grid>
@@ -127,7 +181,10 @@ export default function CASA() {
                     title="Transaction Details"
                 />
                 <CardContent>
-                    <Tables />
+                    {/* <Tables data= {listOfTransactions} accountNumber={selectedAccount.accountNumber}/> */}
+
+
+                    {listOfTransactions.length>0 ? <Tables key={selectedAccount.accountNumber} data={listOfTransactions} accountNumber={selectedAccount.accountNumber} /> : <div>Please select an Account Number</div>}
                 </CardContent>
 
             </Card>
