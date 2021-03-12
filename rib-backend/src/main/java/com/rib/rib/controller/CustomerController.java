@@ -98,15 +98,7 @@ public class CustomerController {
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
 	}
-	@PostMapping("/resetPassword")
-	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
-
-	Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
-
-	customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-	customerRepository.save(customer);
-	}
-
+	
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {
 		return accountRepository.findAll();
