@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: drawerWidth,
         },
     },
+    active: {
+        backgroundColor: "red"
+    },
     menuButton: {
         marginRight: theme.spacing(2),
         [theme.breakpoints.up('md')]: {
