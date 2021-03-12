@@ -85,8 +85,8 @@ public class OTPController {
 		}
 
 		if (otpService.getInvalidAttempts(username) >= 3) {
-			cus.setAccountStatus("DISABLE");
-			customerRepository.save(cus);
+			customer.setAccountStatus("DISABLE");
+			customerRepository.save(customer);
 			return DISABLEACCOUNT;
 		}
 		invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username) + 1);
