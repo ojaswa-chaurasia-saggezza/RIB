@@ -84,12 +84,14 @@ public class CustomerController {
 	}
 
 	@PostMapping("/resetPassword")
-	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+	public String resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
 
 		Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
-		
 		customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+		customer.setLoginStatus("Registered");
 		customerRepository.save(customer);
+		System.out.println("New password: "+ loginRequest.getPassword());
+		return "Okay";
 	}
 
 	@GetMapping("/Customer/{username}/disableLoginStatus")
@@ -98,14 +100,7 @@ public class CustomerController {
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
 	}
-	@PostMapping("/resetPassword")
-	public void resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
 
-	Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
-
-	customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-	customerRepository.save(customer);
-	}
 
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {

@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link as RouteLink } from 'react-router-dom';
 import FormDialog from '../../Elements/FormDialog';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { green } from '@material-ui/core/colors';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
@@ -49,6 +51,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+    },
+    buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
 }));
 
 export default function SignUp(props) {
@@ -72,24 +86,35 @@ export default function SignUp(props) {
     const verify = () => {
 
         if (Otp < 1000000 && Otp > 100000) {
-            
 
-            CustomerService.validateOTP(Otp).then((response)=>{
-                if(response.data.split(":")[0] == "True "){
+
+            CustomerService.validateOTP(Otp).then((response) => {
+                if (response.data.split(":")[0] == "True ") {
                     handleClose();
                     props.history.push("/ResetPassword");
                 }
-                else{
-                    setOtpError({error: true, errorText: response.data});
+                else {
+                    setOtpError({ error: true, errorText: response.data });
 
                 }
 
             },
-            (error)=>{
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
 
-            });
+                    setLoading(false);
+                    setMessage(resMessage);
+                    setUsernameError({ error: false, errorText: "" });
+                    setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+                    console.log(resMessage);
+                });
 
-            
+
         }
         else
             setOtpError({ error: true, errorText: "The Otp is not in the defined range" })
@@ -131,6 +156,7 @@ export default function SignUp(props) {
 
                     CustomerService.generateOTP().then(() => {
                         handleClickOpen();
+                        setLoading(false);
                     });
 
                 }
@@ -153,7 +179,7 @@ export default function SignUp(props) {
 
             });
 
-        setLoading(false);
+
 
     }
 
@@ -202,27 +228,33 @@ export default function SignUp(props) {
                                 id="password"
                                 autoComplete="current-password"
                                 onKeyPress={() => { if (password != "") setPasswordError({ error: false, errorText: "" }) }}
-            
+
                                 onChange={(e) => { setPassword(e.target.value) }}
                             />
                         </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={handleSignUp}
-                    >
-                        Sign Up
-          </Button>
-                    <FormDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} verify={verify} error={otpError} setOtp={setOtp}/>
+                    <div className={classes.wrapper}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            disabled={loading}
+                            color="primary"
+                            className={classes.submit}
+                            onClick={handleSignUp}
+                        >
+                            Sign Up
+                        </Button>
+                        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                    </div>
+
+
+                    <FormDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} verify={verify} error={otpError} setOtp={setOtp} />
                     <Grid container justify="flex-end">
                         <Grid item>
                             <RouteLink to="/">
                                 Already have an account? Sign in
-              </RouteLink>
+                            </RouteLink>
                         </Grid>
                     </Grid>
                 </div>
