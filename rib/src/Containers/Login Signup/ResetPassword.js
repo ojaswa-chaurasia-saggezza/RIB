@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    label: {
+        backgroundColor: "white"
+    }
 }));
 
 function ResetPassword(props) {
@@ -86,7 +89,7 @@ function ResetPassword(props) {
             return;
         }
 
-        var USERNAME= JSON.parse(localStorage.getItem('SignUpToken')).username;
+        var USERNAME = JSON.parse(localStorage.getItem('SignUpToken')).username;
 
         if (username != "" && password != "" && confirmPassword != "")
             CustomerService.resetPassword(USERNAME, password).then((response) => {
@@ -125,6 +128,11 @@ function ResetPassword(props) {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -141,6 +149,11 @@ function ResetPassword(props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -157,6 +170,11 @@ function ResetPassword(props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth

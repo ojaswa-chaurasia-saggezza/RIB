@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  label: {
+    backgroundColor: "white"
+  }
 }));
 
 // This is the main login funciton that is being exported
@@ -126,6 +129,11 @@ export default function Login(props) {
         </Typography>
         <form className={classes.form} >
           <TextField
+            InputLabelProps={{
+              classes: {
+                root: classes.label
+              }
+            }}
             variant="outlined"
             margin="normal"
             required
@@ -142,6 +150,11 @@ export default function Login(props) {
 
           />
           <TextField
+            InputLabelProps={{
+              classes: {
+                root: classes.label
+              }
+            }}
             variant="outlined"
             margin="normal"
             required
