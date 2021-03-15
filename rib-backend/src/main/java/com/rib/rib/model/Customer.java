@@ -39,6 +39,31 @@ public class Customer {
 
 	@Column
 	private String accountStatus = "ENABLE";
+	
+	@Column
+	private String name;
+	
+	@Column
+	private Long phoneNumber;
+	
+	@Column
+	private Date DOB;
+	
+	@Column
+	private String email;
+	
+	@Column
+	private String username;
+	
+	@Column
+	private String password;
+	
+	@Column
+	private String LoginStatus = "Unregistered";
+	
+	private Date currentLogin;
+	
+	private Date previousLogin;
 
 	public List<Account> getAccounts() {
 		return accounts;
@@ -56,21 +81,6 @@ public class Customer {
 		this.accounts = accounts;
 		return this;
 	}
-
-	@Column
-	private String name;
-	@Column
-	private Long phoneNumber;
-	@Column
-	private Date DOB;
-	@Column
-	private String email;
-	@Column
-	private String username;
-	@Column
-	private String password;
-	@Column
-	private String LoginStatus = "Unregistered";
 
 	public String getName() {
 		return name;
@@ -146,6 +156,22 @@ public class Customer {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public Date getCurrentLogin() {
+		return currentLogin;
+	}
+
+	public void setCurrentLogin(Date currentLogin) {
+		this.currentLogin = currentLogin;
+	}
+
+	public Date getPreviousLogin() {
+		return previousLogin;
+	}
+
+	public void setPreviousLogin(Date previousLogin) {
+		this.previousLogin = previousLogin;
 	}
 
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,

@@ -314,7 +314,7 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : 12/01/2021</MenuItem>
+                                </ListItemIcon>Last Login : {Customer.previousLogin}</MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />

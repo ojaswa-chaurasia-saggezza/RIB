@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -170,6 +171,9 @@ public class CustomerController {
 		List<Account> nayanAccount = new ArrayList<Account>();
 		List<Account> shantiAccount = new ArrayList<Account>();
 		List<Account> ojaswaAccount = new ArrayList<Account>();
+		
+		Calendar calendar = Calendar.getInstance();
+		
 
 		// Adding Accounts to the accounts list and setting transactions list
 		nayanAccount.add(new Account(10101010L, 100000000000L, "Saving", 0L, new Date(), "Silver", "PatelNagar")
@@ -186,11 +190,14 @@ public class CustomerController {
 				.setTransactions(ojaswaTransaction.subList(10, 20)));
 
 		// Creating Customers and setting their accounts;
-		Customer nayan = new Customer(7988934699L, new Date(1999, 3, 10), "nayan.pravesh@saggezza.com", "Nayan",
+		calendar.set(1999, 3, 10);
+		Customer nayan = new Customer(7988934699L, calendar.getTime(), "nayan.pravesh@saggezza.com", "Nayan",
 				passwordEncoder.encode("Nayan"), "Nayan Verma").setAccounts(nayanAccount);
-		Customer shanti = new Customer(6265510415L, new Date(1997, 5, 23), "shanti.mukati@saggezza.com", "Shanti",
+		calendar.set(1997, 5, 23);
+		Customer shanti = new Customer(6265510415L, calendar.getTime(), "shanti.mukati@saggezza.com", "Shanti",
 				passwordEncoder.encode("Shanti"), "Shanti Mukati").setAccounts(shantiAccount);
-		Customer ojaswa = new Customer(7897842634L, new Date(1997, 1, 16), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
+		calendar.set(1997, 1, 16);
+		Customer ojaswa = new Customer(7897842634L, calendar.getTime(), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
 				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount);
 
 		// Saving the Customers and returning their data

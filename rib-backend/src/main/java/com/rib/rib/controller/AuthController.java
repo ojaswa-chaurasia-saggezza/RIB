@@ -1,5 +1,6 @@
 package com.rib.rib.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -66,11 +67,17 @@ public class AuthController {
 		if (userDetails.getAccountStatus().equals("DISABLE")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 		}
-		if(userDetails.getLoginStatus().equals("Unregistered")) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Your account is not Registered. Please Sign in first."));
+		if (userDetails.getLoginStatus().equals("Unregistered")) {
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Error: Your account is not Registered. Please Sign in first."));
 		}
-		
-		
+
+		Calendar calendar = Calendar.getInstance();
+
+		Customer customer = customerRepository.findByUsername(authentication.getName()).orElseThrow(null);
+		customer.setPreviousLogin(customer.getCurrentLogin());
+		customer.setCurrentLogin(calendar.getTime());
+		customerRepository.save(customer);
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
@@ -87,17 +94,19 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
 		CustomerDetailsImpl userDetails = (CustomerDetailsImpl) authentication.getPrincipal();
-		if(userDetails.getAccountStatus().equals("DISABLE")) {
+		if (userDetails.getAccountStatus().equals("DISABLE")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account Disabled"));
 		}
-		if(userDetails.getLoginStatus().equals("Registered")) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Account aready registered please Login."));
+		if (userDetails.getLoginStatus().equals("Registered")) {
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Error: Account aready registered please Login."));
 		}
-		
+
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(
-				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));	}
+				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+	}
 
 }
