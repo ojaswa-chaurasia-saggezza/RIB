@@ -73,8 +73,9 @@ public class CustomerController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
-
-		return customerRepository.findByUsername(username);
+		Optional<Customer> customer = customerRepository.findByUsername(username);
+		
+		return customer;
 	}
 
 	@GetMapping("/Customer/{username}/enableLoginStatus")
@@ -95,8 +96,6 @@ public class CustomerController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
-		System.out.println(username);
-		System.out.println(loginRequest.getUsername());
 		try {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(username,loginRequest.getUsername()));
@@ -209,13 +208,13 @@ public class CustomerController {
 				.setTransactions(ojaswaTransaction.subList(10, 20)));
 
 		// Creating Customers and setting their accounts;
-		calendar.set(1999, 3, 10);
+		calendar.set(1999, 2, 10);
 		Customer nayan = new Customer(7988934699L, calendar.getTime(), "nayan.pravesh@saggezza.com", "Nayan",
 				passwordEncoder.encode("Nayan"), "Nayan Verma").setAccounts(nayanAccount);
-		calendar.set(1997, 5, 23);
+		calendar.set(1997, 4, 23);
 		Customer shanti = new Customer(6265510415L, calendar.getTime(), "shanti.mukati@saggezza.com", "Shanti",
 				passwordEncoder.encode("Shanti"), "Shanti Mukati").setAccounts(shantiAccount);
-		calendar.set(1997, 1, 16);
+		calendar.set(1997, 0, 16);
 		Customer ojaswa = new Customer(7897842634L, calendar.getTime(), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
 				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount);
 

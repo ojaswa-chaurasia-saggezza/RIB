@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -72,7 +73,8 @@ public class AuthController {
 					.body(new MessageResponse("Error: Your account is not Registered. Please Sign in first."));
 		}
 
-		Calendar calendar = Calendar.getInstance();
+		TimeZone timeZone= TimeZone.getTimeZone("UTC");
+		Calendar calendar = Calendar.getInstance(timeZone);
 
 		Customer customer = customerRepository.findByUsername(authentication.getName()).orElseThrow(null);
 		customer.setPreviousLogin(customer.getCurrentLogin());
@@ -87,9 +89,18 @@ public class AuthController {
 
 	@PostMapping("/signUp")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(signUpRequest.getUsername(), signUpRequest.getPassword()));
+		
+		Authentication authentication;
+		try {
+			authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(signUpRequest.getUsername(), signUpRequest.getPassword()));
 
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Error: Username/Password incorrect."));
+		}
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 

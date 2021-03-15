@@ -265,9 +265,9 @@ export default function SignUp(props) {
                         </Grid>
                     </Grid>
                     <div className={classes.wrapper}>
-                        <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackClose}>
+                        <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
                             <Alert onClose={handleSnackClose} severity="success">
-                                Login Successfully!
+                                SignUp Successfully! Redirecting to Reset Password page...
                         </Alert>
                         </Snackbar>
                         <Button
