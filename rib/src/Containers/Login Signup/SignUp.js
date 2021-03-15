@@ -19,6 +19,8 @@ import { green } from '@material-ui/core/colors';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
     return (
@@ -67,11 +69,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "white"
     }
 }));
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function SignUp(props) {
     const classes = useStyles();
     const [dialogVariable, setdialogVariable] = React.useState([]);
     const [open, setOpen] = useState(false);
+    const [openSnack, setOpenSnack] = useState(false);
 
     const [Otp, setOtp] = useState(0);
 
@@ -86,6 +92,19 @@ export default function SignUp(props) {
     const [message, setMessage] = useState(""); // Message to be displayed
 
     const [otpError, setOtpError] = useState({ error: false, errorText: "" });
+
+    const handleClick = () => {
+        setOpenSnack(true);
+    };
+
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnack(false);
+    };
     const verify = () => {
 
         if (Otp < 1000000 && Otp > 100000) {
@@ -94,7 +113,11 @@ export default function SignUp(props) {
             CustomerService.validateOTP(Otp).then((response) => {
                 if (response.data.split(":")[0] == "True ") {
                     handleClose();
-                    props.history.push("/ResetPassword");
+                    handleClick();
+                    setTimeout(() => {
+                        props.history.push("/ResetPassword");
+                    }, 2000);
+
                 }
                 else {
                     setOtpError({ error: true, errorText: response.data });
@@ -123,17 +146,16 @@ export default function SignUp(props) {
             setOtpError({ error: true, errorText: "The Otp is not in the defined range" })
 
     }
-
-
-
+    const handleClose = () => {
+        setOpen(true);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+
+
 
     const handleSignUp = () => {
 
@@ -247,6 +269,11 @@ export default function SignUp(props) {
                         </Grid>
                     </Grid>
                     <div className={classes.wrapper}>
+                        <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackClose}>
+                            <Alert onClose={handleSnackClose} severity="success">
+                                Login Successfully!
+                        </Alert>
+                        </Snackbar>
                         <Button
                             type="submit"
                             fullWidth
