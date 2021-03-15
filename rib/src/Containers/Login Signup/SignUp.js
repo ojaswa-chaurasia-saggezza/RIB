@@ -267,7 +267,7 @@ export default function SignUp(props) {
                     <div className={classes.wrapper}>
                         <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackClose}>
                             <Alert onClose={handleSnackClose} severity="success">
-                                Login Successfully!
+                                User Registered successfuly!
                         </Alert>
                         </Snackbar>
                         <Button
