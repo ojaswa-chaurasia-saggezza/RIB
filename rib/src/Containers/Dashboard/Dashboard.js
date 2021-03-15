@@ -59,9 +59,6 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: drawerWidth,
         },
     },
-    active: {
-        backgroundColor: "red"
-    },
     menuButton: {
         marginRight: theme.spacing(2),
         [theme.breakpoints.up('md')]: {
@@ -105,7 +102,7 @@ function Dashboard(props) {
         const currentCustomer = AuthService.getCurrentUser();
 
         if (currentCustomer)
-            CustomerService.getCustomerDetails(currentCustomer.username).then(
+            CustomerService.getCustomerDetails().then(
                 (response) => {
                     setCustomer(response.data);
                     console.log(response.data);
@@ -314,7 +311,7 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : 12/01/2021</MenuItem>
+                                </ListItemIcon>Last Login : {Customer.previousLogin}</MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
