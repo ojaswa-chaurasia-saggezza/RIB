@@ -86,13 +86,27 @@ public class CustomerController {
 
 	@PostMapping("/resetPassword")
 	public String resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+		/* Here the incoming loginRequest.username is actually the old password and 
+		 * loginRequest.password is actually the new password.
+		*/
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		Customer customer = customerRepository.findByUsername(loginRequest.getUsername()).orElseThrow(null);
+		String username = auth.getName();
+
+
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		
+		if(customer.getPassword().equals(passwordEncoder.encode(loginRequest.getUsername()))) 	// Because the username is actually the password
+		{
 		customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
 		customer.setLoginStatus("Registered");
 		customerRepository.save(customer);
-		System.out.println("New password: "+ loginRequest.getPassword());
-		return "Okay";
+		return "Reset Successfull";
+		}
+		
+		return "The Old Password is incorrect";
+		
+		
 	}
 
 	@GetMapping("/Customer/{username}/disableLoginStatus")

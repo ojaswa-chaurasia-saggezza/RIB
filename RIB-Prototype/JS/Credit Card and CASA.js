@@ -63,6 +63,7 @@ $(function () {
 
 });
 
+
 console.log($('#reportrange').val());
 
 // This is for Pie chart creation

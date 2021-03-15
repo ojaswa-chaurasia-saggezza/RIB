@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: -12,
         marginLeft: -12,
     },
+    label: {
+        backgroundColor: "white"
+    }
 }));
 
 export default function SignUp(props) {
@@ -202,6 +205,11 @@ export default function SignUp(props) {
 
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 error={usernameError.error}
                                 helperText={username.errorText}
@@ -217,6 +225,11 @@ export default function SignUp(props) {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 error={passwordError.error}
                                 helperText={passwordError.errorText}
