@@ -113,7 +113,7 @@ function Dashboard(props) {
                         error.message ||
                         error.toString();
                     setCustomer({});
-                    setErrorMessage(_content);
+                    setErrorMessage("Your session has expired please login again");
                     console.log(_content);
                 }
             );

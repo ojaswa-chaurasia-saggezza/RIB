@@ -114,17 +114,15 @@ function ResetPassword(props) {
         }
 
 
-        var USERNAME = JSON.parse(localStorage.getItem('SignUpToken')).username;
-
-
         if (username != "" && password != "" && confirmPassword != "")
-            CustomerService.resetPassword(USERNAME, password).then((response) => {
+            CustomerService.resetPassword(username, password).then((response) => {
 
                 if (response.data) {
-                    localStorage.clear();
+
                     handleClick();
                     setTimeout(() => {
                         props.history.push("/");
+                        localStorage.clear();
                     }, 2000);
 
                 }
@@ -137,7 +135,7 @@ function ResetPassword(props) {
                         error.message ||
                         error.toString();
 
-                    setUsernameError({ error: true, errorText: "Username not found" });
+                    setUsernameError({ error: true, errorText: resMessage });
                     console.log(resMessage);
                 });
 

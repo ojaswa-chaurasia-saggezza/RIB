@@ -19,6 +19,8 @@ import { green } from '@material-ui/core/colors';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
     return (
@@ -67,11 +69,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "white"
     }
 }));
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function SignUp(props) {
     const classes = useStyles();
     const [dialogVariable, setdialogVariable] = React.useState([]);
     const [open, setOpen] = useState(false);
+    const [openSnack, setOpenSnack] = useState(false);
 
     const [Otp, setOtp] = useState(0);
 
@@ -83,9 +89,21 @@ export default function SignUp(props) {
     const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
 
     const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
-    const [message, setMessage] = useState(""); // Message to be displayed
 
     const [otpError, setOtpError] = useState({ error: false, errorText: "" });
+
+    const handleClick = () => {
+        setOpenSnack(true);
+    };
+
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnack(false);
+    };
     const verify = () => {
 
         if (Otp < 1000000 && Otp > 100000) {
@@ -94,7 +112,11 @@ export default function SignUp(props) {
             CustomerService.validateOTP(Otp).then((response) => {
                 if (response.data.split(":")[0] == "True ") {
                     handleClose();
-                    props.history.push("/ResetPassword");
+                    handleClick();
+                    setTimeout(() => {
+                        props.history.push("/ResetPassword");
+                    }, 2000);
+
                 }
                 else {
                     setOtpError({ error: true, errorText: response.data });
@@ -111,9 +133,8 @@ export default function SignUp(props) {
                         error.toString();
 
                     setLoading(false);
-                    setMessage(resMessage);
                     setUsernameError({ error: false, errorText: "" });
-                    setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+                    setPasswordError({ error: true, errorText: resMessage })
                     console.log(resMessage);
                 });
 
@@ -123,64 +144,61 @@ export default function SignUp(props) {
             setOtpError({ error: true, errorText: "The Otp is not in the defined range" })
 
     }
-
-
-
+    const handleClose = () => {
+        setOpen(true);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+
+
 
     const handleSignUp = () => {
 
-        setMessage("");
         setLoading(true);
 
         if (username == "") {
-            setUsernameError({ error: true, errorText: "Username should not be empty" });
+            setUsernameError({ error: true, errorText: "Username should not be empty" }); return;
         }
         if (password == "") {
-            setPasswordError({ error: true, errorText: "Password should not be empty" });
+            setPasswordError({ error: true, errorText: "Password should not be empty" }); return;
         }
 
-        if (username != "" && password != "")
-            AuthService.signUp(username, password).then((response) => {
-                if (response.data.accessToken) {
+        AuthService.signUp(username, password).then((response) => {
+            if (response.data.accessToken) {
 
-                    localStorage.setItem("SignUpToken", JSON.stringify(response.data));
+                localStorage.setItem("SignUpToken", JSON.stringify(response.data));
 
-                    const signUpCredentials = JSON.parse(localStorage.getItem('SignUpToken'));
-                    console.log(signUpCredentials);
-
-
-                    CustomerService.generateOTP().then(() => {
-                        handleClickOpen();
-                        setLoading(false);
-                    });
-
-                }
+                const signUpCredentials = JSON.parse(localStorage.getItem('SignUpToken'));
+                console.log(signUpCredentials);
 
 
-            }, (error) => {
+                CustomerService.generateOTP().then(() => {
+                    handleClickOpen();
+                    setLoading(false);
+                });
 
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            }
 
-                setLoading(false);
-                setMessage(resMessage);
-                setUsernameError({ error: false, errorText: "" });
-                setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
-                console.log(resMessage);
 
-            });
+        }, (error) => {
+
+            const resMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            setLoading(false);
+            console.log(resMessage);
+            setUsernameError({ error: false, errorText: "" });
+            setPasswordError({ error: true, errorText: resMessage })
+
+
+        });
 
 
 
@@ -247,6 +265,11 @@ export default function SignUp(props) {
                         </Grid>
                     </Grid>
                     <div className={classes.wrapper}>
+                        <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackClose}>
+                            <Alert onClose={handleSnackClose} severity="success">
+                                Login Successfully!
+                        </Alert>
+                        </Snackbar>
                         <Button
                             type="submit"
                             fullWidth

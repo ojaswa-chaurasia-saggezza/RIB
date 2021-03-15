@@ -20,6 +20,8 @@ import { ContactSupportOutlined, HistoryRounded, LaptopWindows } from '@material
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
   return (
@@ -57,12 +59,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white"
   }
 }));
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 // This is the main login funciton that is being exported
 export default function Login(props) {
-
+  const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();  // for styling
+
 
   const [whereTo, changeWhereTo] = useState('');
   const [user_name, changeusername] = useState(''); //The Username in the input
@@ -75,7 +81,18 @@ export default function Login(props) {
 
   const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
   const [message, setMessage] = useState(""); // Message to be displayed
+  
+  const handleClick = () => {
+    setOpen(true);
+};
 
+const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+        return;
+    }
+
+    setOpen(false);
+};
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -89,10 +106,13 @@ export default function Login(props) {
       setPasswordError({ error: true, errorText: "Password should not be empty" });
     }
 
-    if (user_name != "" && pass_word != "") 
+    if (user_name != "" && pass_word != "")
       AuthService.login(user_name, pass_word).then(
         () => {
-          props.history.push("/CASA");
+          handleClick();
+          setTimeout(() => {
+            props.history.push("/CASA");
+        }, 2000);
           //window.location.reload(); //No need to reload the window
         },
         (error) => {
@@ -106,12 +126,12 @@ export default function Login(props) {
           setLoading(false);
           setMessage(resMessage);
           setUsernameError({ error: false, errorText: "" });
-          setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+          setPasswordError({ error: true, errorText: resMessage })
           console.log(resMessage);
         }
       );
 
-  
+
 
     setLoading(false);
   };
@@ -169,7 +189,11 @@ export default function Login(props) {
             error={passwordError.error}
             helperText={passwordError.errorText}
           />
-
+           <Snackbar open={open} autoHideDuration={6000} onClose={handleLogin}>
+        <Alert onClose={handleLogin} severity="success">
+          Login Successfully!
+                        </Alert>
+      </Snackbar>
           <Button
             type="submit"
             fullWidth
@@ -197,6 +221,7 @@ export default function Login(props) {
           </Grid>
         </form>
       </div>
+      
       <Box mt={8}>
         {/* <Copyright /> */}
       </Box>
