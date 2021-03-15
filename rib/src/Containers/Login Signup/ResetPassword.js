@@ -16,6 +16,8 @@ import FormDialog from '../../Elements/FormDialog';
 import { Link as RouteLink } from "react-router-dom";
 import CustomerService from "../../Services/Customer.service";
 import { PinDropSharp } from '@material-ui/icons';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
     return (
@@ -53,9 +55,31 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 function ResetPassword(props) {
 
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    if (!JSON.parse(localStorage.getItem('SignUpToken'))) {
+        props.history.push('/SignUp');
+    }
+
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const [username, setUsername] = useState("");
     const [usernameError, setUsernameError] = useState({ error: false, errorText: "" });
@@ -89,14 +113,20 @@ function ResetPassword(props) {
             return;
         }
 
+
         var USERNAME = JSON.parse(localStorage.getItem('SignUpToken')).username;
+
 
         if (username != "" && password != "" && confirmPassword != "")
             CustomerService.resetPassword(USERNAME, password).then((response) => {
 
                 if (response.data) {
                     localStorage.clear();
-                    props.history.push("/");
+                    handleClick();
+                    setTimeout(() => {
+                        props.history.push("/");
+                    }, 2000);
+
                 }
             },
                 (error) => {
@@ -190,6 +220,11 @@ function ResetPassword(props) {
                             />
                         </Grid>
                     </Grid>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            Password reset successfuly! Redirecting...
+                        </Alert>
+                    </Snackbar>
                     <Button
                         type="submit"
                         fullWidth
