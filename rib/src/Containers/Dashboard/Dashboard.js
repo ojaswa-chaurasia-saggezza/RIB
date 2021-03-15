@@ -59,9 +59,6 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: drawerWidth,
         },
     },
-    active: {
-        backgroundColor: "red"
-    },
     menuButton: {
         marginRight: theme.spacing(2),
         [theme.breakpoints.up('md')]: {
@@ -105,7 +102,7 @@ function Dashboard(props) {
         const currentCustomer = AuthService.getCurrentUser();
 
         if (currentCustomer)
-            CustomerService.getCustomerDetails(currentCustomer.username).then(
+            CustomerService.getCustomerDetails().then(
                 (response) => {
                     setCustomer(response.data);
                     console.log(response.data);
