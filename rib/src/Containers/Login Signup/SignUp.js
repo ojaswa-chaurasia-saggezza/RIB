@@ -89,7 +89,6 @@ export default function SignUp(props) {
     const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
 
     const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
-    const [message, setMessage] = useState(""); // Message to be displayed
 
     const [otpError, setOtpError] = useState({ error: false, errorText: "" });
 
@@ -134,9 +133,8 @@ export default function SignUp(props) {
                         error.toString();
 
                     setLoading(false);
-                    setMessage(resMessage);
                     setUsernameError({ error: false, errorText: "" });
-                    setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+                    setPasswordError({ error: true, errorText: resMessage })
                     console.log(resMessage);
                 });
 
@@ -159,50 +157,48 @@ export default function SignUp(props) {
 
     const handleSignUp = () => {
 
-        setMessage("");
         setLoading(true);
 
         if (username == "") {
-            setUsernameError({ error: true, errorText: "Username should not be empty" });
+            setUsernameError({ error: true, errorText: "Username should not be empty" }); return;
         }
         if (password == "") {
-            setPasswordError({ error: true, errorText: "Password should not be empty" });
+            setPasswordError({ error: true, errorText: "Password should not be empty" }); return;
         }
 
-        if (username != "" && password != "")
-            AuthService.signUp(username, password).then((response) => {
-                if (response.data.accessToken) {
+        AuthService.signUp(username, password).then((response) => {
+            if (response.data.accessToken) {
 
-                    localStorage.setItem("SignUpToken", JSON.stringify(response.data));
+                localStorage.setItem("SignUpToken", JSON.stringify(response.data));
 
-                    const signUpCredentials = JSON.parse(localStorage.getItem('SignUpToken'));
-                    console.log(signUpCredentials);
-
-
-                    CustomerService.generateOTP().then(() => {
-                        handleClickOpen();
-                        setLoading(false);
-                    });
-
-                }
+                const signUpCredentials = JSON.parse(localStorage.getItem('SignUpToken'));
+                console.log(signUpCredentials);
 
 
-            }, (error) => {
+                CustomerService.generateOTP().then(() => {
+                    handleClickOpen();
+                    setLoading(false);
+                });
 
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            }
 
-                setLoading(false);
-                setMessage(resMessage);
-                setUsernameError({ error: false, errorText: "" });
-                setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
-                console.log(resMessage);
 
-            });
+        }, (error) => {
+
+            const resMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            setLoading(false);
+            console.log(resMessage);
+            setUsernameError({ error: false, errorText: "" });
+            setPasswordError({ error: true, errorText: resMessage })
+
+
+        });
 
 
 

@@ -126,7 +126,7 @@ const handleClose = (event, reason) => {
           setLoading(false);
           setMessage(resMessage);
           setUsernameError({ error: false, errorText: "" });
-          setPasswordError({ error: true, errorText: "Username/Password combination invalid" })
+          setPasswordError({ error: true, errorText: resMessage })
           console.log(resMessage);
         }
       );
