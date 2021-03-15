@@ -58,9 +58,17 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		Authentication authentication;
+		try {
+			authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username/Password Incorrect"));
+		}
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -76,6 +84,8 @@ public class AuthController {
 		TimeZone timeZone= TimeZone.getTimeZone("UTC");
 		Calendar calendar = Calendar.getInstance(timeZone);
 
+		System.out.println();
+		
 		Customer customer = customerRepository.findByUsername(authentication.getName()).orElseThrow(null);
 		customer.setPreviousLogin(customer.getCurrentLogin());
 		customer.setCurrentLogin(calendar.getTime());
