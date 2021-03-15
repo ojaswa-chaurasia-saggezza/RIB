@@ -98,6 +98,7 @@ public class CustomerController {
 		if(customer.getPassword().equals(passwordEncoder.encode(loginRequest.getUsername()))) 	// Because the username is actually the password
 		{
 		customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+		customer.setLoginStatus("Registered");
 		customerRepository.save(customer);
 		return "Reset Successfull";
 		}
@@ -113,7 +114,8 @@ public class CustomerController {
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
 	}
-	
+
+
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {
 		return accountRepository.findAll();

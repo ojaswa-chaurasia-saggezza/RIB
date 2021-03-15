@@ -19,6 +19,7 @@ public class EmailTemplate {
 
 	}
 
+	/*Load data from html file*/
 	private String loadTemplate(String customtemplate) throws Exception {
 
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -32,7 +33,7 @@ public class EmailTemplate {
 		return content;
 
 	}
-
+/*Replace with corresponding username and otpnum*/
 	public String getTemplate(Map<String, String> replacements) {
 
 		String cTemplate = this.template;

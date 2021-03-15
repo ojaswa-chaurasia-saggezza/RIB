@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormDialog from '../../Elements/FormDialog';
-import {Link as RouteLink}  from "react-router-dom";
+import { Link as RouteLink } from "react-router-dom";
+import CustomerService from "../../Services/Customer.service";
+import { PinDropSharp } from '@material-ui/icons';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 function Copyright() {
     return (
@@ -46,10 +50,98 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    label: {
+        backgroundColor: "white"
+    }
 }));
 
-export default function SignUp() {
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+function ResetPassword(props) {
+
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    if (!JSON.parse(localStorage.getItem('SignUpToken'))) {
+        props.history.push('/SignUp');
+    }
+
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    const [username, setUsername] = useState("");
+    const [usernameError, setUsernameError] = useState({ error: false, errorText: "" });
+
+    const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
+
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState({ error: false, errorText: "" });
+
+    const handleResetPassword = () => {
+
+        console.log("Inside handleResetPassword" + username + password + confirmPassword);
+
+        if (username == "") {
+            setUsernameError({ error: true, errorText: "Username should not be empty" });
+            return;
+        }
+        if (password == "") {
+            setPasswordError({ error: true, errorText: "Password should not be empty" });
+            return;
+        }
+
+        if (confirmPassword == "") {
+            setConfirmPasswordError({ error: true, errorText: "Confirm Password should not be empty" });
+            return;
+        }
+
+        if (password != confirmPassword) {
+            setConfirmPasswordError({ error: true, errorText: "Confirm password does not match with the given password" });
+            return;
+        }
+
+
+        var USERNAME = JSON.parse(localStorage.getItem('SignUpToken')).username;
+
+
+        if (username != "" && password != "" && confirmPassword != "")
+            CustomerService.resetPassword(USERNAME, password).then((response) => {
+
+                if (response.data) {
+                    localStorage.clear();
+                    handleClick();
+                    setTimeout(() => {
+                        props.history.push("/");
+                    }, 2000);
+
+                }
+            },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    setUsernameError({ error: true, errorText: "Username not found" });
+                    console.log(resMessage);
+                });
+
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -62,57 +154,88 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Reset Password
         </Typography>
-                <form className={classes.form} noValidate>
-                    <Grid container spacing={2}>  
+                <div className={classes.form} >
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                        <TextField
+                            <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth
+                                error={usernameError.error}
+                                helperText={usernameError.errorText}
                                 name="current-password"
                                 label="Current Password"
                                 type="current-password"
                                 id="current-password"
                                 autoComplete="current-password"
+                                onKeyPress={() => { if (username != "") setUsernameError({ error: false, errorText: "" }) }}
+                                onChange={(e) => { setUsername(e.target.value) }}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth
+                                error={passwordError.error}
+                                helperText={passwordError.errorText}
                                 name="password"
                                 label="Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onKeyPress={() => { if (password != "") setPasswordError({ error: false, errorText: "" }) }}
+                                onChange={(e) => { setPassword(e.target.value) }}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                InputLabelProps={{
+                                    classes: {
+                                        root: classes.label
+                                    }
+                                }}
                                 variant="outlined"
                                 required
                                 fullWidth
+                                error={confirmPasswordError.error}
+                                helperText={confirmPasswordError.errorText}
                                 name="confirm-password"
                                 label="Confirm Password"
                                 type="confirm-password"
                                 id="confirm-password"
                                 autoComplete="current-password"
+                                onKeyPress={() => { if (confirmPassword != "") setConfirmPasswordError({ error: false, errorText: "" }) }}
+                                onChange={(e) => { setConfirmPassword(e.target.value) }}
                             />
                         </Grid>
                     </Grid>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            Password reset successfuly! Redirecting...
+                        </Alert>
+                    </Snackbar>
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        component={RouteLink} 
-                        to={'/'}
                         className={classes.submit}
+                        onClick={handleResetPassword}
                     >
                         Change Password
           </Button>
-                </form>
+                </div>
             </div>
             <Box mt={5}>
                 {/* <Copyright /> */}
@@ -120,3 +243,6 @@ export default function SignUp() {
         </Container>
     );
 }
+
+
+export default ResetPassword;

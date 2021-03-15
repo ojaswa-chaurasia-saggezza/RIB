@@ -18,6 +18,10 @@ const validateOTP = (otpNumber) => {
   return axios.get(API_URL_OTP + 'validateOtp/' + otpNumber, { headers: otpHeader() });
 }
 
+const resetPassword = (username, password) => {
+  return axios.post(API_URL + 'resetPassword',{ username, password}, { headers: otpHeader() });
+}
+
 
 const getCustomerDetails = () => {
   return axios.get(API_URL + "CustomerDetails", { headers: authHeader() });
@@ -38,5 +42,6 @@ export default {
   getAccountDetails,
   generateOTP,
   validateOTP,
+  resetPassword,
   getAdminBoard,
 };
