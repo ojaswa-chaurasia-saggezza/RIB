@@ -61,8 +61,10 @@ public class Customer {
 	@Column
 	private String LoginStatus = "Unregistered";
 	
+	@Column
 	private Date currentLogin;
 	
+	@Column
 	private Date previousLogin;
 
 	public List<Account> getAccounts() {
@@ -184,5 +186,4 @@ public class Customer {
 		this.password = password;
 		this.name = name;
 	}
-
 }

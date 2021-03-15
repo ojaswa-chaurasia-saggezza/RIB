@@ -98,6 +98,11 @@ function Dashboard(props) {
     const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
+    function convertTZ(date, tzString) {
+        console.log(typeof date);
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+    }
+
     useEffect(() => {
         const currentCustomer = AuthService.getCurrentUser();
 
@@ -311,15 +316,11 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : {Customer.previousLogin.split('T').map((val, index) => {
-                                    if (index == 0) {
-                                        return "Date : " + val.split('-').join('/');
-                                    }
-                                    else
-                                        return "Time: " + val.split('.')[0];
-                                }).join(' - ')
+                                </ListItemIcon>Last Login : {
+                                    Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString(): null
 
-                                }</MenuItem>
+
+                                } </MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
