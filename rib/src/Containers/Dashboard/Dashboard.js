@@ -142,9 +142,9 @@ function Dashboard(props) {
         setAnchorEl(null);
     };
 
-    const handleLogOut = () => { 
-        AuthService.logout(); 
-        handleClose(); 
+    const handleLogOut = () => {
+        AuthService.logout();
+        handleClose();
         props.history.push("/")
     }
 
@@ -286,8 +286,8 @@ function Dashboard(props) {
                             Demo Bank
                 </Typography>
                         <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
-                            Welcome { Customer.name ? Customer.name.split(" ")[0]: ""}
-                </Button>
+                            Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
+                        </Button>
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -311,7 +311,15 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : {Customer.previousLogin}</MenuItem>
+                                </ListItemIcon>Last Login : {Customer.previousLogin.split('T').map((val, index) => {
+                                    if (index == 0) {
+                                        return "Date : " + val.split('-').join('/');
+                                    }
+                                    else
+                                        return "Time: " + val.split('.')[0];
+                                }).join(' - ')
+
+                                }</MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
