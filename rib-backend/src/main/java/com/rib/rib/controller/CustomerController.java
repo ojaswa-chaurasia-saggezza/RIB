@@ -17,6 +17,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +34,7 @@ import com.rib.rib.model.Account;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.LoginRequest;
+import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.TransactionRepositary;
@@ -44,6 +46,8 @@ import com.rib.rib.security.services.CustomerDetailsImpl;
 public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
+	AuthenticationManager authenticationManager;
 	@Autowired
 	private AccountRepository accountRepository;
 	@Autowired
@@ -61,18 +65,16 @@ public class CustomerController {
 	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
 	}
-	
+
 	@GetMapping("/CustomerDetails")
 	public Optional<Customer> getCustomerByUsernameAuthentication() {
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
 
-		
 		return customerRepository.findByUsername(username);
 	}
-
 
 	@GetMapping("/Customer/{username}/enableLoginStatus")
 	public void enableloginStatus(@PathVariable String username) {
@@ -84,28 +86,32 @@ public class CustomerController {
 	}
 
 	@PostMapping("/resetPassword")
-	public String resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
-		/* Here the incoming loginRequest.username is actually the old password and 
+	public ResponseEntity<?> resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
+		/*
+		 * Here the incoming loginRequest.username is actually the old password and
 		 * loginRequest.password is actually the new password.
-		*/
+		 */
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
+		System.out.println(username);
+		System.out.println(loginRequest.getUsername());
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(username,loginRequest.getUsername()));
 
+			Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 
-		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
-		
-		if(customer.getPassword().equals(passwordEncoder.encode(loginRequest.getUsername()))) 	// Because the username is actually the password
-		{
-		customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-		customer.setLoginStatus("Registered");
-		customerRepository.save(customer);
-		return "Reset Successfull";
+			customer.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+			customer.setLoginStatus("Registered");
+			customerRepository.save(customer);
+			return ResponseEntity.ok(new MessageResponse("Reset Successfull"));
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return ResponseEntity.badRequest().body(new MessageResponse("The Old Password is incorrect"));
 		}
-		
-		return "The Old Password is incorrect";
-		
-		
+
 	}
 
 	@GetMapping("/Customer/{username}/disableLoginStatus")
@@ -114,7 +120,6 @@ public class CustomerController {
 		customer.setLoginStatus("Unregistered");
 		customerRepository.save(customer);
 	}
-
 
 	@GetMapping("/Account") // Retrieve all Accounts
 	public List<Account> getallAccounts() {
