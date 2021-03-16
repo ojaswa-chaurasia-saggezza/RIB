@@ -31,7 +31,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
-import Ojaswa from '../../Components/AddBiller';
+import AddBiller from '../../Components/AddBiller';
+import EditBiller from '../../Components/EditBiller';
+import Pay from '../../Components/Pay';
+import FTWithinBankAccount from '../../Components/FTWithinBankAccount';
+import FTWithinBankBeneficiary from '../../Components/FTWithinBankBeneficiary';
+import ChequeRequest from '../../Components/ChequeRequest';
+import ViewExistingChequeRequest from '../../Components/ViewExistingChequeRequest';
+import CreditLimitIncrease from '../../Components/CreditLimitIncrease';
+import ResetPassword from '../../Components/ResetPassword';
+
+
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
@@ -183,10 +193,10 @@ function Dashboard(props) {
                                 <ListItem button component={Link} to='/Edit Beneficiary'>
                                     <ListItemText primary={'Edit Beneficiary'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Transfer within your accounts'>
+                                <ListItem button component={Link} to='/Dashboard/FTWithinBankAccount'>
                                     <ListItemText primary={'Transfer within your accounts'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Transfer to within Bank Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/FTWithinBankBeneficiary'>
                                     <ListItemText primary={'Transfer to within Bank Beneficiary'} />
                                 </ListItem>
                             </List>
@@ -207,10 +217,10 @@ function Dashboard(props) {
                                 <ListItem button component={Link} to='/Dashboard/AddBiller'>
                                     <ListItemText primary={'Add Biller'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Edit Biller'>
+                                <ListItem button component={Link} to='/Dashboard/EditBiller'>
                                     <ListItemText primary={'Edit Biller'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Pay'>
+                                <ListItem button component={Link} to='/Dashboard/Pay'>
                                     <ListItemText primary={'Pay'} />
                                 </ListItem>
                             </List>
@@ -229,13 +239,16 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Check(Cheque) Order'>
+                                <ListItem button component={Link} to='/Dashboard/ChequeRequest'>
                                     <ListItemText primary={'Check(Cheque) Order'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Credit Limit Increase'>
+                                <ListItem button component={Link} to='/Dashboard/ViewExistingChequeRequest'>
+                                    <ListItemText primary={'View Existing'} />
+                                </ListItem>
+                                <ListItem button component={Link} to='/Dashboard/CreditLimitIncrease'>
                                     <ListItemText primary={'Credit Limit Increase'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Reset Password'>
+                                <ListItem button component={Link} to='/Dashboard/ResetPassword'>
                                     <ListItemText primary={'Reset Password'} />
                                 </ListItem>
                             </List>
@@ -368,7 +381,17 @@ function Dashboard(props) {
                         Customer.username ?
                             (<Switch>
                                 <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
-                                <Route path='/Dashboard/AddBiller' component={Ojaswa}></Route>
+                                <Route path='/Dashboard/AddBiller' component={AddBiller}></Route>
+                                <Route path='/Dashboard/EditBiller' component={EditBiller}></Route>
+                                <Route path='/Dashboard/Pay' component={Pay}></Route>
+                                <Route path='/Dashboard/FTWithinBankAccount' component={FTWithinBankAccount}></Route>
+                                <Route path='/Dashboard/FTWithinBankBeneficiary' component={FTWithinBankBeneficiary}></Route>
+                                <Route path='/Dashboard/ChequeRequest' component={ChequeRequest}></Route>
+                                <Route path='/Dashboard/ViewExistingChequeRequest' component={ViewExistingChequeRequest}></Route>
+                                <Route path='/Dashboard/CreditLimitIncrease' component={CreditLimitIncrease}></Route>
+                                <Route path='/Dashboard/ResetPassword' component={ResetPassword}></Route>
+                                
+                                
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)

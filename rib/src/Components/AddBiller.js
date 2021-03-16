@@ -5,7 +5,7 @@ import '../CSS/ErrorStyling.css';
 export default function AddBiller() {
 
     return (
-        <div id="wrapper">
+        // <div id="wrapper">
             <div class="content">
                 <section class="trasfer-beneficiary">
                     <h1 class="title">Add Biller</h1>
@@ -43,7 +43,7 @@ export default function AddBiller() {
                     </div>
                 </section>
             </div>
-        </div>
+        // </div>
 
     );
 }
