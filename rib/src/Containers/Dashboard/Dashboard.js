@@ -31,6 +31,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
+import Ojaswa from '../../Components/AddBiller';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-    lastLogin:{
+    lastLogin: {
         fontSize: 10,
     },
     appBar: {
@@ -101,6 +102,11 @@ function Dashboard(props) {
 
     const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
+
+    function convertTZ(date, tzString) {
+        console.log(typeof date);
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
+    }
 
     useEffect(() => {
         const currentCustomer = AuthService.getCurrentUser();
@@ -158,7 +164,7 @@ function Dashboard(props) {
             <Divider />
             <List>
                 {['CASA', 'CREDIT CARD',].map((text, index) => (
-                    <ListItem button component={Link} to={`/${text}`} key={text}>
+                    <ListItem button component={Link} to={`/Dashboard/${text}`} key={text}>
 
                         <ListItemText primary={text} />
                     </ListItem>
@@ -202,7 +208,7 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Add Biller'>
+                                <ListItem button component={Link} to='/Dashboard/AddBiller'>
                                     <ListItemText primary={'Add Biller'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Edit Biller'>
@@ -290,15 +296,15 @@ function Dashboard(props) {
                             Demo Bank
                 </Typography>
                         <Grid container item xs={2}>
-                            <Grid item  xs={12}>
+                            <Grid item xs={12}>
                                 <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
                                     Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
                                 </Button>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="caption" noWrap className={classes.lastLogin}>
-                                    Last Login : {Customer.previousLogin}
-                             </Typography>
+                                    Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                                </Typography>
                             </Grid>
                         </Grid>
 
@@ -325,7 +331,9 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : {Customer.previousLogin}</MenuItem>
+                                </ListItemIcon>
+                                Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                            </MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
@@ -373,8 +381,8 @@ function Dashboard(props) {
                     {
                         Customer.username ?
                             (<Switch>
-                                <Route path='/CASA' component={CASA}></Route>
-
+                                <Route path={['/Dashboard', '/Dashboard/CASA']} exact component={CASA}></Route>
+                                <Route path='/Dashboard/AddBiller' component={Ojaswa}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)
