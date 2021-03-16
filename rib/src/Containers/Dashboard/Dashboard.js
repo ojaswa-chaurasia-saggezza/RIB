@@ -31,6 +31,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
+import Ojaswa from '../../Components/AddBiller';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
@@ -159,7 +160,7 @@ function Dashboard(props) {
             <Divider />
             <List>
                 {['CASA', 'CREDIT CARD',].map((text, index) => (
-                    <ListItem button component={Link} to={`/${text}`} key={text}>
+                    <ListItem button component={Link} to={`/Dashboard/${text}`} key={text}>
 
                         <ListItemText primary={text} />
                     </ListItem>
@@ -203,7 +204,7 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Add Biller'>
+                                <ListItem button component={Link} to='/Dashboard/AddBiller'>
                                     <ListItemText primary={'Add Biller'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Edit Biller'>
@@ -366,8 +367,8 @@ function Dashboard(props) {
                     {
                         Customer.username ?
                             (<Switch>
-                                <Route path='/CASA' component={CASA}></Route>
-
+                                <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
+                                <Route path='/Dashboard/AddBiller' component={Ojaswa}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)

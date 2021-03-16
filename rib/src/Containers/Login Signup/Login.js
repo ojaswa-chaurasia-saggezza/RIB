@@ -111,7 +111,7 @@ const handleClose = (event, reason) => {
         () => {
           handleClick();
           setTimeout(() => {
-            props.history.push("/CASA");
+            props.history.push("/Dashboard");
         }, 2000);
           //window.location.reload(); //No need to reload the window
         },
