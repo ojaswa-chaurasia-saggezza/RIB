@@ -345,12 +345,7 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <PersonIcon fontSize="small" />
-                                </ListItemIcon>{Customer.name}</MenuItem>
-                            <MenuItem onClick={handleClose} className={classes.MenuItem}>
-                                <ListItemIcon>
-                                    <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>
-                                Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                                </ListItemIcon>{Customer.name}
                             </MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
@@ -400,6 +395,7 @@ function Dashboard(props) {
                         Customer.username ?
                             (<Switch>
                                 <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
+                                <Route path='/Dashboard/CREDIT CARD' component={CASA}></Route>
                                 <Route path='/Dashboard/AddBiller' component={AddBiller}></Route>
                                 <Route path='/Dashboard/EditBiller' component={EditBiller}></Route>
                                 <Route path='/Dashboard/Pay' component={Pay}></Route>

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../CSS/style.css';
-import '../CSS/style1.css';
 import '../CSS/ErrorStyling.css';
 
 export default function CreditLimitIncrease() {
