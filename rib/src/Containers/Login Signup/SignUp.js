@@ -267,11 +267,7 @@ export default function SignUp(props) {
                     <div className={classes.wrapper}>
                         <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
                             <Alert onClose={handleSnackClose} severity="success">
-<<<<<<< HEAD
-                                User Registered successfuly!
-=======
                                 SignUp Successfully! Redirecting to Reset Password page...
->>>>>>> 2b331640f221b31906ce5d06af8699358e098ebe
                         </Alert>
                         </Snackbar>
                         <Button

@@ -31,10 +31,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
-import Ojaswa from '../../Components/AddBiller';
-
+import AddBiller from '../../Components/AddBiller';
+import EditBeneficiary from '../../Components/EditBeneficiary';
+import AddBeneficiary from '../../Components/AddBeneficiary';
+import CardType from '../../Components/CardType';
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+import CasaType from '../../Components/CasaType';
+
 
 const drawerWidth = 250;
 
@@ -176,11 +180,11 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Add Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/AddBeneficiary'>
                                     <ListItemText primary={'Add Beneficiary'} />
                                 </ListItem>
 
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/EditBeneficiary'>
                                     <ListItemText primary={'Edit Beneficiary'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Transfer within your accounts'>
@@ -253,10 +257,10 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/DashBoard/CasaType'>
                                     <ListItemText primary={'Open New Casa Account'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/CardType'>
                                     <ListItemText primary={'Open New Credit Card'} />
                                 </ListItem>
 
@@ -368,7 +372,11 @@ function Dashboard(props) {
                         Customer.username ?
                             (<Switch>
                                 <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
-                                <Route path='/Dashboard/AddBiller' component={Ojaswa}></Route>
+                                <Route path='/Dashboard/AddBiller' component={AddBiller}></Route>
+                                <Route path='/Dashboard/EditBeneficiary' component={EditBeneficiary}></Route>
+                                <Route path='/Dashboard/AddBeneficiary' component={AddBeneficiary}></Route>
+                                <Route path='/Dashboard/CardType' component={CardType}></Route>
+                                <Route path ='/Dashboard/CasaType' component={CasaType}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)
