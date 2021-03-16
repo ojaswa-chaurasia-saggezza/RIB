@@ -59,6 +59,17 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+var passwordStrength = (pass) => {
+    var strength = 1;
+    var arr = [/^.{8,16}$/, /[a-z]+/, /[0-9]+/, /[A-Z]+/, /[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+/];
+    arr.map(function (regexp) {
+        if (pass.match(regexp))
+            strength++;
+    });
+    console.log(strength);
+    return strength
+}
+
 function ResetPassword(props) {
 
     const classes = useStyles();
@@ -102,17 +113,18 @@ function ResetPassword(props) {
             setPasswordError({ error: true, errorText: "Password should not be empty" });
             return;
         }
-
+        if (passwordStrength(password) <= 5) {
+            setPasswordError({ error: true, errorText: "The password must be of 8-16 letters and include atleast one small letter, capital letter, digit and a special character" });
+            return;
+        }
         if (confirmPassword == "") {
             setConfirmPasswordError({ error: true, errorText: "Confirm Password should not be empty" });
             return;
         }
-
         if (password != confirmPassword) {
             setConfirmPasswordError({ error: true, errorText: "Confirm password does not match with the given password" });
             return;
         }
-
 
         if (username != "" && password != "" && confirmPassword != "")
             CustomerService.resetPassword(username, password).then((response) => {
@@ -193,7 +205,15 @@ function ResetPassword(props) {
                                 id="password"
                                 autoComplete="current-password"
                                 onKeyPress={() => { if (password != "") setPasswordError({ error: false, errorText: "" }) }}
-                                onChange={(e) => { setPassword(e.target.value) }}
+                                onChange={(e) => {
+                                    if (passwordStrength(e.target.value) <= 5)
+                                        setPasswordError({ error: true, errorText: "The password must be of 8-16 letters and include atleast one small letter, capital letter, digit and a special character" });
+                                    else
+                                        setPasswordError({ error: false, errorText: "" });
+
+
+                                    setPassword(e.target.value);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>

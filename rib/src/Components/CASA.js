@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormHelperText, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,12 +11,38 @@ import { CssBaseline, Grid, FormControl, Input, InputLabel } from '@material-ui/
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import InputBase from "@material-ui/core/InputBase";
 
 import Wrap from '../HOC/Wrap';
 import Tables from '../Elements/Tables';
 
 import AuthService from "../Services/Auth.service";
 import CustomerService from "../Services/Customer.service";
+
+const BootstrapInput = withStyles((theme) => ({
+    root: {
+      'label + &': {
+        marginTop: theme.spacing(0),
+      },
+    },
+    input: {
+      borderRadius: 4,
+      marginTop: '-3px ',
+      width: '150px',
+      position: 'relative',
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #ced4da',
+      fontSize: 14,
+      padding: '7px 26px 7px 12px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      '&:focus': {
+        borderRadius: 4,
+        borderColor: '#80bdff',
+        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+      },
+    },
+  }))(InputBase);
+  
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,8 +90,8 @@ export default function CASA() {
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
     const [Accounts, setAccounts] = useState([]);
-    const [selectedAccount, setSelectedAccount] = useState({});
-    const [listOfTransactions , setListOfTransactions] = useState([]);
+    const [selectedAccount, setSelectedAccount] = useState('');
+    const [listOfTransactions, setListOfTransactions] = useState([]);
 
     useEffect(() => {
         const currentCustomer = AuthService.getCurrentUser();
@@ -77,6 +103,11 @@ export default function CASA() {
                     var accountList = response.data.accounts.map((val) => val.accountNumber);
 
                     setAccounts(accountList);
+                    handleAccountChange(accountList[0]);
+                    setAccount(accountList[0]);
+
+
+
                 },
                 (error) => {
                     const _content =
@@ -125,17 +156,16 @@ export default function CASA() {
                 <CardContent>
                     <Grid container spacing={1}>
                         <Grid container item xs={12} spacing={1}>
-                            <Grid item xs={6}>
+                            <Grid item sm={6} xs={12}>
                                 <Paper className={classes.paper}><strong>Account Number : &emsp;&emsp;&emsp;</strong>
                                     <FormControl variant="">
                                         <Select
-                                            labelId="demo-simple-select-outlined-label"
-                                            id="demo-simple-select-outlined"
+                                            labelId="demo-customized-select-label"
+                                            id="demo-customized-select"
                                             value={account}
-                                            displayEmpty={true}
-                                            className={classes.accountNumber}
                                             onChange={handleChange}
                                             label="Account Number"
+                                            input={<BootstrapInput />}
                                         >
                                             {Accounts.map((accountNumber) => <MenuItem key={accountNumber} value={accountNumber} onClick={() => handleAccountChange(accountNumber)}>{accountNumber}</MenuItem>)}
 
@@ -143,24 +173,24 @@ export default function CASA() {
                                     </FormControl>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item sm={6} xs={12}>
                                 <Paper className={classes.paper}><strong>Balance : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
-                                        { selectedAccount.balance }
+                                        {selectedAccount.balance}
                                     </Typography>
                                 </Paper>
 
                             </Grid>
                         </Grid>
                         <Grid container item xs={12} spacing={1}>
-                            <Grid item xs={6}>
+                            <Grid item sm={6} xs={12}>
                                 <Paper className={classes.paper}><strong>Account Type : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
-                                        { selectedAccount.type}
+                                        {selectedAccount.type}
                                     </Typography>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item sm={6} xs={12}>
                                 <Paper className={classes.paper}><big><strong>Segment : &emsp;&emsp;&emsp;</strong></big>
                                     <Typography variant="body2" gutterBottom>
                                         {selectedAccount.segment}
@@ -181,10 +211,9 @@ export default function CASA() {
                     title="Transaction Details"
                 />
                 <CardContent>
-                    {/* <Tables data= {listOfTransactions} accountNumber={selectedAccount.accountNumber}/> */}
 
 
-                    {listOfTransactions.length>0 ? <Tables key={selectedAccount.accountNumber} data={listOfTransactions} accountNumber={selectedAccount.accountNumber} /> : <div>Please select an Account Number</div>}
+                    {listOfTransactions.length > 0 ? <Tables key={selectedAccount.accountNumber} data={listOfTransactions} accountNumber={selectedAccount.accountNumber} /> : <div>Please select an Account Number</div>}
                 </CardContent>
 
             </Card>

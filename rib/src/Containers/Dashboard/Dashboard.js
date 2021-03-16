@@ -34,6 +34,7 @@ import CASA from '../../Components/CASA';
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+import { Grid } from '@material-ui/core';
 
 const drawerWidth = 250;
 
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+    },
+    lastLogin:{
+        fontSize: 10,
     },
     appBar: {
         [theme.breakpoints.up('md')]: {
@@ -142,9 +146,9 @@ function Dashboard(props) {
         setAnchorEl(null);
     };
 
-    const handleLogOut = () => { 
-        AuthService.logout(); 
-        handleClose(); 
+    const handleLogOut = () => {
+        AuthService.logout();
+        handleClose();
         props.history.push("/")
     }
 
@@ -285,9 +289,19 @@ function Dashboard(props) {
                         <Typography variant="h6" noWrap className={classes.title}>
                             Demo Bank
                 </Typography>
-                        <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
-                            Welcome { Customer.name ? Customer.name.split(" ")[0]: ""}
-                </Button>
+                        <Grid container item xs={2}>
+                            <Grid item  xs={12}>
+                                <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
+                                    Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="caption" noWrap className={classes.lastLogin}>
+                                    Last Login : {Customer.previousLogin}
+                             </Typography>
+                            </Grid>
+                        </Grid>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -318,6 +332,8 @@ function Dashboard(props) {
                                 </ListItemIcon>
                              Logout</MenuItem>
                         </Menu>
+
+
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">
