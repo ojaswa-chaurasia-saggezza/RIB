@@ -40,11 +40,17 @@ import ChequeRequest from '../../Components/ChequeRequest';
 import ViewExistingChequeRequest from '../../Components/ViewExistingChequeRequest';
 import CreditLimitIncrease from '../../Components/CreditLimitIncrease';
 import ResetPassword from '../../Components/ResetPassword';
-
+import EditBeneficiary from '../../Components/EditBeneficiary';
+import AddBeneficiary from '../../Components/AddBeneficiary';
+import CardType from '../../Components/CardType';
+import CasaType from '../../Components/CasaType';
 
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
+
+
+import { Grid } from '@material-ui/core';
 
 const drawerWidth = 250;
 
@@ -61,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+    },
+    lastLogin: {
+        fontSize: 10,
     },
     appBar: {
         [theme.breakpoints.up('md')]: {
@@ -111,7 +120,7 @@ function Dashboard(props) {
 
     function convertTZ(date, tzString) {
         console.log(typeof date);
-        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
     }
 
     useEffect(() => {
@@ -186,11 +195,11 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Add Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/AddBeneficiary'>
                                     <ListItemText primary={'Add Beneficiary'} />
                                 </ListItem>
 
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/EditBeneficiary'>
                                     <ListItemText primary={'Edit Beneficiary'} />
                                 </ListItem>
                                 <ListItem button component={Link} to='/Dashboard/FTWithinBankAccount'>
@@ -266,10 +275,10 @@ function Dashboard(props) {
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/DashBoard/CasaType'>
                                     <ListItemText primary={'Open New Casa Account'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Edit Beneficiary'>
+                                <ListItem button component={Link} to='/Dashboard/CardType'>
                                     <ListItemText primary={'Open New Credit Card'} />
                                 </ListItem>
 
@@ -304,9 +313,19 @@ function Dashboard(props) {
                         <Typography variant="h6" noWrap className={classes.title}>
                             Demo Bank
                 </Typography>
-                        <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
-                            Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
-                        </Button>
+                        <Grid container item xs={2}>
+                            <Grid item xs={12}>
+                                <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
+                                    Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="caption" noWrap className={classes.lastLogin}>
+                                    Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -330,17 +349,17 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>Last Login : {
-                                    Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString(): null
-
-
-                                } </MenuItem>
+                                </ListItemIcon>
+                                Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                            </MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
                                 </ListItemIcon>
                              Logout</MenuItem>
                         </Menu>
+
+
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">
@@ -390,8 +409,10 @@ function Dashboard(props) {
                                 <Route path='/Dashboard/ViewExistingChequeRequest' component={ViewExistingChequeRequest}></Route>
                                 <Route path='/Dashboard/CreditLimitIncrease' component={CreditLimitIncrease}></Route>
                                 <Route path='/Dashboard/ResetPassword' component={ResetPassword}></Route>
-                                
-                                
+                                <Route path='/Dashboard/EditBeneficiary' component={EditBeneficiary}></Route>
+                                <Route path='/Dashboard/AddBeneficiary' component={AddBeneficiary}></Route>
+                                <Route path='/Dashboard/CardType' component={CardType}></Route>
+                                <Route path ='/Dashboard/CasaType' component={CasaType}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)
