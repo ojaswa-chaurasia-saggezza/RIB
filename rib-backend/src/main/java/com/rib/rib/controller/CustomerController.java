@@ -144,7 +144,7 @@ public class CustomerController {
 		Random rand = new Random(); // For Generating Random values
 
 		// Generating Random Transactions for Nayan
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 100; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXN" + i + (rand.nextInt(9000000) + 1000000);
@@ -158,7 +158,7 @@ public class CustomerController {
 		}
 
 		// Generating Random Transactions for Shanti
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 167; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXS" + i + (rand.nextInt(9000000) + 1000000);
@@ -172,7 +172,7 @@ public class CustomerController {
 		}
 
 		// Generating Random Transactions for Ojaswa
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 69; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXO" + i + (rand.nextInt(9000000) + 1000000);
@@ -195,17 +195,17 @@ public class CustomerController {
 
 		// Adding Accounts to the accounts list and setting transactions list
 		nayanAccount.add(new Account(10101010L, 100000000000L, "Saving", 0L, new Date(), "Silver", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(0, 10)));
+				.setTransactions(nayanTransaction.subList(0, nayanTransaction.size()/2)));
 		nayanAccount.add(new Account(10000000L, 100000000000L, "Saving", 0L, new Date(), "Gold", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(10, 20)));
+				.setTransactions(nayanTransaction.subList(nayanTransaction.size()/2, nayanTransaction.size())));
 		shantiAccount.add(new Account(787328L, 7329874L, "Current", 0L, new Date(), "Platinum", "IN")
-				.setTransactions(shantiTransaction.subList(0, 10)));
+				.setTransactions(shantiTransaction.subList(0, shantiTransaction.size()/2)));
 		shantiAccount.add(new Account(7982392L, 9880332L, "Saving", 0L, new Date(), "Platinum", "PatelNagar")
-				.setTransactions(shantiTransaction.subList(10, 20)));
+				.setTransactions(shantiTransaction.subList(shantiTransaction.size()/2, shantiTransaction.size())));
 		ojaswaAccount.add(new Account(329882L, 320984L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(0, 10)));
+				.setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size()/2)));
 		ojaswaAccount.add(new Account(32897L, 3098509L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(10, 20)));
+				.setTransactions(ojaswaTransaction.subList(ojaswaTransaction.size()/2, ojaswaTransaction.size())));
 
 		// Creating Customers and setting their accounts;
 		calendar.set(1999, 2, 10);
