@@ -1,10 +1,12 @@
 
 .content{
-  position: absolute; 
+  position: relative; 
   margin-left: 0px;
   width: 100%;
-  top: 100px;
-  left: 0px;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   z-index: 0;
   color: #202020;
   text-align: center;
@@ -98,6 +100,10 @@
   position: absolute;
   left: 20px;
   bottom: 32px;
+}
+
+input {
+  background-color: #fafafa;
 }
 
 input::-webkit-outer-spin-button,
