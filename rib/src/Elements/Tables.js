@@ -4,17 +4,30 @@ import React from 'react';
 //Bootstrap and jQuery libraries
 import 'jquery/dist/jquery.min.js';
 
+
+
 //Datatable Modules
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "datatables.net-dt/js/dataTables.dataTables";
+import 'bootstrap/dist/css/bootstrap.css';
+import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $, { data } from 'jquery';
+import DateRangeSelector from './DateRangeSelector';
+
+
+function convertTZ(date, tzString) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
+}
+
 
 
 class Tables extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = {
+            data: [],
+            value: null
+        };
 
     }
     componentDidMount() {
@@ -29,7 +42,7 @@ class Tables extends React.Component {
         var DATA = this.props.data.map((val) => {
             var data = [];
             data.push(val.transactionId);
-            data.push("Date : " + val.date.split("T").join(" Time : ").split('.')[0]);
+            data.push(convertTZ(val.date, 'Asia/Kolkata'));
             data.push(val.narration);
             data.push(val.category);
             data.push(formatter.format(val.withdraw));
@@ -88,6 +101,9 @@ class Tables extends React.Component {
         //Datatable HTML
         return (
             <div id={"table_div"} style={{ padding: ' 10px' }}>
+
+
+
                 {/* <!-- Table to be used for searching --> */}
                 <div>
                     <table className="summary_text" style={{ margin: '0 1em -1em auto', zIndex: 200, }}>
@@ -106,8 +122,16 @@ class Tables extends React.Component {
                                             <option value="5">Deposit</option>
                                         </select>
                                         <input type="search" placeholder="Search here" className="form-control ds-input global_filter" id="global_filter" />
+                                        {/* <DateRangeSelector/> */}
+
+
                                     </div>
+
                                 </td>
+                                <td>
+
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>
