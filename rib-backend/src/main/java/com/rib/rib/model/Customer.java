@@ -180,6 +180,14 @@ public class Customer {
 		this.previousLogin = previousLogin;
 	}
 
+	public List<Beneficiary> getBeneficiaries() {
+		return beneficiaries;
+	}
+
+	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
+		this.beneficiaries = beneficiaries;
+	}
+
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
 			String name) {
 		super();
