@@ -31,6 +31,10 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Account.class)
 	@JoinColumn(name = "customer_id")
 	private List<Account> accounts;
+	
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "customer_id")
+	private List<Beneficiary> beneficiaries;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
