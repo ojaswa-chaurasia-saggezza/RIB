@@ -132,8 +132,9 @@ export default function CASA() {
     const handleAccountChange = (accountNumber) => {
         CustomerService.getAccountDetails(accountNumber).then(response => {
             console.log(response.data);
+            // First chanhge the list of transactions and than the account  beacause otherwise wrong data reached to the tables
+            setListOfTransactions(response.data.transactions);      
             setSelectedAccount(response.data);
-            setListOfTransactions(response.data.transactions);
         }, error => {
 
             const _content =

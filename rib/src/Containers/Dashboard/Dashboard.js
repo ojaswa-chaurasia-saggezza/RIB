@@ -119,7 +119,6 @@ function Dashboard(props) {
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
     function convertTZ(date, tzString) {
-        console.log(typeof date);
         return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
     }
 

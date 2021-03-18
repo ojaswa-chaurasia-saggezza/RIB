@@ -1,46 +1,27 @@
 import React from "react";
-import MobileDateRangePicker from '@material-ui/lab/MobileDateRangePicker';
-import DesktopDateRangePicker from "@material-ui/lab/DesktopDateRangePicker";
-import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import { TextField, Box } from "@material-ui/core";
+
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 
 
-export default function DateRangeSelector(props){
+export default function DateRangeSelector(props) {
 
     const [value, setValue] = React.useState([null, null]);
+    const handleCallback = (start, end, label) => {
+        props.changeStartDate(start);
+        props.changeEndDate(end);
+    }
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MobileDateRangePicker
-                startText="Mobile start"
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue);
-                }}
-                renderInput={(startProps, endProps) => (
-                    <React.Fragment>
-                        <TextField {...startProps} variant="standard" />
-                        <Box sx={{ mx: 2 }}> to </Box>
-                        <TextField {...endProps} variant="standard" />
-                    </React.Fragment>
-                )}
-            />
-            <DesktopDateRangePicker
-                startText="Desktop start"
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue);
-                }}
-                renderInput={(startProps, endProps) => (
-                    <React.Fragment>
-                        <TextField {...startProps} variant="standard" />
-                        <Box sx={{ mx: 2 }}> to </Box>
-                        <TextField {...endProps} variant="standard" />
-                    </React.Fragment>
-                )}
-            />
-        </LocalizationProvider>
+        <DateRangePicker
+            className={'DataRangePicker'}
+            onCallback={handleCallback}
+            onCancel={(event, picker) => { handleCallback(null, null, null) }}
+            initialSettings={{ opens: 'left', locale: { format: 'MMM Do YYYY', cancelLabel: "Clear" }, cancelButtonClasses: 'btn btn-danger' }}
+            >
+            <input type="text" className="form-control DataRangePicker" style={{width:'auto'}} />
+        </DateRangePicker>
     );
 };
