@@ -2,6 +2,7 @@
 package com.rib.rib.controller;
 
 import java.math.BigDecimal;
+import java.text.Normalizer.Form;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,7 @@ import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.LoginRequest;
+import com.rib.rib.payload.request.TransferWithinBankBeneficiaryRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
@@ -167,7 +170,7 @@ public class CustomerController {
 	}
 	
 	
-	@PostMapping("/EditBeneficiary")
+	@PutMapping("/EditBeneficiary")
 	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest)
 	{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -197,9 +200,42 @@ public class CustomerController {
     		customerRepository.save(customer);
     		return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
     	}
-    	
-	
 	}
+	
+	@PostMapping("/FTWithinBankBeneficiary")
+	public void transferWithinBankBeneficiary(@RequestBody TransferWithinBankBeneficiaryRequest bankBeneficiaryRequest) {
+		
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 
+		 Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+		 
+		 List<Beneficiary> beneficiaries = customer.getBeneficiaries();
+		 
+		 Beneficiary myBeneficiary = null;
+		 
+		 for(Beneficiary beneficiary: beneficiaries) {
+			 
+			 if(beneficiary.getNickName().equals(bankBeneficiaryRequest.getBeneficiary())) 
+				 myBeneficiary = beneficiary;
+			 
+			 if(myBeneficiary!=null)
+				 break;
+			 
+		 }
+		 
+		 Account fromAccount = accountRepository.findById(bankBeneficiaryRequest.getFromAccount()).orElse(null);
+		 Account toAccount = myBeneficiary.getAccount();
+		 
+		 if(fromAccount.getBalance().subtract(bankBeneficiaryRequest.getAmount()).compareTo(new BigDecimal(5000)) == -1)
+		 {
+			 
+		 }
+		 
+		 
+		 
+		
+	}
+	
 
 	// If this function returns an error then try running the function after
 	// dropping all the tables in the rib database and rerun the java app
@@ -264,17 +300,17 @@ public class CustomerController {
 		
 
 		// Adding Accounts to the accounts list and setting transactions list
-		nayanAccount.add(new Account(10101010L, 100000000000L, "Saving", 0L, new Date(), "Silver", "PatelNagar")
+		nayanAccount.add(new Account(10101010L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0), new Date(), "Silver", "PatelNagar")
 				.setTransactions(nayanTransaction.subList(0, nayanTransaction.size()/2)));
-		nayanAccount.add(new Account(10000000L, 100000000000L, "Saving", 0L, new Date(), "Gold", "PatelNagar")
+		nayanAccount.add(new Account(10000000L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0), new Date(), "Gold", "PatelNagar")
 				.setTransactions(nayanTransaction.subList(nayanTransaction.size()/2, nayanTransaction.size())));
-		shantiAccount.add(new Account(787328L, 7329874L, "Current", 0L, new Date(), "Platinum", "IN")
+		shantiAccount.add(new Account(787328L, new BigDecimal(7329874), "Current", new BigDecimal(0.0), new Date(), "Platinum", "IN")
 				.setTransactions(shantiTransaction.subList(0, shantiTransaction.size()/2)));
-		shantiAccount.add(new Account(7982392L, 9880332L, "Saving", 0L, new Date(), "Platinum", "PatelNagar")
+		shantiAccount.add(new Account(7982392L, new BigDecimal(9880332), "Saving", new BigDecimal(0.0), new Date(), "Platinum", "PatelNagar")
 				.setTransactions(shantiTransaction.subList(shantiTransaction.size()/2, shantiTransaction.size())));
-		ojaswaAccount.add(new Account(329882L, 320984L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
+		ojaswaAccount.add(new Account(329882L, new BigDecimal(320984), "Current", new BigDecimal(0.0), new Date(), "Diamond", "PatelNagar")
 				.setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size()/2)));
-		ojaswaAccount.add(new Account(32897L, 3098509L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
+		ojaswaAccount.add(new Account(32897L, new BigDecimal(3098509), "Current", new BigDecimal(0.0), new Date(), "Diamond", "PatelNagar")
 				.setTransactions(ojaswaTransaction.subList(ojaswaTransaction.size()/2, ojaswaTransaction.size())));
 
 		// Creating Customers and setting their accounts;

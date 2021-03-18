@@ -1,5 +1,6 @@
 package com.rib.rib.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -22,11 +23,11 @@ public class Account {
 	@Id
 	private Long accountNumber;
 	@Column
-	private Long balance;
+	private BigDecimal balance;
 	@Column
 	private String type;
 	@Column
-	private Long outStandingBalance;
+	private BigDecimal outStandingBalance;
 	@Column
 	private Date outStandingDueDate;
 	@Column
@@ -46,11 +47,11 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	public Long getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Long balance) {
+	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	}
 
@@ -62,11 +63,11 @@ public class Account {
 		this.type = type;
 	}
 
-	public Long getOutStandingBalance() {
+	public BigDecimal getOutStandingBalance() {
 		return outStandingBalance;
 	}
 
-	public void setOutStandingBalance(Long outStandingBalance) {
+	public void setOutStandingBalance(BigDecimal outStandingBalance) {
 		this.outStandingBalance = outStandingBalance;
 	}
 
@@ -103,7 +104,7 @@ public class Account {
 		return this;
 	}
 
-	public Account(Long accountNumber, Long balance, String type, Long outStandingBalance, Date outStandingDueDate,
+	public Account(Long accountNumber, BigDecimal balance, String type, BigDecimal outStandingBalance, Date outStandingDueDate,
 			String segment, String iFSC) {
 		super();
 		this.accountNumber = accountNumber;
