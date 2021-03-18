@@ -8,7 +8,6 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 
 export default function DateRangeSelector(props) {
 
-    const [value, setValue] = React.useState([null, null]);
     const handleCallback = (start, end, label) => {
         props.changeStartDate(start);
         props.changeEndDate(end);
