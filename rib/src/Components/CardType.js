@@ -1,16 +1,15 @@
 import React from 'react';
 import '../CSS/style.css';
-import '../CSS/style1.css';
 import '../CSS/ErrorStyling.css';
 
 export default function CardType() {
     return (
         <div class="content" >
-            <section class="add-beneficiary">
+            <section class="trasfer-beneficiary">
                 <h1 class="title bg-primary" >Open New Credit Card</h1>
                 <br/><br/><br/>
                 <div class="container">
-                    <div class="contact-form row">
+                    <div class="transfer-form row">
 
                         <div class="form-field col-lg-6">
                             <label for="productType" class="label drop-label text-primary">Card Product type</label>

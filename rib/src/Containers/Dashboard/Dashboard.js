@@ -97,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
     },
     MenuItem: {
         fontSize: 14,
+    },
+    activeAccordion: {
+        backgroundColor: theme.palette.action.selected,
     }
 }));
 
@@ -114,6 +117,13 @@ var AccordionStyle = withStyles({
 })(Accordion);
 
 function Dashboard(props) {
+
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+    };
+
 
     const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
@@ -178,33 +188,34 @@ function Dashboard(props) {
             <Divider />
             <List>
                 {['CASA', 'CREDIT CARD',].map((text, index) => (
-                    <ListItem button component={Link} to={`/Dashboard/${text}`} key={text}>
+                    <ListItem selected={selectedIndex === index} button component={Link} to={`/Dashboard/${text}`} key={text} onClick={(e) => handleListItemClick(e, index)}>
 
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
                 <ListItem button key={'FUND TRANSFER'} style={{ padding: 0, }}>
-                    <AccordionStyle>
+                    <AccordionStyle >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
+                            className={[2, 3, 4, 5].includes(selectedIndex) ? classes.activeAccordion : null}
                         >
                             <Typography >FUND TRANSFER</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Dashboard/AddBeneficiary'>
+                                <ListItem selected={selectedIndex === 2} button component={Link} to='/Dashboard/AddBeneficiary' onClick={(e) => handleListItemClick(e, 2)}>
                                     <ListItemText primary={'Add Beneficiary'} />
                                 </ListItem>
 
-                                <ListItem button component={Link} to='/Dashboard/EditBeneficiary'>
+                                <ListItem selected={selectedIndex === 3} button component={Link} to='/Dashboard/EditBeneficiary' onClick={(e) => handleListItemClick(e, 3)}>
                                     <ListItemText primary={'Edit Beneficiary'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/FTWithinBankAccount'>
+                                <ListItem  selected={selectedIndex === 4}button component={Link} to='/Dashboard/FTWithinBankAccount' onClick={(e) => handleListItemClick(e, 4)}>
                                     <ListItemText primary={'Transfer within your accounts'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/FTWithinBankBeneficiary'>
+                                <ListItem  selected={selectedIndex === 5} button component={Link} to='/Dashboard/FTWithinBankBeneficiary' onClick={(e) => handleListItemClick(e, 5)}>
                                     <ListItemText primary={'Transfer to within Bank Beneficiary'} />
                                 </ListItem>
                             </List>
@@ -217,18 +228,19 @@ function Dashboard(props) {
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
+                            className={[6, 7, 8].includes(selectedIndex) ? classes.activeAccordion : null}
                         >
                             <Typography >BILL PAYMENT</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Dashboard/AddBiller'>
+                                <ListItem selected={selectedIndex === 6} button component={Link} to='/Dashboard/AddBiller' onClick={(e) => handleListItemClick(e, 6)}>
                                     <ListItemText primary={'Add Biller'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/EditBiller'>
+                                <ListItem selected={selectedIndex === 7} button component={Link} to='/Dashboard/EditBiller' onClick={(e) => handleListItemClick(e, 7)}>
                                     <ListItemText primary={'Edit Biller'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/Pay'>
+                                <ListItem selected={selectedIndex === 8} button component={Link} to='/Dashboard/Pay' onClick={(e) => handleListItemClick(e, 8)}>
                                     <ListItemText primary={'Pay'} />
                                 </ListItem>
                             </List>
@@ -242,21 +254,22 @@ function Dashboard(props) {
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
+                            className={[9, 10, 11,12].includes(selectedIndex) ? classes.activeAccordion : null}
                         >
                             <Typography >SERVICE REQUEST</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/Dashboard/ChequeRequest'>
+                                <ListItem selected={selectedIndex === 9}button component={Link} to='/Dashboard/ChequeRequest'  onClick={(e) => handleListItemClick(e, 9)}> 
                                     <ListItemText primary={'Check(Cheque) Order'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/ViewExistingChequeRequest'>
+                                <ListItem selected={selectedIndex === 10} button component={Link} to='/Dashboard/ViewExistingChequeRequest' onClick={(e) => handleListItemClick(e, 10)}> 
                                     <ListItemText primary={'View Existing'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/CreditLimitIncrease'>
+                                <ListItem selected={selectedIndex === 11} button component={Link} to='/Dashboard/CreditLimitIncrease' onClick={(e) => handleListItemClick(e, 11)}>
                                     <ListItemText primary={'Credit Limit Increase'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/ResetPassword'>
+                                <ListItem selected={selectedIndex === 12} button component={Link} to='/Dashboard/ResetPassword' onClick={(e) => handleListItemClick(e, 12)}>
                                     <ListItemText primary={'Reset Password'} />
                                 </ListItem>
                             </List>
@@ -269,15 +282,16 @@ function Dashboard(props) {
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
+                            className={[13,14 ].includes(selectedIndex) ? classes.activeAccordion : null}
                         >
                             <Typography >PRODUCT OPENING</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>
-                                <ListItem button component={Link} to='/DashBoard/CasaType'>
+                                <ListItem selected={selectedIndex === 13}button component={Link} to='/DashBoard/CasaType' onClick={(e) => handleListItemClick(e, 13)}>
                                     <ListItemText primary={'Open New Casa Account'} />
                                 </ListItem>
-                                <ListItem button component={Link} to='/Dashboard/CardType'>
+                                <ListItem selected={selectedIndex === 14} button component={Link} to='/Dashboard/CardType' onClick={(e) => handleListItemClick(e, 14)}>
                                     <ListItemText primary={'Open New Credit Card'} />
                                 </ListItem>
 
@@ -344,12 +358,7 @@ function Dashboard(props) {
                             <MenuItem onClick={handleClose} className={classes.MenuItem}>
                                 <ListItemIcon>
                                     <PersonIcon fontSize="small" />
-                                </ListItemIcon>{Customer.name}</MenuItem>
-                            <MenuItem onClick={handleClose} className={classes.MenuItem}>
-                                <ListItemIcon>
-                                    <ScheduleIcon fontSize="small" />
-                                </ListItemIcon>
-                                Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                                </ListItemIcon>{Customer.name}
                             </MenuItem>
                             <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
                                 <ListItemIcon>
@@ -399,6 +408,7 @@ function Dashboard(props) {
                         Customer.username ?
                             (<Switch>
                                 <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
+                                <Route path='/Dashboard/CREDIT CARD' component={CASA}></Route>
                                 <Route path='/Dashboard/AddBiller' component={AddBiller}></Route>
                                 <Route path='/Dashboard/EditBiller' component={EditBiller}></Route>
                                 <Route path='/Dashboard/Pay' component={Pay}></Route>
@@ -411,7 +421,7 @@ function Dashboard(props) {
                                 <Route path='/Dashboard/EditBeneficiary' component={EditBeneficiary}></Route>
                                 <Route path='/Dashboard/AddBeneficiary' component={AddBeneficiary}></Route>
                                 <Route path='/Dashboard/CardType' component={CardType}></Route>
-                                <Route path ='/Dashboard/CasaType' component={CasaType}></Route>
+                                <Route path='/Dashboard/CasaType' component={CasaType}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)

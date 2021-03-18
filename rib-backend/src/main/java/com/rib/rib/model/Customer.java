@@ -31,6 +31,10 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Account.class)
 	@JoinColumn(name = "customer_id")
 	private List<Account> accounts;
+	
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "customer_id")
+	private List<Beneficiary> beneficiaries;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
@@ -174,6 +178,14 @@ public class Customer {
 
 	public void setPreviousLogin(Date previousLogin) {
 		this.previousLogin = previousLogin;
+	}
+
+	public List<Beneficiary> getBeneficiaries() {
+		return beneficiaries;
+	}
+
+	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
+		this.beneficiaries = beneficiaries;
 	}
 
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,

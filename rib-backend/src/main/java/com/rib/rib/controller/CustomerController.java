@@ -32,8 +32,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
+import com.rib.rib.model.Beneficiary;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
+import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
@@ -129,6 +131,74 @@ public class CustomerController {
 	@GetMapping("/Account/{accountnumber}")
 	public Optional<Account> getCustomerByUsername(@PathVariable Long accountnumber) {
 		return accountRepository.findById(accountnumber);
+	}
+	
+	//Add beneficiary API
+	@PostMapping("/AddBeneficiary")
+	public ResponseEntity<?> addBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+		
+		Account account = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
+
+		if(account==null)
+			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+		
+		else if(!account.getIFSC().equals(beneficiaryRequest.getIfsc()))
+		{
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC code"));
+		}
+		else
+		{
+			Beneficiary beneficiary = new Beneficiary(beneficiaryRequest.getNickName());
+			beneficiary.setAccount(account);
+			
+			List<Beneficiary> list = customer.getBeneficiaries();
+			list.add(beneficiary);
+			
+			customer.setBeneficiaries(list);
+			
+			customerRepository.save(customer);
+			return ResponseEntity.ok(new MessageResponse("Beneficiary added successfully"));
+		}
+		
+	}
+	
+	
+	@PostMapping("/EditBeneficiary")
+	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest)
+	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+	    Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+	    
+    	List<Beneficiary> list = customer.getBeneficiaries();
+    	Beneficiary currentBeneficiary = null;
+    	for(Beneficiary beneficiary: list)
+    	{
+    		if(beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
+    			currentBeneficiary = beneficiary;
+    			break;
+    		}
+    	}
+    	
+    	Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
+    	if(newAccount == null) {
+    		return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+    	}
+    	else if(!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
+    		return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
+    	}
+    	else {
+    		currentBeneficiary.setAccount(newAccount);
+    		customer.setBeneficiaries(list);
+    		customerRepository.save(customer);
+    		return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
+    	}
+    	
+	
 	}
 
 	// If this function returns an error then try running the function after

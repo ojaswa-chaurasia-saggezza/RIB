@@ -92,8 +92,8 @@ function ResetPassword(props) {
         setOpen(false);
     };
 
-    const [username, setUsername] = useState("");
-    const [usernameError, setUsernameError] = useState({ error: false, errorText: "" });
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [currentPasswordError, setCurrentPasswordError] = useState({ error: false, errorText: "" });
 
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState({ error: false, errorText: "" });
@@ -103,10 +103,10 @@ function ResetPassword(props) {
 
     const handleResetPassword = () => {
 
-        console.log("Inside handleResetPassword" + username + password + confirmPassword);
+        console.log("Inside handleResetPassword" + currentPassword + password + confirmPassword);
 
-        if (username == "") {
-            setUsernameError({ error: true, errorText: "Username should not be empty" });
+        if (currentPassword == "") {
+            setCurrentPasswordError({ error: true, errorText: "Current Password should not be empty" });
             return;
         }
         if (password == "") {
@@ -126,8 +126,8 @@ function ResetPassword(props) {
             return;
         }
 
-        if (username != "" && password != "" && confirmPassword != "")
-            CustomerService.resetPassword(username, password).then((response) => {
+        if (currentPassword != "" && password != "" && confirmPassword != "")
+            CustomerService.resetPassword(currentPassword, password).then((response) => {
 
                 if (response.data) {
 
@@ -147,7 +147,7 @@ function ResetPassword(props) {
                         error.message ||
                         error.toString();
 
-                    setUsernameError({ error: true, errorText: resMessage });
+                    setCurrentPasswordError({ error: true, errorText: resMessage });
                     console.log(resMessage);
                 });
 
@@ -176,15 +176,15 @@ function ResetPassword(props) {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                error={usernameError.error}
-                                helperText={usernameError.errorText}
+                                error={currentPasswordError.error}
+                                helperText={currentPasswordError.errorText}
                                 name="current-password"
                                 label="Current Password"
-                                type="current-password"
+                                type="password"
                                 id="current-password"
                                 autoComplete="current-password"
-                                onKeyPress={() => { if (username != "") setUsernameError({ error: false, errorText: "" }) }}
-                                onChange={(e) => { setUsername(e.target.value) }}
+                                onKeyPress={() => { if (currentPassword != "") setCurrentPasswordError({ error: false, errorText: "" }) }}
+                                onChange={(e) => { setCurrentPassword(e.target.value) }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -230,7 +230,7 @@ function ResetPassword(props) {
                                 helperText={confirmPasswordError.errorText}
                                 name="confirm-password"
                                 label="Confirm Password"
-                                type="confirm-password"
+                                type="password"
                                 id="confirm-password"
                                 autoComplete="current-password"
                                 onKeyPress={() => { if (confirmPassword != "") setConfirmPasswordError({ error: false, errorText: "" }) }}

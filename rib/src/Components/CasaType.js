@@ -1,17 +1,16 @@
 import React from 'react';
 import '../CSS/style.css';
-import '../CSS/style1.css';
 import '../CSS/ErrorStyling.css';
 
 export default function CasaType()
 {
     return (
 <div class="content" >
-      <section class="add-beneficiary">
+      <section class="trasfer-beneficiary">
         <h1 class="title bg-primary" >Open New CASA Account</h1>
         <br/><br/><br/>
         <div class="container">
-          <div class="contact-form row">
+          <div class="trasfer-form row">
 
             <div class="form-field col-lg-6">
               <label for="account-type" class="label drop-label text-primary">Account type</label>
