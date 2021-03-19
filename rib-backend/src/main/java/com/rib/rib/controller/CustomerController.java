@@ -2,6 +2,7 @@
 package com.rib.rib.controller;
 
 import java.math.BigDecimal;
+import java.text.Normalizer.Form;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +41,8 @@ import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.LoginRequest;
+import com.rib.rib.payload.request.TransferWithinBankBeneficiaryRequest;
+import com.rib.rib.payload.request.TransferWithinOwnAccountsRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CreditCardRepository;
@@ -182,7 +187,7 @@ public class CustomerController {
 
 	}
 
-	@PostMapping("/EditBeneficiary")
+	@PutMapping("/EditBeneficiary")
 	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -207,6 +212,113 @@ public class CustomerController {
 			customer.setBeneficiaries(list);
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
+		}
+	}
+
+	@PostMapping("/TransferWithinBankAccounts")
+
+	public ResponseEntity<?> transferWithinOwnAccounts(
+			@RequestBody TransferWithinOwnAccountsRequest transferWithinOwnAccountsRequest) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+		List<Account> accounts = customer.getAccounts();
+
+		Account fromAccount = null;
+		Account toAccount = null;
+
+		for (Account account : accounts) {
+
+			if (fromAccount == null
+					&& account.getAccountNumber().equals(transferWithinOwnAccountsRequest.getFromAccountNumber()))
+				fromAccount = account;
+
+			if (toAccount == null
+					&& account.getAccountNumber().equals(transferWithinOwnAccountsRequest.getToAccountNumber()))
+				toAccount = account;
+
+			if (fromAccount != null && toAccount != null)
+				break;
+
+		}
+		if (fromAccount.getBalance().subtract(transferWithinOwnAccountsRequest.getAmount())
+				.compareTo(new BigDecimal(5000)) == -1) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Insufficient balance"));
+		}
+
+		TimeZone timeZone = TimeZone.getTimeZone("UTC");
+		Calendar calendar = Calendar.getInstance(timeZone);
+
+		fromAccount.setBalance(fromAccount.getBalance().subtract(transferWithinOwnAccountsRequest.getAmount()));
+
+		toAccount.setBalance(toAccount.getBalance().add(transferWithinOwnAccountsRequest.getAmount()));
+
+		int day = calendar.get(Calendar.DATE);
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		long mili = System.currentTimeMillis();
+		String transactionId = "TXN" + day + month + year + mili;
+		String category = "Transfer";
+		String narration = "Transaction to " + toAccount.getAccountNumber() + "-" + " SELF " + day + "/" + month + "/"
+				+ year;
+		Date date = calendar.getTime();
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Transaction fromTransaction = new Transaction(transactionId, category, narration, date,
+				fromAccount.getBalance(), transferWithinOwnAccountsRequest.getAmount(), new BigDecimal(0));
+
+		mili = System.currentTimeMillis();
+		transactionId = "TXN" + day + month + year + mili;
+		narration = "Transaction from " + fromAccount.getAccountNumber() + "-" + " SELF " + day + "/" + month + "/"
+				+ year;
+
+		Transaction toTransaction = new Transaction(transactionId, category, narration, date, toAccount.getBalance(),
+				new BigDecimal(0), transferWithinOwnAccountsRequest.getAmount());
+		
+		List<Transaction> fromTransactions = fromAccount.getTransactions();
+		List<Transaction> toTransactions = toAccount.getTransactions();
+		
+		fromTransactions.add(fromTransaction);
+		toTransactions.add(toTransaction);
+		
+		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Transaction successful"));
+
+	}
+
+	@PostMapping("/FTWithinBankBeneficiary")
+	public void transferWithinBankBeneficiary(
+			@RequestBody TransferWithinBankBeneficiaryRequest bankBeneficiaryRequest) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		List<Beneficiary> beneficiaries = customer.getBeneficiaries();
+
+		Beneficiary myBeneficiary = null;
+
+		for (Beneficiary beneficiary : beneficiaries) {
+
+			if (beneficiary.getNickName().equals(bankBeneficiaryRequest.getBeneficiary()))
+				myBeneficiary = beneficiary;
+
+			if (myBeneficiary != null)
+				break;
+
+		}
+
+		Account fromAccount = accountRepository.findById(bankBeneficiaryRequest.getFromAccount()).orElse(null);
+		Account toAccount = myBeneficiary.getAccount();
+
+		if (fromAccount.getBalance().subtract(bankBeneficiaryRequest.getAmount())
+				.compareTo(new BigDecimal(5000)) == -1) {
+
 		}
 
 	}
