@@ -33,12 +33,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
 import com.rib.rib.model.Beneficiary;
+import com.rib.rib.model.CreditCard;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
+import com.rib.rib.repository.CreditCardRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.TransactionRepositary;
 import com.rib.rib.security.services.CustomerDetailsImpl;
@@ -55,6 +57,8 @@ public class CustomerController {
 	private AccountRepository accountRepository;
 	@Autowired
 	private TransactionRepositary transactionRepositary;
+	@Autowired
+	private CreditCardRepository creditCardRepository;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -64,23 +68,23 @@ public class CustomerController {
 		return customerRepository.findAll();
 	}
 
-	@GetMapping("/Customer/{username}")
+	@GetMapping("/Customer/{username}") // Retrieve Customer by username ( for Testing, remove when deploying)
 	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
 	}
 
-	@GetMapping("/CustomerDetails")
+	@GetMapping("/CustomerDetails") // Retrieve Customer Details using the jwt token
 	public Optional<Customer> getCustomerByUsernameAuthentication() {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = auth.getName();
 		Optional<Customer> customer = customerRepository.findByUsername(username);
-		
+
 		return customer;
 	}
 
-	@GetMapping("/Customer/{username}/enableLoginStatus")
+	@GetMapping("/Customer/{username}/enableLoginStatus") // For testing purpose
 	public void enableloginStatus(@PathVariable String username) {
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 
@@ -89,7 +93,7 @@ public class CustomerController {
 
 	}
 
-	@PostMapping("/resetPassword")
+	@PostMapping("/resetPassword") // Reset the password using the jwt token
 	public ResponseEntity<?> resetPassword(@Valid @RequestBody LoginRequest loginRequest) {
 		/*
 		 * Here the incoming loginRequest.username is actually the old password and
@@ -99,8 +103,8 @@ public class CustomerController {
 
 		String username = auth.getName();
 		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(username,loginRequest.getUsername()));
+			Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(username, loginRequest.getUsername()));
 
 			Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 
@@ -116,7 +120,7 @@ public class CustomerController {
 
 	}
 
-	@GetMapping("/Customer/{username}/disableLoginStatus")
+	@GetMapping("/Customer/{username}/disableLoginStatus") // For testing purposes
 	public void disableLoginStatus(@PathVariable String username) {
 		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 		customer.setLoginStatus("Unregistered");
@@ -128,77 +132,83 @@ public class CustomerController {
 		return accountRepository.findAll();
 	}
 
-	@GetMapping("/Account/{accountnumber}")
-	public Optional<Account> getCustomerByUsername(@PathVariable Long accountnumber) {
-		return accountRepository.findById(accountnumber);
+	@GetMapping("/Account/{accountNumber}") // Retrieve Account by Account number
+	public Optional<Account> getAccoutnByAccountNumber(@PathVariable Long accountNumber) {
+		return accountRepository.findById(accountNumber);
+	}
+
+	@GetMapping("/CreditCard")
+	public List<CreditCard> getAllCreditCard() {
+		return creditCardRepository.findAll();
+	}
+
+	@GetMapping("/CreditCard/{creditCardNumber}")
+	public Optional<CreditCard> getCreditCardByCreditCardNumber(@PathVariable Long creditCardNumber) {
+		return creditCardRepository.findById(creditCardNumber);
 	}
 	
-	//Add beneficiary API
+	@PostMapping("/CreditCard/{CreditCardNumber}/PFA")
+	public void getCreditCardPFA(@PathVariable Long CreditCardNumber){
+		
+	}
+
+	// Add beneficiary API
 	@PostMapping("/AddBeneficiary")
 	public ResponseEntity<?> addBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
-		
+
 		Account account = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
 
-		if(account==null)
+		if (account == null)
 			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
-		
-		else if(!account.getIFSC().equals(beneficiaryRequest.getIfsc()))
-		{
+
+		else if (!account.getIFSC().equals(beneficiaryRequest.getIfsc())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC code"));
-		}
-		else
-		{
+		} else {
 			Beneficiary beneficiary = new Beneficiary(beneficiaryRequest.getNickName());
 			beneficiary.setAccount(account);
-			
+
 			List<Beneficiary> list = customer.getBeneficiaries();
 			list.add(beneficiary);
-			
+
 			customer.setBeneficiaries(list);
-			
+
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary added successfully"));
 		}
-		
+
 	}
-	
-	
+
 	@PostMapping("/EditBeneficiary")
-	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest)
-	{
+	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-	    Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
-	    
-    	List<Beneficiary> list = customer.getBeneficiaries();
-    	Beneficiary currentBeneficiary = null;
-    	for(Beneficiary beneficiary: list)
-    	{
-    		if(beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
-    			currentBeneficiary = beneficiary;
-    			break;
-    		}
-    	}
-    	
-    	Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
-    	if(newAccount == null) {
-    		return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
-    	}
-    	else if(!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
-    		return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
-    	}
-    	else {
-    		currentBeneficiary.setAccount(newAccount);
-    		customer.setBeneficiaries(list);
-    		customerRepository.save(customer);
-    		return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
-    	}
-    	
-	
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+
+		List<Beneficiary> list = customer.getBeneficiaries();
+		Beneficiary currentBeneficiary = null;
+		for (Beneficiary beneficiary : list) {
+			if (beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
+				currentBeneficiary = beneficiary;
+				break;
+			}
+		}
+
+		Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
+		if (newAccount == null) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+		} else if (!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
+		} else {
+			currentBeneficiary.setAccount(newAccount);
+			customer.setBeneficiaries(list);
+			customerRepository.save(customer);
+			return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
+		}
+
 	}
 
 	// If this function returns an error then try running the function after
@@ -210,11 +220,12 @@ public class CustomerController {
 		List<Transaction> nayanTransaction = new ArrayList<Transaction>();
 		List<Transaction> shantiTransaction = new ArrayList<Transaction>();
 		List<Transaction> ojaswaTransaction = new ArrayList<Transaction>();
+		List<Transaction> creditCardTransaction = new ArrayList<Transaction>();
 
 		Random rand = new Random(); // For Generating Random values
 
 		// Generating Random Transactions for Nayan
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 300; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXN" + i + (rand.nextInt(9000000) + 1000000);
@@ -228,7 +239,7 @@ public class CustomerController {
 		}
 
 		// Generating Random Transactions for Shanti
-		for (int i = 0; i < 167; i++) {
+		for (int i = 0; i < 567; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXS" + i + (rand.nextInt(9000000) + 1000000);
@@ -242,7 +253,7 @@ public class CustomerController {
 		}
 
 		// Generating Random Transactions for Ojaswa
-		for (int i = 0; i < 69; i++) {
+		for (int i = 0; i < 169; i++) {
 			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 					: rand.nextInt(10) < 5 ? "Bill" : "Food";
 			String TransactionId = "TXO" + i + (rand.nextInt(9000000) + 1000000);
@@ -255,27 +266,50 @@ public class CustomerController {
 					BigDecimal.ZERO));
 		}
 
+		// Generating Transactions for CreditCard
+		for (int i = 0; i < 269; i++) {
+			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
+					: rand.nextInt(10) < 5 ? "Bill" : "Food";
+			String TransactionId = "TXC" + i + (rand.nextInt(9000000) + 1000000);
+
+			creditCardTransaction.add(new Transaction(TransactionId, category,
+					"Transaction to " + (10000000 + rand.nextInt(90000000)) + "- UPI " + rand.nextInt(30) + "/"
+							+ rand.nextInt(12) + "/" + (rand.nextInt(42) + 1980),
+					Date.from(ZonedDateTime.now().minusDays(rand.nextInt(1000)).toInstant()),
+					new BigDecimal(rand.nextInt(900000) + 100000), new BigDecimal(rand.nextInt(100000)),
+					BigDecimal.ZERO));
+		}
+
 		// Creating List of accounts for each customer
 		List<Account> nayanAccount = new ArrayList<Account>();
 		List<Account> shantiAccount = new ArrayList<Account>();
 		List<Account> ojaswaAccount = new ArrayList<Account>();
-		
+
 		Calendar calendar = Calendar.getInstance();
-		
 
 		// Adding Accounts to the accounts list and setting transactions list
 		nayanAccount.add(new Account(10101010L, 100000000000L, "Saving", 0L, new Date(), "Silver", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(0, nayanTransaction.size()/2)));
+				.setTransactions(nayanTransaction.subList(0, nayanTransaction.size() / 2)));
 		nayanAccount.add(new Account(10000000L, 100000000000L, "Saving", 0L, new Date(), "Gold", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(nayanTransaction.size()/2, nayanTransaction.size())));
+				.setTransactions(nayanTransaction.subList(nayanTransaction.size() / 2, nayanTransaction.size())));
 		shantiAccount.add(new Account(787328L, 7329874L, "Current", 0L, new Date(), "Platinum", "IN")
-				.setTransactions(shantiTransaction.subList(0, shantiTransaction.size()/2)));
+				.setTransactions(shantiTransaction.subList(0, shantiTransaction.size() / 2)));
 		shantiAccount.add(new Account(7982392L, 9880332L, "Saving", 0L, new Date(), "Platinum", "PatelNagar")
-				.setTransactions(shantiTransaction.subList(shantiTransaction.size()/2, shantiTransaction.size())));
+				.setTransactions(shantiTransaction.subList(shantiTransaction.size() / 2, shantiTransaction.size())));
 		ojaswaAccount.add(new Account(329882L, 320984L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size()/2)));
+				.setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size() / 2)));
 		ojaswaAccount.add(new Account(32897L, 3098509L, "Current", 0L, new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(ojaswaTransaction.size()/2, ojaswaTransaction.size())));
+				.setTransactions(ojaswaTransaction.subList(ojaswaTransaction.size() / 2, ojaswaTransaction.size())));
+
+		List<CreditCard> shantiCreditCard = new ArrayList<CreditCard>();
+		List<CreditCard> ojaswaCreditCard = new ArrayList<CreditCard>();
+
+		shantiCreditCard.add(new CreditCard(7777777777777777L, "Travel", 100000000L, 2000000L, new Date())
+				.setTransactions(creditCardTransaction.subList(0, 111)));
+		ojaswaCreditCard.add(new CreditCard(3333333333333333L, "General", 1000000L, 370000L, new Date())
+				.setTransactions(creditCardTransaction.subList(111, 200)));
+		ojaswaCreditCard.add(new CreditCard(3333333333333331L, "Travel", 500000L, 0L, new Date())
+				.setTransactions(creditCardTransaction.subList(200, 269)));
 
 		// Creating Customers and setting their accounts;
 		calendar.set(1999, 2, 10);
@@ -283,10 +317,12 @@ public class CustomerController {
 				passwordEncoder.encode("Nayan"), "Nayan Verma").setAccounts(nayanAccount);
 		calendar.set(1997, 4, 23);
 		Customer shanti = new Customer(6265510415L, calendar.getTime(), "shanti.mukati@saggezza.com", "Shanti",
-				passwordEncoder.encode("Shanti"), "Shanti Mukati").setAccounts(shantiAccount);
+				passwordEncoder.encode("Shanti"), "Shanti Mukati").setAccounts(shantiAccount)
+						.setCreditCard(shantiCreditCard);
 		calendar.set(1997, 0, 16);
 		Customer ojaswa = new Customer(7897842634L, calendar.getTime(), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
-				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount);
+				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount)
+						.setCreditCard(ojaswaCreditCard);
 
 		// Saving the Customers and returning their data
 		return customerRepository.saveAll(Arrays.asList(nayan, shanti, ojaswa));

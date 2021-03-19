@@ -32,6 +32,10 @@ public class Customer {
 	@JoinColumn(name = "customer_id")
 	private List<Account> accounts;
 	
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = CreditCard.class)
+	@JoinColumn(name = "customer_id")
+	private List<CreditCard> creditCard;
+	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
 	@JoinColumn(name = "customer_id")
 	private List<Beneficiary> beneficiaries;
@@ -87,6 +91,16 @@ public class Customer {
 		this.accounts = accounts;
 		return this;
 	}
+	
+	public List<CreditCard> getCreditCard() {
+		return creditCard;
+	}
+
+	public Customer setCreditCard(List<CreditCard> creditCard) {
+		this.creditCard = creditCard;
+		return this;
+	}
+
 
 	public String getName() {
 		return name;
