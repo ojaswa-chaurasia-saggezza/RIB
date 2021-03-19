@@ -37,11 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
 import com.rib.rib.model.Beneficiary;
-<<<<<<< HEAD
 import com.rib.rib.model.Biller;
-=======
 import com.rib.rib.model.CreditCard;
->>>>>>> dbead9df074f263d38b16a6115a061b4cf043157
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.GlobalBiller;
 import com.rib.rib.model.Transaction;
