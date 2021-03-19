@@ -98,21 +98,11 @@ export default function CreditCard() {
     const [selectedCreditCard, setSelectedCreditCard] = useState('');
     const [listOfTransactions, setListOfTransactions] = useState([]);
 
-    const [startDatePFA, setStartDatePFA] = useState(null);
-    const [endDatePFA, setEndDatePFA] = useState(null);
     const [chartData , setChartData] = useState([['category','Amount'],]);
 
-    const setStartPFA=(date)=>{
-        startDatePFA(date);
-        changeChartData();
-    }
-    const setEndPFA=(date)=>{
-        startDatePFA(date);
-        changeChartData();
-    }
-
-    const changeChartData= () =>{
-        CustomerService.getCreditCardPFAData(selectedCreditCard,startDatePFA,endDatePFA).then((response)=>{
+    const changeChartData= (startDate, endDate, CREDITCARD) =>{
+        CustomerService.getCreditCardPFAData(CREDITCARD ?? creditCard,startDate,endDate).then((response)=>{
+            console.log(response.data);
             if(response.data)
                 setChartData(response.data);
         },(error)=>{
@@ -139,6 +129,7 @@ export default function CreditCard() {
                     setCreditCards(creditCardList);
                     handleAccountChange(creditCardList[0]);
                     setCreditCard(creditCardList[0]);
+                    changeChartData(new Date(1900,0), new Date(), creditCardList[0]);
 
 
 
@@ -245,7 +236,7 @@ export default function CreditCard() {
                             <div style={{ justifyContent: "center", display: 'flex-box', width: '200px', height: '200px' }}>
                                 <div style={{ textAlign: 'center' }}><strong>PFA</strong></div>
                                 <PieChart data={chartData}/>
-                                <div className="input-group-sm ms-2" style={{ display: 'flex', }}>Select Range :<DateRangeSelector changeStartDate={setStartPFA} changeEndDate={setEndPFA} width='90%' />
+                                <div className="input-group-sm ms-2" style={{ display: 'flex', }}>Select Range :<DateRangeSelector changeDate={changeChartData} width='90%' />
                                 </div>
                             </div>
                         </Grid>

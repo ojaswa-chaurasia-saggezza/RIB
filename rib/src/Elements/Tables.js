@@ -15,7 +15,7 @@ import $, { data } from 'jquery';
 import DateRangeSelector from './DateRangeSelector';
 import Slider from "@material-ui/core/Slider";
 import { withStyles } from '@material-ui/core';
-import { convertTZ , formatter} from "../Helpers/HelperFunctions";
+import { convertTZ, formatter } from "../Helpers/HelperFunctions";
 
 
 const CustomSlider = withStyles({
@@ -64,6 +64,7 @@ class Tables extends React.Component {
         this.changeStartDate = this.changeStartDate.bind(this);
         this.changeEndDate = this.changeEndDate.bind(this);
         this.handleSliderChange = this.handleSliderChange.bind(this);
+        this.changeDate = this.changeDate.bind(this);
         this.formatter = formatter;
 
 
@@ -74,6 +75,12 @@ class Tables extends React.Component {
     }
     changeEndDate = (date) => {
         this.setState({ endDate: convertTZ(date) });
+    }
+
+    changeDate = (startDate, endDate) => {
+        this.changeStartDate(startDate);
+        this.changeEndDate(endDate);
+
     }
     handleSliderChange = (event, value) => {
         this.setState({ rangeValue: value });
@@ -250,9 +257,9 @@ class Tables extends React.Component {
                                         </select>
                                         <input type="search" placeholder="Search here" className="form-control ds-input global_filter" id="global_filter" style={{ display: ['1', '4', '5'].includes(this.state.whatIsSelected) ? 'none' : 'block' }} />
 
-                                        <DateRangeSelector changeStartDate={this.changeStartDate} changeEndDate={this.changeEndDate} />
+                                        <DateRangeSelector changeDate={this.changeDate} />
                                         {this.state.whatIsSelected >= '4' ?
-                                            <div style={{ display: 'flex', width: '200px', paddingLeft: '10px'}}>
+                                            <div style={{ display: 'flex', width: '200px', paddingLeft: '10px' }}>
 
                                                 <CustomSlider
                                                     value={this.state.rangeValue}
@@ -283,7 +290,7 @@ class Tables extends React.Component {
 
                 {/* </div>The Main Table to Be displayed */}
                 <table id={"Credit_Card_and_CASA_Table" + this.props.accountNumber} className="table table-striped table-responsive table-bordered " style={{ width: '100%' }}>
-                    
+
                 </table>
             </div>
         );

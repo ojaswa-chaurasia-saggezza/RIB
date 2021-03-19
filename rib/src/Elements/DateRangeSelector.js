@@ -9,8 +9,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 export default function DateRangeSelector(props) {
 
     const handleCallback = (start, end, label) => {
-        props.changeStartDate(start);
-        props.changeEndDate(end);
+        props.changeDate(start,end);
     }
 
     return (
