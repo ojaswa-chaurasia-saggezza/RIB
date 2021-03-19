@@ -36,15 +36,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
 import com.rib.rib.model.Beneficiary;
+import com.rib.rib.model.Biller;
 import com.rib.rib.model.Customer;
+import com.rib.rib.model.GlobalBiller;
 import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.BeneficiaryRequest;
+import com.rib.rib.payload.request.BillerRequest;
 import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.payload.request.TransferWithinBankBeneficiaryRequest;
 import com.rib.rib.payload.request.TransferWithinOwnAccountsRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
+import com.rib.rib.repository.GlobalBillerRepository;
 import com.rib.rib.repository.TransactionRepositary;
 import com.rib.rib.security.services.CustomerDetailsImpl;
 
@@ -60,6 +64,8 @@ public class CustomerController {
 	private AccountRepository accountRepository;
 	@Autowired
 	private TransactionRepositary transactionRepositary;
+	@Autowired
+	private GlobalBillerRepository globalBillerRepository; 
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -303,6 +309,27 @@ public class CustomerController {
 		}
 
 	}
+	
+	@PostMapping("/AddBiller")
+	public void addBiller(@RequestBody BillerRequest billerRequest) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		Customer customer = customerRepository.findByUsername(authentication.getName()).orElse(null);
+		
+		Biller biller = new Biller(billerRequest.getBillerAccountNumber(), billerRequest.getDescription());
+		
+		Long billerId = globalBillerRepository.findIdByName(billerRequest.getBillerName());
+		
+		GlobalBiller globalBiller = globalBillerRepository.findById(billerId).orElse(null);
+		
+		biller.setGlobalBiller(globalBiller);
+		
+		List<Biller> billers = customer.getBillers();
+		billers.add(biller);		
+		
+		customerRepository.save(customer);
+	}
 
 	// If this function returns an error then try running the function after
 	// dropping all the tables in the rib database and rerun the java app
@@ -362,6 +389,7 @@ public class CustomerController {
 		List<Account> nayanAccount = new ArrayList<Account>();
 		List<Account> shantiAccount = new ArrayList<Account>();
 		List<Account> ojaswaAccount = new ArrayList<Account>();
+		
 
 		Calendar calendar = Calendar.getInstance();
 
@@ -393,6 +421,17 @@ public class CustomerController {
 		calendar.set(1997, 0, 16);
 		Customer ojaswa = new Customer(7897842634L, calendar.getTime(), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
 				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount);
+		
+		List<GlobalBiller> billers = new ArrayList<GlobalBiller>();
+		billers.add(new GlobalBiller("self credit card", "Card"));
+		billers.add(new GlobalBiller("Jio Mobile", "Mobile"));
+		billers.add(new GlobalBiller("Airtel", "Mobile"));
+		billers.add(new GlobalBiller("Indane Gas", "Gas"));
+		billers.add(new GlobalBiller("Reliance", "Electricity"));
+		billers.add(new GlobalBiller("DishTV", "DTH"));
+		billers.add(new GlobalBiller("BSNL", "Broadband"));
+		globalBillerRepository.saveAll(billers);
+		
 
 		// Saving the Customers and returning their data
 		return customerRepository.saveAll(Arrays.asList(nayan, shanti, ojaswa));

@@ -35,6 +35,10 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
 	@JoinColumn(name = "customer_id")
 	private List<Beneficiary> beneficiaries;
+	
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Biller.class)
+	@JoinColumn(name = "customer_id")
+	private List<Biller> billers;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
@@ -186,6 +190,14 @@ public class Customer {
 
 	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
 		this.beneficiaries = beneficiaries;
+	}
+
+	public List<Biller> getBillers() {
+		return billers;
+	}
+
+	public void setBillers(List<Biller> billers) {
+		this.billers = billers;
 	}
 
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
