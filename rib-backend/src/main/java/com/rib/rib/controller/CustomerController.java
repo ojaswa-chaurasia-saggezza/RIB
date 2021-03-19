@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -40,6 +41,7 @@ import com.rib.rib.model.Transaction;
 import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.payload.request.TransferWithinBankBeneficiaryRequest;
+import com.rib.rib.payload.request.TransferWithinOwnAccountsRequest;
 import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.AccountRepository;
 import com.rib.rib.repository.CustomerRepository;
@@ -79,7 +81,7 @@ public class CustomerController {
 
 		String username = auth.getName();
 		Optional<Customer> customer = customerRepository.findByUsername(username);
-		
+
 		return customer;
 	}
 
@@ -102,8 +104,8 @@ public class CustomerController {
 
 		String username = auth.getName();
 		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(username,loginRequest.getUsername()));
+			Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(username, loginRequest.getUsername()));
 
 			Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
 
@@ -135,107 +137,172 @@ public class CustomerController {
 	public Optional<Account> getCustomerByUsername(@PathVariable Long accountnumber) {
 		return accountRepository.findById(accountnumber);
 	}
-	
-	//Add beneficiary API
+
+	// Add beneficiary API
 	@PostMapping("/AddBeneficiary")
 	public ResponseEntity<?> addBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
-		
+
 		Account account = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
 
-		if(account==null)
+		if (account == null)
 			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
-		
-		else if(!account.getIFSC().equals(beneficiaryRequest.getIfsc()))
-		{
+
+		else if (!account.getIFSC().equals(beneficiaryRequest.getIfsc())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC code"));
-		}
-		else
-		{
+		} else {
 			Beneficiary beneficiary = new Beneficiary(beneficiaryRequest.getNickName());
 			beneficiary.setAccount(account);
-			
+
 			List<Beneficiary> list = customer.getBeneficiaries();
 			list.add(beneficiary);
-			
+
 			customer.setBeneficiaries(list);
-			
+
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary added successfully"));
 		}
-		
+
 	}
-	
-	
+
 	@PutMapping("/EditBeneficiary")
-	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest)
-	{
+	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-	    Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
-	    
-    	List<Beneficiary> list = customer.getBeneficiaries();
-    	Beneficiary currentBeneficiary = null;
-    	for(Beneficiary beneficiary: list)
-    	{
-    		if(beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
-    			currentBeneficiary = beneficiary;
-    			break;
-    		}
-    	}
-    	
-    	Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
-    	if(newAccount == null) {
-    		return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
-    	}
-    	else if(!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
-    		return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
-    	}
-    	else {
-    		currentBeneficiary.setAccount(newAccount);
-    		customer.setBeneficiaries(list);
-    		customerRepository.save(customer);
-    		return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
-    	}
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+
+		List<Beneficiary> list = customer.getBeneficiaries();
+		Beneficiary currentBeneficiary = null;
+		for (Beneficiary beneficiary : list) {
+			if (beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
+				currentBeneficiary = beneficiary;
+				break;
+			}
+		}
+
+		Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
+		if (newAccount == null) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+		} else if (!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
+		} else {
+			currentBeneficiary.setAccount(newAccount);
+			customer.setBeneficiaries(list);
+			customerRepository.save(customer);
+			return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
+		}
 	}
-	
+
+	@PostMapping("/TransferWithinBankAccounts")
+
+	public ResponseEntity<?> transferWithinOwnAccounts(
+			@RequestBody TransferWithinOwnAccountsRequest transferWithinOwnAccountsRequest) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow(null);
+		List<Account> accounts = customer.getAccounts();
+
+		Account fromAccount = null;
+		Account toAccount = null;
+
+		for (Account account : accounts) {
+
+			if (fromAccount == null
+					&& account.getAccountNumber().equals(transferWithinOwnAccountsRequest.getFromAccountNumber()))
+				fromAccount = account;
+
+			if (toAccount == null
+					&& account.getAccountNumber().equals(transferWithinOwnAccountsRequest.getToAccountNumber()))
+				toAccount = account;
+
+			if (fromAccount != null && toAccount != null)
+				break;
+
+		}
+		if (fromAccount.getBalance().subtract(transferWithinOwnAccountsRequest.getAmount())
+				.compareTo(new BigDecimal(5000)) == -1) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Insufficient balance"));
+		}
+
+		TimeZone timeZone = TimeZone.getTimeZone("UTC");
+		Calendar calendar = Calendar.getInstance(timeZone);
+
+		fromAccount.setBalance(fromAccount.getBalance().subtract(transferWithinOwnAccountsRequest.getAmount()));
+
+		toAccount.setBalance(toAccount.getBalance().add(transferWithinOwnAccountsRequest.getAmount()));
+
+		int day = calendar.get(Calendar.DATE);
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		long mili = System.currentTimeMillis();
+		String transactionId = "TXN" + day + month + year + mili;
+		String category = "Transfer";
+		String narration = "Transaction to " + toAccount.getAccountNumber() + "-" + " SELF " + day + "/" + month + "/"
+				+ year;
+		Date date = calendar.getTime();
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Transaction fromTransaction = new Transaction(transactionId, category, narration, date,
+				fromAccount.getBalance(), transferWithinOwnAccountsRequest.getAmount(), new BigDecimal(0));
+
+		mili = System.currentTimeMillis();
+		transactionId = "TXN" + day + month + year + mili;
+		narration = "Transaction from " + fromAccount.getAccountNumber() + "-" + " SELF " + day + "/" + month + "/"
+				+ year;
+
+		Transaction toTransaction = new Transaction(transactionId, category, narration, date, toAccount.getBalance(),
+				new BigDecimal(0), transferWithinOwnAccountsRequest.getAmount());
+		
+		List<Transaction> fromTransactions = fromAccount.getTransactions();
+		List<Transaction> toTransactions = toAccount.getTransactions();
+		
+		fromTransactions.add(fromTransaction);
+		toTransactions.add(toTransaction);
+		
+		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Transaction successful"));
+
+	}
+
 	@PostMapping("/FTWithinBankBeneficiary")
-	public void transferWithinBankBeneficiary(@RequestBody TransferWithinBankBeneficiaryRequest bankBeneficiaryRequest) {
-		
-		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		 
-		 Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
-		 
-		 List<Beneficiary> beneficiaries = customer.getBeneficiaries();
-		 
-		 Beneficiary myBeneficiary = null;
-		 
-		 for(Beneficiary beneficiary: beneficiaries) {
-			 
-			 if(beneficiary.getNickName().equals(bankBeneficiaryRequest.getBeneficiary())) 
-				 myBeneficiary = beneficiary;
-			 
-			 if(myBeneficiary!=null)
-				 break;
-			 
-		 }
-		 
-		 Account fromAccount = accountRepository.findById(bankBeneficiaryRequest.getFromAccount()).orElse(null);
-		 Account toAccount = myBeneficiary.getAccount();
-		 
-		 if(fromAccount.getBalance().subtract(bankBeneficiaryRequest.getAmount()).compareTo(new BigDecimal(5000)) == -1)
-		 {
-			 
-		 }
-		 
-		 
-		 
-		
+	public void transferWithinBankBeneficiary(
+			@RequestBody TransferWithinBankBeneficiaryRequest bankBeneficiaryRequest) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		List<Beneficiary> beneficiaries = customer.getBeneficiaries();
+
+		Beneficiary myBeneficiary = null;
+
+		for (Beneficiary beneficiary : beneficiaries) {
+
+			if (beneficiary.getNickName().equals(bankBeneficiaryRequest.getBeneficiary()))
+				myBeneficiary = beneficiary;
+
+			if (myBeneficiary != null)
+				break;
+
+		}
+
+		Account fromAccount = accountRepository.findById(bankBeneficiaryRequest.getFromAccount()).orElse(null);
+		Account toAccount = myBeneficiary.getAccount();
+
+		if (fromAccount.getBalance().subtract(bankBeneficiaryRequest.getAmount())
+				.compareTo(new BigDecimal(5000)) == -1) {
+
+		}
+
 	}
-	
 
 	// If this function returns an error then try running the function after
 	// dropping all the tables in the rib database and rerun the java app
@@ -295,23 +362,26 @@ public class CustomerController {
 		List<Account> nayanAccount = new ArrayList<Account>();
 		List<Account> shantiAccount = new ArrayList<Account>();
 		List<Account> ojaswaAccount = new ArrayList<Account>();
-		
+
 		Calendar calendar = Calendar.getInstance();
-		
 
 		// Adding Accounts to the accounts list and setting transactions list
-		nayanAccount.add(new Account(10101010L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0), new Date(), "Silver", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(0, nayanTransaction.size()/2)));
-		nayanAccount.add(new Account(10000000L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0), new Date(), "Gold", "PatelNagar")
-				.setTransactions(nayanTransaction.subList(nayanTransaction.size()/2, nayanTransaction.size())));
-		shantiAccount.add(new Account(787328L, new BigDecimal(7329874), "Current", new BigDecimal(0.0), new Date(), "Platinum", "IN")
-				.setTransactions(shantiTransaction.subList(0, shantiTransaction.size()/2)));
-		shantiAccount.add(new Account(7982392L, new BigDecimal(9880332), "Saving", new BigDecimal(0.0), new Date(), "Platinum", "PatelNagar")
-				.setTransactions(shantiTransaction.subList(shantiTransaction.size()/2, shantiTransaction.size())));
-		ojaswaAccount.add(new Account(329882L, new BigDecimal(320984), "Current", new BigDecimal(0.0), new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size()/2)));
-		ojaswaAccount.add(new Account(32897L, new BigDecimal(3098509), "Current", new BigDecimal(0.0), new Date(), "Diamond", "PatelNagar")
-				.setTransactions(ojaswaTransaction.subList(ojaswaTransaction.size()/2, ojaswaTransaction.size())));
+		nayanAccount.add(new Account(10101010L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0),
+				new Date(), "Silver", "PatelNagar")
+						.setTransactions(nayanTransaction.subList(0, nayanTransaction.size() / 2)));
+		nayanAccount.add(new Account(10000000L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0.0),
+				new Date(), "Gold", "PatelNagar").setTransactions(
+						nayanTransaction.subList(nayanTransaction.size() / 2, nayanTransaction.size())));
+		shantiAccount.add(new Account(787328L, new BigDecimal(7329874), "Current", new BigDecimal(0.0), new Date(),
+				"Platinum", "IN").setTransactions(shantiTransaction.subList(0, shantiTransaction.size() / 2)));
+		shantiAccount.add(new Account(7982392L, new BigDecimal(9880332), "Saving", new BigDecimal(0.0), new Date(),
+				"Platinum", "PatelNagar").setTransactions(
+						shantiTransaction.subList(shantiTransaction.size() / 2, shantiTransaction.size())));
+		ojaswaAccount.add(new Account(329882L, new BigDecimal(320984), "Current", new BigDecimal(0.0), new Date(),
+				"Diamond", "PatelNagar").setTransactions(ojaswaTransaction.subList(0, ojaswaTransaction.size() / 2)));
+		ojaswaAccount.add(new Account(32897L, new BigDecimal(3098509), "Current", new BigDecimal(0.0), new Date(),
+				"Diamond", "PatelNagar").setTransactions(
+						ojaswaTransaction.subList(ojaswaTransaction.size() / 2, ojaswaTransaction.size())));
 
 		// Creating Customers and setting their accounts;
 		calendar.set(1999, 2, 10);
