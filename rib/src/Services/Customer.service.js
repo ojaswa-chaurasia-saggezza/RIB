@@ -19,7 +19,7 @@ const validateOTP = (otpNumber) => {
 }
 
 const resetPassword = (username, password) => {
-  return axios.post(API_URL + 'resetPassword',{ username, password}, { headers: otpHeader() });
+  return axios.post(API_URL + 'resetPassword', { username, password }, { headers: otpHeader() });
 }
 
 
@@ -29,6 +29,16 @@ const getCustomerDetails = () => {
 
 const getAccountDetails = (accountNumber) => {
   return axios.get(API_URL + "Account/" + accountNumber, { headers: authHeader() });
+}
+
+const getCreditCardDetails = (creditCardNumber) => {
+  return axios.get(API_URL + "CreditCard/" + creditCardNumber, { headers: authHeader() });
+}
+
+const getCreditCardPFAData = (creditCardNumber, startDate, endDate) => {
+  startDate = startDate.toISOString();
+  endDate = endDate.toISOString();
+  return axios.post(API_URL + 'CreditCard/' + creditCardNumber + '/PFA', { startDate, endDate }, { headers: authHeader() });
 }
 
 
@@ -41,7 +51,9 @@ export default {
   getCustomerDetails,
   getAccountDetails,
   generateOTP,
+  getCreditCardDetails,
   validateOTP,
+  getCreditCardPFAData,
   resetPassword,
   getAdminBoard,
 };

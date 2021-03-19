@@ -31,6 +31,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import CASA from '../../Components/CASA';
+import CreditCard from "../../Components/CreditCard";
 import AddBiller from '../../Components/AddBiller';
 import EditBiller from '../../Components/EditBiller';
 import Pay from '../../Components/Pay';
@@ -408,7 +409,7 @@ function Dashboard(props) {
                         Customer.username ?
                             (<Switch>
                                 <Route path={['/Dashboard','/Dashboard/CASA']} exact component={CASA}></Route>
-                                <Route path='/Dashboard/CREDIT CARD' component={CASA}></Route>
+                                <Route path='/Dashboard/CREDIT CARD' component={CreditCard}></Route>
                                 <Route path='/Dashboard/AddBiller' component={AddBiller}></Route>
                                 <Route path='/Dashboard/EditBiller' component={EditBiller}></Route>
                                 <Route path='/Dashboard/Pay' component={Pay}></Route>

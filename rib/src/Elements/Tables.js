@@ -15,12 +15,7 @@ import $, { data } from 'jquery';
 import DateRangeSelector from './DateRangeSelector';
 import Slider from "@material-ui/core/Slider";
 import { withStyles } from '@material-ui/core';
-
-
-function convertTZ(date, tzString) {
-    if (!date) return date;
-    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
-}
+import { convertTZ, formatter } from "../Helpers/HelperFunctions";
 
 
 const CustomSlider = withStyles({
@@ -69,11 +64,8 @@ class Tables extends React.Component {
         this.changeStartDate = this.changeStartDate.bind(this);
         this.changeEndDate = this.changeEndDate.bind(this);
         this.handleSliderChange = this.handleSliderChange.bind(this);
-        this.formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'INR',
-
-        });
+        this.changeDate = this.changeDate.bind(this);
+        this.formatter = formatter;
 
 
     }
@@ -83,6 +75,12 @@ class Tables extends React.Component {
     }
     changeEndDate = (date) => {
         this.setState({ endDate: convertTZ(date) });
+    }
+
+    changeDate = (startDate, endDate) => {
+        this.changeStartDate(startDate);
+        this.changeEndDate(endDate);
+
     }
     handleSliderChange = (event, value) => {
         this.setState({ rangeValue: value });
@@ -118,7 +116,7 @@ class Tables extends React.Component {
 
         $(() => {
 
-            $('.DataRangePicker').hide();
+            $('#filter_global .DataRangePicker').hide();
 
             var table = $('#Credit_Card_and_CASA_Table' + this.props.accountNumber).DataTable({
                 lengthMenu: [5, 10, 15, 25, 30],
@@ -200,7 +198,7 @@ class Tables extends React.Component {
                     true,   // This is for smart search
                 ).draw();
             }
-            $('#global_filter').on('change keyup click', function () {
+            $('#global_filter').on('keyup click', function () {
                 filterGlobal();
             });
 
@@ -208,25 +206,23 @@ class Tables extends React.Component {
                 this.setState({ whatIsSelected: $('#filter_global select').val(), rangeValue: [null, null] });
 
                 if ($('#filter_global select').val() != 1) {
-                    $('.DataRangePicker').hide();
+                    $('#filter_global .DataRangePicker').hide();
                 }
                 else {
-                    $('.DataRangePicker').show();
+                    $('#filter_global .DataRangePicker').show();
                 }
 
 
                 this.setState({ startDate: null, endDate: null });
                 $('#global_filter').val('');
                 table.search('').columns().search('').draw();
-                $('#Credit_Card_and_CASA_Table' + this.props.accountNumber).DataTable().draw();
-                table.draw();
             });
 
-            $('.DataRangePicker').on('apply.daterangepicker', () => {
+            $('#filter_global .DataRangePicker').on('apply.daterangepicker', () => {
                 table.draw();
             });
-            $('.DataRangePicker').on('cancel.daterangepicker', () => {
-                $('.DataRangePicker').val('');
+            $('#filter_global .DataRangePicker').on('cancel.daterangepicker', () => {
+                $('#filter_global .DataRangePicker').val('');
                 table.draw();
             });
 
@@ -261,9 +257,9 @@ class Tables extends React.Component {
                                         </select>
                                         <input type="search" placeholder="Search here" className="form-control ds-input global_filter" id="global_filter" style={{ display: ['1', '4', '5'].includes(this.state.whatIsSelected) ? 'none' : 'block' }} />
 
-                                        <DateRangeSelector changeStartDate={this.changeStartDate} changeEndDate={this.changeEndDate} />
+                                        <DateRangeSelector changeDate={this.changeDate} />
                                         {this.state.whatIsSelected >= '4' ?
-                                            <div style={{ display: 'flex', width: '200px', paddingLeft: '10px'}}>
+                                            <div style={{ display: 'flex', width: '200px', paddingLeft: '10px' }}>
 
                                                 <CustomSlider
                                                     value={this.state.rangeValue}
@@ -291,10 +287,10 @@ class Tables extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                
+
                 {/* </div>The Main Table to Be displayed */}
                 <table id={"Credit_Card_and_CASA_Table" + this.props.accountNumber} className="table table-striped table-responsive table-bordered " style={{ width: '100%' }}>
-                    
+
                 </table>
             </div>
         );

@@ -19,6 +19,8 @@ import Tables from '../Elements/Tables';
 import AuthService from "../Services/Auth.service";
 import CustomerService from "../Services/Customer.service";
 
+import { formatter } from "../Helpers/HelperFunctions";
+
 const BootstrapInput = withStyles((theme) => ({
     root: {
       'label + &': {
@@ -62,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 12,
     },
     paper: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
         textAlign: 'left',
         boxShadow: 'none',
         display: 'flex',
@@ -158,7 +160,7 @@ export default function CASA() {
                     <Grid container spacing={1}>
                         <Grid container item xs={12} spacing={1}>
                             <Grid item sm={6} xs={12}>
-                                <Paper className={classes.paper}><strong>Account Number : &emsp;&emsp;&emsp;</strong>
+                                <Paper className={classes.paper}><strong>Account Number : &emsp;&emsp;</strong>
                                     <FormControl variant="">
                                         <Select
                                             labelId="demo-customized-select-label"
@@ -177,7 +179,7 @@ export default function CASA() {
                             <Grid item sm={6} xs={12}>
                                 <Paper className={classes.paper}><strong>Balance : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
-                                        {selectedAccount.balance}
+                                        {formatter.format(selectedAccount.balance)}
                                     </Typography>
                                 </Paper>
 
@@ -192,7 +194,7 @@ export default function CASA() {
                                 </Paper>
                             </Grid>
                             <Grid item sm={6} xs={12}>
-                                <Paper className={classes.paper}><big><strong>Segment : &emsp;&emsp;&emsp;</strong></big>
+                                <Paper className={classes.paper}><strong>Segment : &emsp;&emsp;&emsp;</strong>
                                     <Typography variant="body2" gutterBottom>
                                         {selectedAccount.segment}
                                     </Typography>
