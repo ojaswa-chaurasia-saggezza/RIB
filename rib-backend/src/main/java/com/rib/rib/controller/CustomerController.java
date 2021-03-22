@@ -46,6 +46,7 @@ import com.rib.rib.payload.request.BeneficiaryRequest;
 import com.rib.rib.payload.request.BillerRequest;
 import com.rib.rib.payload.request.LoginRequest;
 import com.rib.rib.payload.request.PFARequest;
+import com.rib.rib.payload.request.PayRequest;
 import com.rib.rib.payload.request.TransferWithinBankBeneficiaryRequest;
 import com.rib.rib.payload.request.TransferWithinOwnAccountsRequest;
 import com.rib.rib.payload.response.MessageResponse;
@@ -69,7 +70,7 @@ public class CustomerController {
 	@Autowired
 	private TransactionRepositary transactionRepositary;
 	@Autowired
-	private GlobalBillerRepository globalBillerRepository; 
+	private GlobalBillerRepository globalBillerRepository;
 	@Autowired
 	private CreditCardRepository creditCardRepository;
 
@@ -357,31 +358,58 @@ public class CustomerController {
 		}
 
 	}
-	
+
 	@PostMapping("/AddBiller")
-	public void addBiller(@RequestBody BillerRequest billerRequest) {
-		
+	public ResponseEntity<?> addBiller(@RequestBody BillerRequest billerRequest) {
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		Customer customer = customerRepository.findByUsername(authentication.getName()).orElse(null);
-		
+
 		Biller biller = new Biller(billerRequest.getBillerAccountNumber(), billerRequest.getDescription());
-		
-		Long billerId = globalBillerRepository.findIdByName(billerRequest.getBillerName());
-		
-		GlobalBiller globalBiller = globalBillerRepository.findById(billerId).orElse(null);
-		
+
+		GlobalBiller globalBiller = globalBillerRepository.findByName(billerRequest.getBillerName());
+
 		biller.setGlobalBiller(globalBiller);
+
+		List<Biller> billers = customer.getBillers();
+		billers.add(biller);
+
+		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Biller added successfully"));
+	}
+
+	@PostMapping("/EditBiller")
+	public ResponseEntity<?> editBiller(@RequestBody BillerRequest billerRequest) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
 		
 		List<Biller> billers = customer.getBillers();
-		billers.add(biller);		
 		
+		Biller currBiller = null;
+		
+		for(Biller biller: billers) {
+			
+			if(biller.getDescription().equals(billerRequest.getDescription())) {
+				currBiller = biller;
+				break;
+			}
+		}
+		
+		GlobalBiller newGlobalBiller = globalBillerRepository.findByName(billerRequest.getBillerName());
+		
+		currBiller.setGlobalBiller(newGlobalBiller);
+		currBiller.setBillerAccountNumber(billerRequest.getBillerAccountNumber());
+		customer.setBillers(billers);
 		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Biller edited successfully"));
+		
 	}
+	
 
 	// If this function returns an error then try running the function after
 	// dropping all the tables in the rib database and rerun the java app
-	@GetMapping("/GenerateDummyData")
+	@GetMapping("/GenerateDummyData/")
 	public List<Customer> generateDummyData() {
 
 		// Creating lists of transactions for all accounts of each customer
@@ -494,7 +522,6 @@ public class CustomerController {
 		calendar.set(1997, 0, 16);
 		Customer ojaswa = new Customer(7897842634L, calendar.getTime(), "ojaswa.chaurasia@saggezza.com", "Ojaswa",
 				passwordEncoder.encode("Ojaswa"), "Ojaswa Chaurasia").setAccounts(ojaswaAccount).setCreditCard(ojaswaCreditCard);
-;
 		
 		List<GlobalBiller> billers = new ArrayList<GlobalBiller>();
 		billers.add(new GlobalBiller("self credit card", "Card"));
