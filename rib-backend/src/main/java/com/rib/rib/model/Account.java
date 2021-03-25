@@ -7,10 +7,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "account")
@@ -18,7 +22,11 @@ public class Account {
 
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Transaction.class)
 	@JoinColumn(name = "account_number")
-	List<Transaction> transactions;
+	private List<Transaction> transactions;
+	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Customer customer;
 
 	@Id
 	private Long accountNumber;
@@ -102,6 +110,14 @@ public class Account {
 	public Account setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 		return this;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Account(Long accountNumber, BigDecimal balance, String type, BigDecimal outStandingBalance, Date outStandingDueDate,
