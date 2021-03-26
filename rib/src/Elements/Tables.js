@@ -123,6 +123,7 @@ class Tables extends React.Component {
                 stateSave: false,
                 dom: "ltip",
                 responsive: true,
+                deferRender:true,
                 data: DATA,
                 columns: [
                     { title: "Transaction ID" },
