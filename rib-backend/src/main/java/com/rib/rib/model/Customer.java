@@ -1,5 +1,6 @@
 package com.rib.rib.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -28,9 +29,8 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Account.class)
-	@JoinColumn(name = "customer_id")
-	private List<Account> accounts;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = Account.class)
+	private List<Account> accounts = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = CreditCard.class)
 	@JoinColumn(name = "customer_id")
@@ -39,6 +39,10 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
 	@JoinColumn(name = "customer_id")
 	private List<Beneficiary> beneficiaries;
+	
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Biller.class)
+	@JoinColumn(name = "customer_id")
+	private List<Biller> billers;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
@@ -202,6 +206,19 @@ public class Customer {
 		this.beneficiaries = beneficiaries;
 	}
 
+	public List<Biller> getBillers() {
+		return billers;
+	}
+
+	public void setBillers(List<Biller> billers) {
+		this.billers = billers;
+	}
+
+	public void addAccount(Account account) {
+		accounts.add(account);
+		account.setCustomer(this);
+	}
+	
 	public Customer(Long phoneNumber, Date dOB, String email, String username, String password,
 			String name) {
 		super();
