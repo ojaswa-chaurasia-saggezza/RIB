@@ -8,7 +8,7 @@ import com.rib.rib.model.GlobalBiller;
 @Repository
 public interface GlobalBillerRepository extends JpaRepository<GlobalBiller, Long> {
 
-	@Query("SELECT b.id FROM GlobalBiller b WHERE b.billerName=?1")
-	public Long findIdByName(String name);
+	@Query("SELECT b FROM GlobalBiller b WHERE b.billerName=?1")
+	public GlobalBiller findByName(String name);
 	
 }
