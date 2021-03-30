@@ -193,6 +193,26 @@ public class CustomerController {
 
 	}
 
+	// Get accounts of logged in customers
+	@GetMapping("/GetAccounts")
+	public List<Account> getAcocunts() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		return customer.getAccounts();
+	}
+
+	// Get beneficiaries of logged in customer
+	@GetMapping("/Getbeneficiaries")
+	public List<Beneficiary> getBeneficiary() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		return customer.getBeneficiaries();
+	}
+
 	// Add beneficiary API
 	@PostMapping("/AddBeneficiary")
 	public ResponseEntity<?> addBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
