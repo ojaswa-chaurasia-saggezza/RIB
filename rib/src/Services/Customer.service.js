@@ -53,11 +53,15 @@ const getAccounts = () => {
   return axios.get(API_URL + "GetAccounts/", { headers: authHeader() });
 }
 const editBeneficiary = (accountNumber,nickName,ifsc) => {
-  return axios.put(API_URL + "EditBeneficiary", {accountNumber,nickName,ifsc} , {headers: authHeader() });
+  return axios.put(API_URL + "EditBeneficiary/", {accountNumber,nickName,ifsc}, {headers: authHeader() });
 }
 const getAllBeneficiaries = () =>
 {
-  return axios.get(API_URL + "GetAllBeneficiaries" , {headers:authHeader()});
+  return axios.get(API_URL + "GetAllBeneficiaries/" , {headers:authHeader()});
+}
+
+const fundTransferWithinBankBeneficiary = (fromAccount, beneficiary, transferMode, amount) => {
+  return axios.post(API_URL + "FTWithinBankBeneficiary/", {fromAccount, beneficiary, transferMode, amount}, {headers: authHeader() })
 }
 
 export default {
@@ -74,5 +78,6 @@ export default {
   getAccounts,
   editBeneficiary,
   getAllBeneficiaries,
-  addBenefeciary
+  addBenefeciary,
+  fundTransferWithinBankBeneficiary
 };

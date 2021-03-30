@@ -3,21 +3,33 @@ import '../CSS/style.css';
 import CustomerService from '../Services/Customer.service';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+
 export default function Editbeneficiary() {
   const [open, setOpen] = React.useState(false);
 
   const [accountNumber, setAccountNumber] = useState("");
-  const [accountNumberError, setAccountNumberError] = useState("");
+  const [accountNumberError, setAccountNumberError] = useState({ error: false, errorText: "" });;
   const [nickName, setNickName] = useState("");
-  const [nickNameError, setNickNameError] = useState("");
+  const [nickNameError, setNickNameError] = useState({ error: false, errorText: "" });;
   const [ifsc, setIfsc] = useState("");
-  const [ifscError, setIfscError] = useState("");
-
+  const [ifscError, setIfscError] = useState({ error: false, errorText: "" });;
+  const [selectedAccount, setSelectedAccount] = useState('');
   const [allBeneficiaries, setAllBeneficiaries] = useState({});
+
+  const handleSelectedAccount = (event) => {
+    setSelectedAccount(event.target.value);
+  };
+
   useEffect(() => {
     CustomerService.getAllBeneficiaries().then((response) => {
       if (response.data)
@@ -67,31 +79,57 @@ export default function Editbeneficiary() {
         <h1 class="title">Edit Beneficiary</h1>
         <div class="container">
           <div class="transfer-form row">
-
             <div class="form-field col-lg-6">
-              <label for="beneficiary" class="label drop-label text-primary">Beneficiary</label>
-              <select id="beneficiary" class="form-select" aria-label="Default select example">
-                {
-                  Object.entries(allBeneficiaries).map(([key,value])=>{
-                    return <option key={key}>{value.nickName}</option>
-                  })
-                }
-              </select>
+              <FormControl fullWidth>
+                <InputLabel id="beneficiary">Beneficiary</InputLabel>
+                <Select
+                  labelId="beneficiary"
+                  value={selectedAccount}
+                  onChange={handleSelectedAccount}
+                >
+                  {
+                    Object.entries(allBeneficiaries).map(([key, value]) => {
+                      return <MenuItem value={key}>{value.nickName}</MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl>
             </div>
 
             <div class="form-field col-lg-6">
-              <input id="account" class="input-text" type="number" name="" onChange={e => setAccountNumber(e.target.value)} />
-              <label for="account" class="label text-primary">Account Number</label>
+              <TextField
+                id="account"
+                required
+                fullWidth
+                label="Account Number"
+                onChange={(e) => { setAccountNumber(e.target.value) }}
+                onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
+                error={accountNumberError.error}
+                helperText={accountNumberError.errorText} />
             </div>
 
             <div class="form-field col-lg-6">
-              <input id="name" class="input-text" type="text" name="" onChange={e => setNickName(e.target.value)} />
-              <label for="name" class="label text-primary">Name</label>
+              <TextField
+                id="name"
+                required
+                fullWidth
+                label="Name"
+                onChange={e => setNickName(e.target.value)}
+                onKeyPress={() => { if (nickName != "") setNickNameError({ error: false, errorText: "" }) }}
+                error={nickNameError.error}
+                helperText={nickNameError.errorText} />
             </div>
 
             <div class="form-field col-lg-6">
-              <input id="ifsc" class="input-text" type="text" name="" onChange={e => setIfsc(e.target.value)} />
-              <label for="ifsc" class="label text-primary">IFSC</label>
+              <TextField
+                id="ifsc"
+                required
+                fullWidth
+                label="IFSC"
+                onChange={e => setIfsc(e.target.value)}
+                onKeyPress={() => { if (ifsc != "") setIfscError({ error: false, errorText: "" }) }}
+                error={ifscError.error}
+                helperText={ifscError.errorText} />
             </div>
 
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

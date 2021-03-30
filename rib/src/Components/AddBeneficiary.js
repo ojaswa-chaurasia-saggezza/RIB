@@ -87,7 +87,6 @@ export default function AddBeneficiary(props) {
                 id="account"
                 required
                 fullWidth
-                autoFocus
                 label="Account Number"
                 onChange={(e) => { setAccountNumber(e.target.value) }}
                 onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
@@ -99,7 +98,6 @@ export default function AddBeneficiary(props) {
                 id="name"
                 required
                 fullWidth
-                autoFocus
                 label="Name"
                 onChange={(e) => { setNickName(e.target.value) }}
                 onKeyPress={() => { if (accountNumber != "") setNickNameError({ error: false, errorText: "" }) }}
@@ -111,7 +109,6 @@ export default function AddBeneficiary(props) {
                 id="ifsc"
                 required
                 fullWidth
-                autoFocus
                 label="IFSC CODE"
                 onChange={(e) => { setIfsc(e.target.value) }}
                 onKeyPress={() => { if (accountNumber != "") setIfscError({ error: false, errorText: "" }) }}
