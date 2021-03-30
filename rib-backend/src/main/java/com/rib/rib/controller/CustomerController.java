@@ -222,6 +222,7 @@ public class CustomerController {
 
 	}
 
+
 	@PutMapping("/EditBeneficiary")
 	public ResponseEntity<?> editBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -248,6 +249,15 @@ public class CustomerController {
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
 		}
+	}
+	
+	@GetMapping("/GetAllBeneficiaries")
+	public List<Beneficiary> getAllBeneficiaries()
+	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+		
+		return customer.getBeneficiaries();
 	}
 
 	@PostMapping("/TransferWithinBankAccounts")

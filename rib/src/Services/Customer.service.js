@@ -46,6 +46,14 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
+const editBeneficiary = (accountNumber,nickName,ifsc) => {
+  return axios.put(API_URL + "EditBeneficiary", {accountNumber,nickName,ifsc} , {headers: authHeader() });
+}
+const getAllBeneficiaries = () =>
+{
+  return axios.get(API_URL + "GetAllBeneficiaries" , {headers:authHeader()});
+}
+
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -56,4 +64,6 @@ export default {
   getCreditCardPFAData,
   resetPassword,
   getAdminBoard,
+  editBeneficiary,
+  getAllBeneficiaries,
 };
