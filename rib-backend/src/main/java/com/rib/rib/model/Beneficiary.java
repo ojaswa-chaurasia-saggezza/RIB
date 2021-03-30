@@ -8,10 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "beneficiary", uniqueConstraints = { @UniqueConstraint (columnNames = "nickName")})
+@Table(name = "beneficiary")
 public class Beneficiary {	
 	
 	@Id

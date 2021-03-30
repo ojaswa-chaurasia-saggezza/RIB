@@ -123,6 +123,7 @@ class Tables extends React.Component {
                 stateSave: false,
                 dom: "ltip",
                 responsive: true,
+                deferRender:true,
                 data: DATA,
                 columns: [
                     { title: "Transaction ID" },
@@ -203,7 +204,7 @@ class Tables extends React.Component {
             });
 
             $('#filter_global select').on('change', () => {
-                this.setState({ whatIsSelected: $('#filter_global select').val(), rangeValue: [null, null] });
+                this.setState({ whatIsSelected: $('#filter_global select').val(), rangeValue: [null, null] ,startDate: null, endDate: null });
 
                 if ($('#filter_global select').val() != 1) {
                     $('#filter_global .DataRangePicker').hide();
@@ -211,9 +212,6 @@ class Tables extends React.Component {
                 else {
                     $('#filter_global .DataRangePicker').show();
                 }
-
-
-                this.setState({ startDate: null, endDate: null });
                 $('#global_filter').val('');
                 table.search('').columns().search('').draw();
             });

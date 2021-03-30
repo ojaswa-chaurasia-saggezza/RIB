@@ -145,7 +145,7 @@ export default function SignUp(props) {
 
     }
     const handleClose = () => {
-        setOpen(true);
+        setOpen(false);
     };
 
     const handleClickOpen = () => {

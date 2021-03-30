@@ -8,7 +8,7 @@ const API_URL_OTP = "http://localhost:8080/";
 
 const getPublicContent = () => {
   return axios.get(API_URL + "all");
-};
+}
 
 const generateOTP = () => {
   return axios.get(API_URL_OTP + 'generateOtp', { headers: otpHeader() });
@@ -25,7 +25,7 @@ const resetPassword = (username, password) => {
 
 const getCustomerDetails = () => {
   return axios.get(API_URL + "CustomerDetails", { headers: authHeader() });
-};
+}
 
 const getAccountDetails = (accountNumber) => {
   return axios.get(API_URL + "Account/" + accountNumber, { headers: authHeader() });
@@ -41,10 +41,13 @@ const getCreditCardPFAData = (creditCardNumber, startDate, endDate) => {
   return axios.post(API_URL + 'CreditCard/' + creditCardNumber + '/PFA', { startDate, endDate }, { headers: authHeader() });
 }
 
-
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
-};
+}
+
+const addBenefeciary = (accountNumber, nickName, ifsc) => {
+  return axios.post(API_URL + "AddBeneficiary/", {accountNumber, nickName, ifsc}, { headers: authHeader() });
+}
 
 const editBeneficiary = (accountNumber,nickName,ifsc) => {
   return axios.put(API_URL + "EditBeneficiary", {accountNumber,nickName,ifsc} , {headers: authHeader() });
@@ -66,4 +69,5 @@ export default {
   getAdminBoard,
   editBeneficiary,
   getAllBeneficiaries,
+  addBenefeciary
 };
