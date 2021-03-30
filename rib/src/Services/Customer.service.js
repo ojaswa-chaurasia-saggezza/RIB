@@ -49,6 +49,10 @@ const addBenefeciary = (accountNumber, nickName, ifsc) => {
   return axios.post(API_URL + "AddBeneficiary/", {accountNumber, nickName, ifsc}, { headers: authHeader() });
 }
 
+const getAccounts = () => {
+  return axios.get(API_URL + "GetAccounts/", { headers: authHeader() });
+}
+
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -59,5 +63,6 @@ export default {
   getCreditCardPFAData,
   resetPassword,
   getAdminBoard,
-  addBenefeciary
+  addBenefeciary,
+  getAccounts
 };

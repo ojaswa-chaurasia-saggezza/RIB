@@ -68,8 +68,6 @@ export default function AddBeneficiary(props) {
             case '3':
               setIfscError({ error: true, errorText: msg[1] });
               break;
-            default:
-              console.log("nodslkfskdf");
           }
           setLoading(false);
         }
