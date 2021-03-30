@@ -52,6 +52,13 @@ const addBenefeciary = (accountNumber, nickName, ifsc) => {
 const getAccounts = () => {
   return axios.get(API_URL + "GetAccounts/", { headers: authHeader() });
 }
+const editBeneficiary = (accountNumber,nickName,ifsc) => {
+  return axios.put(API_URL + "EditBeneficiary", {accountNumber,nickName,ifsc} , {headers: authHeader() });
+}
+const getAllBeneficiaries = () =>
+{
+  return axios.get(API_URL + "GetAllBeneficiaries" , {headers:authHeader()});
+}
 
 export default {
   getPublicContent,
@@ -64,5 +71,8 @@ export default {
   resetPassword,
   getAdminBoard,
   addBenefeciary,
-  getAccounts
+  getAccounts,
+  editBeneficiary,
+  getAllBeneficiaries,
+  addBenefeciary
 };
