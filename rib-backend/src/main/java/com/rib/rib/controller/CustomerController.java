@@ -27,6 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -203,18 +204,24 @@ public class CustomerController {
 		Account account = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
 
 		if (account == null)
-			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+			return ResponseEntity.badRequest().body(new MessageResponse("1:Account not found"));
 
 		else if (!account.getIFSC().equals(beneficiaryRequest.getIfsc())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC code"));
+			return ResponseEntity.badRequest().body(new MessageResponse("3:Invalid IFSC code"));
 		} else {
+			List<Beneficiary> beneficiaries = customer.getBeneficiaries();
+			for (Beneficiary beneficiary : beneficiaries) {
+				if (beneficiary.getNickName().equals(beneficiaryRequest.getNickName()))
+					return ResponseEntity.badRequest()
+							.body(new MessageResponse("2:Beneficiary with this name already exists"));
+			}
+
 			Beneficiary beneficiary = new Beneficiary(beneficiaryRequest.getNickName());
 			beneficiary.setAccount(account);
 
-			List<Beneficiary> list = customer.getBeneficiaries();
-			list.add(beneficiary);
+			beneficiaries.add(beneficiary);
 
-			customer.setBeneficiaries(list);
+			customer.setBeneficiaries(beneficiaries);
 
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary added successfully"));
@@ -248,6 +255,32 @@ public class CustomerController {
 			customerRepository.save(customer);
 			return ResponseEntity.ok(new MessageResponse("Beneficiary edit successfully"));
 		}
+	}
+
+	@DeleteMapping("/DeleteBeneficiary")
+	public ResponseEntity<?> deleteBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		List<Beneficiary> beneficiaries = customer.getBeneficiaries();
+
+		int index = -1;
+		for (int i = 0; i < beneficiaries.size(); i++) {
+			Beneficiary beneficiary = beneficiaries.get(i);
+			if (beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
+				index = i;
+				break;
+			}
+		}
+
+		if (index == -1)
+			return ResponseEntity.badRequest().body(new MessageResponse("Beneficiary not found"));
+
+		beneficiaries.remove(index);
+		customer.setBeneficiaries(beneficiaries);
+		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Beneficiary deleted successfully"));
 	}
 
 	@PostMapping("/TransferWithinBankAccounts")
@@ -350,14 +383,14 @@ public class CustomerController {
 
 		Account fromAccount = accountRepository.findById(bankBeneficiaryRequest.getFromAccount()).orElse(null);
 		Account toAccount = myBeneficiary.getAccount();
-		
+
 		Customer toCustomer = toAccount.getCustomer();
 
 		if (fromAccount.getBalance().subtract(bankBeneficiaryRequest.getAmount())
 				.compareTo(new BigDecimal(5000)) == -1) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Insufficient balance"));
 		}
-		
+
 		TimeZone timeZone = TimeZone.getTimeZone("UTC");
 		Calendar calendar = Calendar.getInstance(timeZone);
 
@@ -402,7 +435,6 @@ public class CustomerController {
 		customerRepository.save(fromCustomer);
 		customerRepository.save(toCustomer);
 
-		
 		return ResponseEntity.ok(new MessageResponse("Transaction Successful"));
 
 	}
@@ -512,55 +544,6 @@ public class CustomerController {
 		return ResponseEntity.ok(new MessageResponse("kitna paisa loge"));
 	}
 
-	@PostMapping("/GenerateFarjiData")
-	public Customer generateFarjiData() {
-
-		List<Transaction> farjiTransactions = new ArrayList<Transaction>();
-
-		Random rand = new Random();
-
-		for (int i = 0; i < 30; i++) {
-			String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
-					: rand.nextInt(10) < 5 ? "Bill" : "Food";
-			String TransactionId = "TXN" + i + (rand.nextInt(9000000) + 1000000);
-
-			farjiTransactions.add(new Transaction(TransactionId, category,
-					"Transaction to " + (10000000 + rand.nextInt(90000000)) + "- UPI " + rand.nextInt(30) + "/"
-							+ rand.nextInt(12) + "/" + (rand.nextInt(42) + 1980),
-					Date.from(ZonedDateTime.now().minusDays(rand.nextInt(1000)).toInstant()),
-					new BigDecimal(rand.nextInt(900000000) * 10 + 10000000), new BigDecimal(rand.nextInt(1000)),
-					BigDecimal.ZERO));
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.set(2000, 2, 20);
-
-		Customer farjiAdmi = new Customer(7988934699L, calendar.getTime(), "farji.admi@saggezza.com", "Farji",
-				passwordEncoder.encode("Farji"), "Farji Admi");
-
-		Account account = new Account(420420420420L, new BigDecimal(6969696969669.0), "Saving", new BigDecimal(0),
-				new Date(), "Silver", "FarjiNagar");
-		account.setTransactions(farjiTransactions);
-
-		farjiAdmi.addAccount(account);
-
-		return customerRepository.save(farjiAdmi);
-
-	}
-
-	@GetMapping("/faltu")
-	public void faltu() {
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
-
-		List<Account> accounts = customer.getAccounts();
-		accounts.forEach(acc -> System.out.println(acc.getCustomer().getName() + " mil gaya tu."));
-
-	}
-
 	public void generateTransaction(List<Transaction> transactions, Random rand, int i) {
 		String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 				: rand.nextInt(10) < 5 ? "Bill" : "Food";
@@ -588,19 +571,19 @@ public class CustomerController {
 
 		// Generating Random Transactions for Nayan
 		int i = 0;
-		for (; i < 300; i++) 
+		for (; i < 300; i++)
 			generateTransaction(nayanTransaction, rand, i);
 
 		// Generating Random Transactions for Shanti
-		for (; i < 567+300; i++) 
+		for (; i < 567 + 300; i++)
 			generateTransaction(shantiTransaction, rand, i);
 
 		// Generating Random Transactions for Ojaswa
-		for (; i < 169+300+567; i++) 
+		for (; i < 169 + 300 + 567; i++)
 			generateTransaction(ojaswaTransaction, rand, i);
 
 		// Generating Transactions for CreditCard
-		for (; i < 269+300+567+169; i++) {
+		for (; i < 269 + 300 + 567 + 169; i++) {
 			generateTransaction(creditCardTransaction, rand, i);
 		}
 
@@ -623,10 +606,11 @@ public class CustomerController {
 		List<Account> ojaswaAccounts = new ArrayList<Account>();
 
 		// Adding Accounts to the accounts list and setting transactions list
-		nayanAccounts.add(new Account(10101010L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0), new Date(),
-				"Silver", "PatelNagar").setTransactions(nayanTransaction.subList(0, nayanTransaction.size() / 2)));
-		nayanAccounts.add(new Account(10000000L, new BigDecimal(100000000000L), "Saving", new BigDecimal(0L), new Date(),
-				"Gold", "PatelNagar").setTransactions(
+		nayanAccounts.add(new Account(10101010L, new BigDecimal(100000000000.0), "Saving", new BigDecimal(0),
+				new Date(), "Silver", "PatelNagar")
+						.setTransactions(nayanTransaction.subList(0, nayanTransaction.size() / 2)));
+		nayanAccounts.add(new Account(10000000L, new BigDecimal(100000000000L), "Saving", new BigDecimal(0L),
+				new Date(), "Gold", "PatelNagar").setTransactions(
 						nayanTransaction.subList(nayanTransaction.size() / 2, nayanTransaction.size())));
 		shantiAccounts.add(new Account(787328L, new BigDecimal(7329874L), "Current", new BigDecimal(0L), new Date(),
 				"Platinum", "IN").setTransactions(shantiTransaction.subList(0, shantiTransaction.size() / 2)));
@@ -638,17 +622,17 @@ public class CustomerController {
 		ojaswaAccounts.add(new Account(32897L, new BigDecimal(3098509L), "Current", new BigDecimal(0L), new Date(),
 				"Diamond", "PatelNagar").setTransactions(
 						ojaswaTransaction.subList(ojaswaTransaction.size() / 2, ojaswaTransaction.size())));
-		
+
 		// adding accounts for customer
-		for(Account nayanAccount : nayanAccounts) 
+		for (Account nayanAccount : nayanAccounts)
 			nayan.addAccount(nayanAccount);
-		
-		for(Account shantiAccount : shantiAccounts) 
+
+		for (Account shantiAccount : shantiAccounts)
 			shanti.addAccount(shantiAccount);
-		
-		for(Account ojaswaAccount : ojaswaAccounts) 
+
+		for (Account ojaswaAccount : ojaswaAccounts)
 			ojaswa.addAccount(ojaswaAccount);
-		
+
 		List<CreditCard> shantiCreditCard = new ArrayList<CreditCard>();
 		List<CreditCard> ojaswaCreditCard = new ArrayList<CreditCard>();
 
@@ -658,7 +642,7 @@ public class CustomerController {
 				.setTransactions(creditCardTransaction.subList(111, 200)));
 		ojaswaCreditCard.add(new CreditCard(3333333333333331L, "Travel", 500000L, 0L, new Date())
 				.setTransactions(creditCardTransaction.subList(200, 269)));
-		
+
 		shanti.setCreditCard(shantiCreditCard);
 		ojaswa.setCreditCard(ojaswaCreditCard);
 

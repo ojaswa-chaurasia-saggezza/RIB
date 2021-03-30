@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fafafa"
   }
 }));
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -81,18 +82,18 @@ export default function Login(props) {
 
   const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
   const [message, setMessage] = useState(""); // Message to be displayed
-  
+
   const handleClick = () => {
     setOpen(true);
-};
+  };
 
-const handleClose = (event, reason) => {
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-        return;
+      return;
     }
 
     setOpen(false);
-};
+  };
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -112,7 +113,7 @@ const handleClose = (event, reason) => {
           handleClick();
           setTimeout(() => {
             props.history.push("/Dashboard");
-        }, 2000);
+          }, 2000);
           //window.location.reload(); //No need to reload the window
         },
         (error) => {
@@ -189,11 +190,11 @@ const handleClose = (event, reason) => {
             error={passwordError.error}
             helperText={passwordError.errorText}
           />
-           <Snackbar open={open} autoHideDuration={6000} onClose={handleLogin}>
-        <Alert onClose={handleLogin} severity="success">
-          Login Successfully!
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleLogin}>
+            <Alert onClose={handleLogin} severity="success">
+              Login Successfully!
                         </Alert>
-      </Snackbar>
+          </Snackbar>
           <Button
             type="submit"
             fullWidth
@@ -221,7 +222,7 @@ const handleClose = (event, reason) => {
           </Grid>
         </form>
       </div>
-      
+
       <Box mt={8}>
         {/* <Copyright /> */}
       </Box>

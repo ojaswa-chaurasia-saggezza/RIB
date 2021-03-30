@@ -36,7 +36,7 @@ public class Customer {
 	@JoinColumn(name = "customer_id")
 	private List<CreditCard> creditCard;
 	
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class)
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Beneficiary.class, orphanRemoval = true)
 	@JoinColumn(name = "customer_id")
 	private List<Beneficiary> beneficiaries;
 	
