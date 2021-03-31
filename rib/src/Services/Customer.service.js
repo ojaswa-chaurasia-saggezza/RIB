@@ -44,25 +44,26 @@ const getCreditCardPFAData = (creditCardNumber, startDate, endDate) => {
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 }
+
+const addBenefeciary = (accountNumber, nickName, ifsc) => {
+  return axios.post(API_URL + "AddBeneficiary/", { accountNumber, nickName, ifsc }, { headers: authHeader() });
+}
+
 const getAccounts = () => {
   return axios.get(API_URL + "GetAccounts/", { headers: authHeader() });
 }
-const addBenefeciary = (accountNumber, nickName, ifsc) => {
-  return axios.post(API_URL + "AddBeneficiary/", {accountNumber, nickName, ifsc}, { headers: authHeader() });
+const editBeneficiary = (accountNumber, nickName, ifsc) => {
+  return axios.put(API_URL + "EditBeneficiary/", { accountNumber, nickName, ifsc }, { headers: authHeader() });
 }
-const editBeneficiary = (accountNumber,nickName,ifsc) => {
-  return axios.put(API_URL + "EditBeneficiary/", {accountNumber,nickName,ifsc}, {headers: authHeader() });
+const deleteBeneficiary = (accountNumber, nickName, ifsc) => {
+  return axios.delete(API_URL + "DeleteBeneficiary/", {data : { accountNumber, nickName, ifsc } , headers : authHeader()});// { accountNumber, nickName, ifsc }, { headers: authHeader() });
 }
-const deleteBeneficiary = (name) => {
-  return axios.delete(API_URL + "DeleteBeneficiary/", {name}, {headers: authHeader() });
-}
-const getAllBeneficiaries = () =>
-{
-  return axios.get(API_URL + "GetAllBeneficiaries/" , {headers:authHeader()});
+const getAllBeneficiaries = () => {
+  return axios.get(API_URL + "GetAllBeneficiaries/", { headers: authHeader() });
 }
 
 const fundTransferWithinBankBeneficiary = (fromAccount, beneficiary, transferMode, amount) => {
-  return axios.post(API_URL + "FTWithinBankBeneficiary/", {fromAccount, beneficiary, transferMode, amount}, {headers: authHeader() })
+  return axios.post(API_URL + "FTWithinBankBeneficiary/", { fromAccount, beneficiary, transferMode, amount }, { headers: authHeader() })
 }
 
 const fundTransferWithinBankAccount = (fromAccountNumber, toAccountNumber, amount) => {
@@ -70,19 +71,19 @@ const fundTransferWithinBankAccount = (fromAccountNumber, toAccountNumber, amoun
 }
 
 const getAllGlobalBillers = () => {
-  return axios.get(API_URL + "GetGlobalBillers/", {headers: authHeader() });
+  return axios.get(API_URL + "GetGlobalBillers/", { headers: authHeader() });
 }
 
 const addBiller = (billerName, billerAccountNumber, description) => {
-  return axios.post(API_URL + "AddBiller/", {billerName, billerAccountNumber, description}, {headers: authHeader() });
+  return axios.post(API_URL + "AddBiller/", { billerName, billerAccountNumber, description }, { headers: authHeader() });
 }
 
 const getAllBillers = () => {
-  return axios.get(API_URL + "GetAllBillers/", {headers: authHeader() });
-} 
+  return axios.get(API_URL + "GetAllBillers/", { headers: authHeader() });
+}
 
 const editBiller = (billerName, billerAccountNumber, description) => {
-  return axios.post(API_URL + "EditBiller/", {billerName, billerAccountNumber, description}, {headers: authHeader() });
+  return axios.post(API_URL + "EditBiller/", { billerName, billerAccountNumber, description }, { headers: authHeader() });
 }
 
 const deleteBiller = (description) => {
@@ -90,7 +91,7 @@ const deleteBiller = (description) => {
 }
 
 const pay = (fromAccount, description, amount) => {
-  return axios.post(API_URL + "Pay/", {fromAccount, description, amount}, {headers: authHeader() });
+  return axios.post(API_URL + "Pay/", { fromAccount, description, amount }, { headers: authHeader() });
 }
 export default {
   getPublicContent,
@@ -115,5 +116,6 @@ export default {
   getAllBillers,
   editBiller,
   deleteBiller,
-  pay
+  pay,
+  deleteBeneficiary
 };

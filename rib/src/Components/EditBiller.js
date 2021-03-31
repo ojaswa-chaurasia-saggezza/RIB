@@ -40,7 +40,26 @@ export default function EditBiller() {
         setOpen({ open: false, text: '' });
     }
 
+    const handleSetBiller = (e) => {
+        const billerName = descriptionList[e.target.value].globalBiller.billerName;
+        console.log("namwa " + billerName);
+
+        let index = 0;
+        Object.entries(billerList).map(([key, value]) => {
+            if (value.billerName == billerName) {
+                index = key;
+                return;
+            }
+        });
+        setBiller(billerList[index].billerName);
+        console.log("indexwa " + index);
+    }
+
     const handleEditBiller = () => {
+
+        console.log("biller name" + biller);
+        console.log("biller account number" + accountNumber);
+        console.log("description hai" + description);
 
         if (biller == "") {
             setBillerError({ error: true, errorText: "Please select a biller" });
@@ -53,7 +72,8 @@ export default function EditBiller() {
         }
 
         if (biller != "" && accountNumber != "" && description != "") {
-            CustomerService.editBiller(biller, accountNumber, description).then(() => {
+            const desc = descriptionList[description].description;
+            CustomerService.editBiller(biller, accountNumber, desc).then(() => {
                 handleClick();
             },
                 (error) => {
@@ -88,6 +108,8 @@ export default function EditBiller() {
         CustomerService.getAllGlobalBillers().then((response) => {
             if (response.data)
                 setBillerList(response.data);
+            setBiller(response.data[0].biller);
+            setAccountNumber(response.data[0].accountNumber);
         },
             (error) => {
                 const _content =
@@ -121,17 +143,17 @@ export default function EditBiller() {
                                 <Select
                                     labelId="description"
                                     value={description}
-                                    onChange={(e) => { setDescription(e.target.value); setDescriptionError({ error: false, errorText: '' }) }}
+                                    onChange={(e) => { setDescription(e.target.value); handleSetBiller(e); setAccountNumber(descriptionList[e.target.value].billerAccountNumber) }}
                                 >
                                     {
                                         Object.entries(descriptionList).map(([key, value]) => {
-                                            return <MenuItem value={value.description}>{value.description}</MenuItem>
+                                            return <MenuItem value={key}>{value.description}</MenuItem>
                                         })
                                     }
                                 </Select>
                                 {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
                             </FormControl>
-
+                            {console.log(biller)}
                         </div>
 
                         <div class="form-field col-lg-6">
@@ -158,6 +180,7 @@ export default function EditBiller() {
                                 required
                                 fullWidth
                                 label="Customer Account Number"
+                                value={accountNumber}
                                 onChange={(e) => { setAccountNumber(e.target.value) }}
                                 onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
                                 error={accountNumberError.error}
@@ -171,7 +194,7 @@ export default function EditBiller() {
 
                         <div class="row justify-content-center">
                             <div class="form-field col-lg-4">
-                                <input class="submit-btn bg-success" type="submit" value="submit" name="" />
+                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleEditBiller} />
                             </div>
                             <div class="form-field col-lg-4">
                                 <input class="submit-btn bg-danger" type="submit" value="delete" data-bs-toggle="modal"
