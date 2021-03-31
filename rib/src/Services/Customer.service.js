@@ -44,16 +44,17 @@ const getCreditCardPFAData = (creditCardNumber, startDate, endDate) => {
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 }
-
-const addBenefeciary = (accountNumber, nickName, ifsc) => {
-  return axios.post(API_URL + "AddBeneficiary/", {accountNumber, nickName, ifsc}, { headers: authHeader() });
-}
-
 const getAccounts = () => {
   return axios.get(API_URL + "GetAccounts/", { headers: authHeader() });
 }
+const addBenefeciary = (accountNumber, nickName, ifsc) => {
+  return axios.post(API_URL + "AddBeneficiary/", {accountNumber, nickName, ifsc}, { headers: authHeader() });
+}
 const editBeneficiary = (accountNumber,nickName,ifsc) => {
   return axios.put(API_URL + "EditBeneficiary/", {accountNumber,nickName,ifsc}, {headers: authHeader() });
+}
+const deleteBeneficiary = (name) => {
+  return axios.delete(API_URL + "DeleteBeneficiary/", {name}, {headers: authHeader() });
 }
 const getAllBeneficiaries = () =>
 {
@@ -62,6 +63,10 @@ const getAllBeneficiaries = () =>
 
 const fundTransferWithinBankBeneficiary = (fromAccount, beneficiary, transferMode, amount) => {
   return axios.post(API_URL + "FTWithinBankBeneficiary/", {fromAccount, beneficiary, transferMode, amount}, {headers: authHeader() })
+}
+
+const fundTransferWithinBankAccount = (fromAccountNumber, toAccountNumber, amount) => {
+  return axios.post(API_URL + "TransferWithinBankAccounts/", {fromAccountNumber, toAccountNumber, amount}, {headers: authHeader()});
 }
 
 const getAllGlobalBillers = () => {
@@ -80,6 +85,10 @@ const editBiller = (billerName, billerAccountNumber, description) => {
   return axios.post(API_URL + "EditBiller/", {billerName, billerAccountNumber, description}, {headers: authHeader() });
 }
 
+const deleteBiller = (description) => {
+  return axios.delete(API_URL + "DeleteBiller/", { data : {description}, headers: authHeader() });
+}
+
 const pay = (fromAccount, description, amount) => {
   return axios.post(API_URL + "Pay/", {fromAccount, description, amount}, {headers: authHeader() });
 }
@@ -96,12 +105,15 @@ export default {
   addBenefeciary,
   getAccounts,
   editBeneficiary,
+  deleteBeneficiary,
   getAllBeneficiaries,
   addBenefeciary,
   fundTransferWithinBankBeneficiary,
+  fundTransferWithinBankAccount,
   getAllGlobalBillers,
   addBiller,
   getAllBillers,
   editBiller,
+  deleteBiller,
   pay
 };

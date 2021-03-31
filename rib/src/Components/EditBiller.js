@@ -6,12 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';    
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
 
 import CustomerService from '../Services/Customer.service'
 
@@ -23,7 +21,7 @@ export default function EditBiller() {
 
     const [billerList, setBillerList] = useState({});
     const [descriptionList, setDescriptionList] = useState({});
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({ open: false, text: '' });
 
     const [description, setDescription] = useState('');
     const [descriptionError, setDescriptionError] = useState({ error: false, errorText: '' });
@@ -34,12 +32,12 @@ export default function EditBiller() {
     const [accountNumber, setAccountNumber] = useState('');
     const [accountNumberError, setAccountNumberError] = useState({ error: false, errorText: '' });
 
-    const handleClick = () => {
-        setOpen(true);
+    const handleClick = (data) => {
+        setOpen({ open: true, text: data.message });
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpen({ open: false, text: '' });
     }
 
     const handleEditBiller = () => {
@@ -68,7 +66,22 @@ export default function EditBiller() {
                 });
         }
 
+    }
 
+    const handleDeleteBiller = () => {
+        console.log("description dekh loooooo |"+description+"|");
+        CustomerService.deleteBiller(description).then((response) => {
+            console.log("description dekh loooooo "+description);
+            handleClick(response.data);
+        },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+            });
     }
 
     useEffect(() => {
@@ -149,7 +162,12 @@ export default function EditBiller() {
                                 onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
                                 error={accountNumberError.error}
                                 helperText={accountNumberError.errorText} />
-                            </div>
+                        </div>
+                        <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="success">
+                                {open.text}
+                            </Alert>
+                        </Snackbar>
 
                         <div class="row justify-content-center">
                             <div class="form-field col-lg-4">
@@ -157,7 +175,7 @@ export default function EditBiller() {
                             </div>
                             <div class="form-field col-lg-4">
                                 <input class="submit-btn bg-danger" type="submit" value="delete" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" name="" />
+                                    data-bs-target="#deleteModal" name="" onClick={handleDeleteBiller} />
                             </div>
                         </div>
 

@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rib.rib.model.Account;
@@ -288,7 +289,7 @@ public class CustomerController {
 	}
 
 	@DeleteMapping("/DeleteBeneficiary")
-	public ResponseEntity<?> deleteBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
+	public ResponseEntity<?> deleteBeneficiary(@RequestBody String nickName) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
@@ -298,7 +299,7 @@ public class CustomerController {
 		int index = -1;
 		for (int i = 0; i < beneficiaries.size(); i++) {
 			Beneficiary beneficiary = beneficiaries.get(i);
-			if (beneficiary.getNickName().equals(beneficiaryRequest.getNickName())) {
+			if (beneficiary.getNickName().equals(nickName)) {
 				index = i;
 				break;
 			}
@@ -486,7 +487,7 @@ public class CustomerController {
 		GlobalBiller globalBiller = globalBillerRepository.findByName(billerRequest.getBillerName());
 
 		biller.setGlobalBiller(globalBiller);
-
+		
 		List<Biller> billers = customer.getBillers();
 		billers.add(biller);
 
@@ -519,6 +520,34 @@ public class CustomerController {
 		customerRepository.save(customer);
 		return ResponseEntity.ok(new MessageResponse("Biller edited successfully"));
 
+	}
+	
+	@DeleteMapping("/DeleteBiller")
+	public ResponseEntity<?> deleteBiller(@RequestBody String description) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		List<Biller> billers= customer.getBillers();
+
+		description = description.split(":")[1].split("\"")[1];
+		
+		int index = -1;
+		for (int i = 0; i < billers.size(); i++) {
+			Biller biller = billers.get(i);
+			if (biller.getDescription().equals(description)) {
+				index = i;
+				break;
+			}
+		}
+
+		if (index == -1)
+			return ResponseEntity.badRequest().body(new MessageResponse("Biller not found"));
+
+		billers.remove(index);
+		customer.setBillers(billers);
+		customerRepository.save(customer);
+		return ResponseEntity.ok(new MessageResponse("Biller deleted successfully"));
 	}
 	
 	@GetMapping("/GetAllBillers")

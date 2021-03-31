@@ -40,7 +40,7 @@ public class Customer {
 	@JoinColumn(name = "customer_id")
 	private List<Beneficiary> beneficiaries;
 	
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Biller.class)
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Biller.class, orphanRemoval = true)
 	@JoinColumn(name = "customer_id")
 	private List<Biller> billers;
 
