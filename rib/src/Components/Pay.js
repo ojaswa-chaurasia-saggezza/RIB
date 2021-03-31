@@ -1,8 +1,97 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CSS/style.css';
 import '../CSS/ErrorStyling.css';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import CustomerService from '../Services/Customer.service'
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Pay() {
+
+    const [open, setOpen] = useState(false);
+    const [accounts, setAccounts] = useState({});
+    const [descriptionList, setDescriptionList] = useState({});
+
+    const [selectedAccount, setSelectedAccount] = useState('');
+    const [selectedAccountError, setSelectedAccountError] = useState({ error: false, errorText: "" });
+
+    const [selectedDescription, setSelectedDescription] = useState('');
+    const [selectedDescriptionError, setSelectedDescriptionError] = useState({ error: false, errorText: "" });
+
+    const [amount, setAmount] = useState('');
+    const [amountError, setAmountError] = useState({ error: false, errorText: "" });
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handlePay = () => {
+
+        if (selectedAccount == "")
+            setSelectedAccountError({ error: true, errorText: "Please select an account" });
+
+        if (selectedDescription == "")
+            setSelectedDescriptionError({ error: true, errorText: "Please select a biller description" });
+
+        if (amount == "")
+            setAmountError({ error: true, errorText: "Amount should not be empty" });
+
+        if (selectedAccount != "" && selectedDescription != "" && amount != "") {
+            CustomerService.pay(selectedAccount, selectedDescription, amount).then(() => {
+                handleClick();
+            },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    setAmountError({ error: true, errorText: resMessage });
+                });
+        }
+    }
+
+    useEffect(() => {
+        CustomerService.getAccounts().then((response) => {
+            if (response.data)
+                setAccounts(response.data);
+        },
+            (error) => {
+                const _content =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+            });
+        CustomerService.getAllBillers().then((response) => {
+            if (response.data)
+                setDescriptionList(response.data);
+        },
+            (error) => {
+                const _content =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+            });
+
+    }, []);
+
 
     return (
         <div class="content">
@@ -10,41 +99,69 @@ export default function Pay() {
                 <h1 class="title">Pay Bill</h1>
                 <div class="container">
                     <div class="transfer-form row">
-                        
+
                         <div class="form-field col-lg-6">
-                            <label for="from-account" class="label drop-label text-primary">From account</label>
-                            <select id="from-account" class="form-select" aria-label="Default select example">
-                                <option selected id="firstAccount">123456789034</option>
-                                <option value="1">987654321033</option>
-                                <option value="2">234567897654</option>
-                                <option value="3">065996564596</option>
-                            </select>
+                            <FormControl fullWidth error={selectedAccountError.error}>
+                                <InputLabel id="from-account">From account</InputLabel>
+                                <Select
+                                    labelId="from-account"
+                                    value={selectedAccount}
+                                    onChange={(e) => { setSelectedAccount(e.target.value); setSelectedAccountError({ error: false, errorText: '' }) }}
+                                >
+                                    {
+                                        Object.entries(accounts).map(([key, value]) => {
+                                            return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
+                                        })
+                                    }
+                                </Select>
+                                {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
+                            </FormControl>
                         </div>
 
                         <div class="form-field col-lg-6">
-                            <label for="description" class="label drop-label text-primary">Description</label>
-                            <select id="description" class="form-select" aria-label="Default select example">
-                                <option selected>Airtel bill payment</option>
-                                <option value="1">Indane Gas bill payment</option>
-                                <option value="2">Credit Card bill payment</option>
-                                <option value="3">Electricity bill payment</option>
-                            </select>
+                            <FormControl fullWidth error={selectedDescriptionError.error}>
+                                <InputLabel id="description">Description</InputLabel>
+                                <Select
+                                    labelId="description"
+                                    value={selectedDescription}
+                                    onChange={(e) => { setSelectedDescription(e.target.value); setSelectedDescriptionError({ error: false, errorText: '' }) }}
+                                >
+                                    {
+                                        Object.entries(descriptionList).map(([key, value]) => {
+                                            return <MenuItem value={value.description}>{value.description}</MenuItem>
+                                        })
+                                    }
+                                </Select>
+                                {selectedDescriptionError.error && <FormHelperText>{selectedDescriptionError.errorText}</FormHelperText>}
+                            </FormControl>
                         </div>
 
                         <div class="form-field col-lg-6">
-                            <input id="amount" class="input-text" type="number" name="" />
-                            <label for="amount" class="label text-primary">Amount</label>
+                            <TextField
+                                id="amount"
+                                required
+                                fullWidth
+                                label="Amount"
+                                type="number"
+                                onChange={e => { setAmount(e.target.value) }}
+                                onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
+                                error={amountError.error}
+                                helperText={amountError.errorText}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                                }} />
                         </div>
-
+                        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="success">
+                                Bill payed Successfully!
+                            </Alert>
+                        </Snackbar>
                         <div class="form-field col-lg-12">
-                            <input class="submit-btn bg-success" type="submit" value="submit" name="" />
+                            <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handlePay}/>
                         </div>
-
                     </div>
                 </div>
             </section>
         </div>
-
-
     );
 }

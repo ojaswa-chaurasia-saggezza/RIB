@@ -64,6 +64,25 @@ const fundTransferWithinBankBeneficiary = (fromAccount, beneficiary, transferMod
   return axios.post(API_URL + "FTWithinBankBeneficiary/", {fromAccount, beneficiary, transferMode, amount}, {headers: authHeader() })
 }
 
+const getAllGlobalBillers = () => {
+  return axios.get(API_URL + "GetGlobalBillers/", {headers: authHeader() });
+}
+
+const addBiller = (billerName, billerAccountNumber, description) => {
+  return axios.post(API_URL + "AddBiller/", {billerName, billerAccountNumber, description}, {headers: authHeader() });
+}
+
+const getAllBillers = () => {
+  return axios.get(API_URL + "GetAllBillers/", {headers: authHeader() });
+} 
+
+const editBiller = (billerName, billerAccountNumber, description) => {
+  return axios.post(API_URL + "EditBiller/", {billerName, billerAccountNumber, description}, {headers: authHeader() });
+}
+
+const pay = (fromAccount, description, amount) => {
+  return axios.post(API_URL + "Pay/", {fromAccount, description, amount}, {headers: authHeader() });
+}
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -79,5 +98,10 @@ export default {
   editBeneficiary,
   getAllBeneficiaries,
   addBenefeciary,
-  fundTransferWithinBankBeneficiary
+  fundTransferWithinBankBeneficiary,
+  getAllGlobalBillers,
+  addBiller,
+  getAllBillers,
+  editBiller,
+  pay
 };

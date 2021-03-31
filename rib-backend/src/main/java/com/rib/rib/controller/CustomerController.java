@@ -468,6 +468,11 @@ public class CustomerController {
 		return ResponseEntity.ok(new MessageResponse("Transaction Successful"));
 
 	}
+	
+	@GetMapping("/GetGlobalBillers")
+	public List<GlobalBiller> getGlobalBillers() {
+		return globalBillerRepository.findAll();
+	}
 
 	@PostMapping("/AddBiller")
 	public ResponseEntity<?> addBiller(@RequestBody BillerRequest billerRequest) {
@@ -514,6 +519,15 @@ public class CustomerController {
 		customerRepository.save(customer);
 		return ResponseEntity.ok(new MessageResponse("Biller edited successfully"));
 
+	}
+	
+	@GetMapping("/GetAllBillers")
+	public List<Biller> getAllBiller() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+		
+		return customer.getBillers();
 	}
 
 	@PostMapping("/Pay")

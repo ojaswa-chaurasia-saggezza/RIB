@@ -126,8 +126,7 @@ function Dashboard(props) {
     };
 
 
-    const [Customer, setCustomer] = useState( {} );
-    console.log(Customer);
+    const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
     function convertTZ(date, tzString) {

@@ -8,19 +8,35 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 import CustomerService from '../Services/Customer.service'
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function FTWithinBankBeneficiary() {
 
+  const [open, setOpen] = useState(false);
   const [accounts, setAccounts] = useState({});
+
   const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState({ error: false, errorText: "" });
+  
   const [allBeneficiaries, setAllBeneficiaries] = useState({});
+  
   const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedAccountError, setSelectedAccountError] = useState({ error: false, errorText: "" });
+  
   const [selectedMode, setSelectedMode] = useState('');
+  const [selectedModeError, setSelectedModeError] = useState({ error: false, errorText: "" });
+  
   const [selectedBeneficiary, setSelectedBeneficiary] = useState('');
+  const [selectedBeneficiaryError, setSelectedBeneficiaryError] = useState({ error: false, errorText: "" });
 
   const handleSelectedAccount = (event) => {
     setSelectedAccount(event.target.value);
@@ -34,8 +50,46 @@ export default function FTWithinBankBeneficiary() {
     setSelectedBeneficiary(event.target.value);
   }
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const handleFundTransfer = () => {
+
+    if (selectedAccount == "")
+      setSelectedAccountError({ error: true, errorText: "Please select an account" });
+
+    if (selectedMode == "")
+      setSelectedModeError({ error: true, errorText: "Please select a transfer mode" });
+
+    if (selectedBeneficiary == "")
+      setSelectedBeneficiaryError({ error: true, errorText: "Please select a benefeciary" });
+
+    if (amount == "")
+      setAmountError({ error: true, errorText: "Please enter the amount" });
+
+    if (selectedAccount != "" && selectedMode != "" && selectedBeneficiary != "" && amount != "") {
+      CustomerService.fundTransferWithinBankBeneficiary(selectedAccount, selectedBeneficiary, selectedMode, amount).then(() => {
+        handleClick();
+      },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            setAmountError({error: true, errorText: resMessage});
+        });
+    }
+  }
+
   useEffect(() => {
-    const accountsList = CustomerService.getAccounts().then((response) => {
+    CustomerService.getAccounts().then((response) => {
       if (response.data)
         setAccounts(response.data);
     },
@@ -45,17 +99,17 @@ export default function FTWithinBankBeneficiary() {
           error.message ||
           error.toString();
       });
+
     CustomerService.getAllBeneficiaries().then((response) => {
       if (response.data)
         setAllBeneficiaries(response.data);
-      console.log(response.data);
     }, (error) => {
       const _content =
         (error.response && error.response.data) ||
         error.message ||
         error.toString();
       setAllBeneficiaries({});
-      console.log(_content);
+      console.log("Error:      "+_content);
 
     });
   }, []);
@@ -68,51 +122,54 @@ export default function FTWithinBankBeneficiary() {
           <div class="transfer-form row">
 
             <div class="form-field col-lg-6">
-              <FormControl fullWidth>
+              <FormControl fullWidth error={selectedAccountError.error}>
                 <InputLabel id="from-account">From account</InputLabel>
                 <Select
                   labelId="from-account"
                   value={selectedAccount}
-                  onChange={handleSelectedAccount}
+                  onChange={(e)=>{handleSelectedAccount(e);setSelectedAccountError({error:false, errorText:''})}}
                 >
                   {
                     Object.entries(accounts).map(([key, value]) => {
-                      return <MenuItem value={key}>{value.accountNumber}</MenuItem>
+                      return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
                     })
                   }
                 </Select>
+                {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
               </FormControl>
             </div>
 
             <div class="form-field col-lg-6">
-              <FormControl fullWidth>
+              <FormControl fullWidth error={selectedModeError.error}>
                 <InputLabel id="transfer-mode">Transfer mode</InputLabel>
                 <Select
                   labelId="transfer-mode"
                   value={selectedMode}
-                  onChange={handleSelectedMode}
-                  >
-                    <MenuItem value={1}>NEFT</MenuItem>
-                    <MenuItem value={2}>RTGS</MenuItem>
-                    <MenuItem value={3}>IMPS</MenuItem>
-                  </Select>
+                  onChange={(e)=>{handleSelectedMode(e);setSelectedModeError({error:false, errorText:''})}}
+                >
+                  <MenuItem value='NEFT'>NEFT</MenuItem>
+                  <MenuItem value='RTGS'>RTGS</MenuItem>
+                  <MenuItem value='IMPS'>IMPS</MenuItem>
+                </Select>
+                {selectedModeError.error && <FormHelperText>{selectedModeError.errorText}</FormHelperText>}
               </FormControl>
             </div>
 
             <div class="form-field col-lg-6">
-              <FormControl fullWidth>
+              <FormControl fullWidth error={selectedBeneficiaryError.error}>
                 <InputLabel id="beneficiary">Beneficiary</InputLabel>
                 <Select
                   labelId="beneficiary"
                   value={selectedBeneficiary}
-                  onChange={handleSelectedBeneficiary}
-                  >
-                    {
-                      Object.entries(allBeneficiaries).map(([key, value]) => {
-                        return <MenuItem value={key}>{value.nickName}</MenuItem>
-                      })
-                    }
-                  </Select>
+                  onChange={(e)=>{handleSelectedBeneficiary(e);setSelectedBeneficiaryError({error:false, errorText:''})}}
+                >
+                  {
+                    Object.entries(allBeneficiaries).map(([key, value]) => {
+                      return <MenuItem value={value.nickName}>{value.nickName}</MenuItem>
+                    })
+                  }
+                </Select>
+                {selectedBeneficiaryError.error && <FormHelperText>{selectedBeneficiaryError.errorText}</FormHelperText>}
               </FormControl>
             </div>
 
@@ -126,13 +183,18 @@ export default function FTWithinBankBeneficiary() {
                 onChange={e => { setAmount(e.target.value) }}
                 onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
                 error={amountError.error}
-                helperText={amountError.errorText} 
+                helperText={amountError.errorText}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-                }}/>
+                }} />
             </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success">
+                Fund transfered Successfully!
+                        </Alert>
+            </Snackbar>
             <div class="form-field col-lg-12">
-              <input class="submit-btn bg-success" type="submit" value="submit" name="" />
+              <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
             </div>
 
           </div>
