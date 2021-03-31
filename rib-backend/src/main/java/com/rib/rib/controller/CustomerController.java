@@ -193,6 +193,26 @@ public class CustomerController {
 
 	}
 
+	// Get accounts of logged in customers
+	@GetMapping("/GetAccounts")
+	public List<Account> getAcocunts() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		return customer.getAccounts();
+	}
+
+	// Get beneficiaries of logged in customer
+	@GetMapping("/Getbeneficiaries")
+	public List<Beneficiary> getBeneficiary() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+
+		return customer.getBeneficiaries();
+	}
+
 	// Add beneficiary API
 	@PostMapping("/AddBeneficiary")
 	public ResponseEntity<?> addBeneficiary(@RequestBody BeneficiaryRequest beneficiaryRequest) {
@@ -448,6 +468,11 @@ public class CustomerController {
 		return ResponseEntity.ok(new MessageResponse("Transaction Successful"));
 
 	}
+	
+	@GetMapping("/GetGlobalBillers")
+	public List<GlobalBiller> getGlobalBillers() {
+		return globalBillerRepository.findAll();
+	}
 
 	@PostMapping("/AddBiller")
 	public ResponseEntity<?> addBiller(@RequestBody BillerRequest billerRequest) {
@@ -494,6 +519,15 @@ public class CustomerController {
 		customerRepository.save(customer);
 		return ResponseEntity.ok(new MessageResponse("Biller edited successfully"));
 
+	}
+	
+	@GetMapping("/GetAllBillers")
+	public List<Biller> getAllBiller() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
+		
+		return customer.getBillers();
 	}
 
 	@PostMapping("/Pay")
