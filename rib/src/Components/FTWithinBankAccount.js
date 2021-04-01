@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import '../CSS/style.css';
 import '../CSS/ErrorStyling.css';
 
+import MetaDataService from "../Services/MetaData.sevice";
+import PlainDialog from "../Elements/PlainDialog";
+
 export default function FTWithinBankAccount() {
+    const [termsAndConditions, setTermsAndConditions] = useState("Empty");
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        MetaDataService.getTermsAndConditions().then((response) => {
+            if (response.data)
+                setTermsAndConditions(response.data);
+            console.log(response.data);
+
+        });
+    }, []);
 
     return (
+        <React.Fragment>
             <div class="content">
                 <section class="trasfer-beneficiary">
                     <h1 class="title">Transfer within your accounts</h1>
@@ -35,6 +54,10 @@ export default function FTWithinBankAccount() {
                                 <input id="amount" class="input-text" type="number" name="" />
                                 <label for="amount" class="label text-primary">Amount</label>
                             </div>
+
+                            <div role="button" className="col-lg-12 text-danger text-start " onClick={()=>{setOpen(true)}}>*Terms & Conditions</div>
+
+
                             <div class="form-field col-lg-12">
                                 <input class="submit-btn bg-success" type="submit" value="submit" name="" />
                             </div>
@@ -43,5 +66,9 @@ export default function FTWithinBankAccount() {
                     </div>
                 </section>
             </div>
+
+
+            <PlainDialog data={termsAndConditions} open={open} handleClose={handleClose} title="Terms and Contitions"/>
+        </React.Fragment>
     );
 }

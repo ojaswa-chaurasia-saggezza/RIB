@@ -1,0 +1,529 @@
+ICICI BANK LIMITED
+
+1.1 ICICI BANK LIMITED ("ICICI Bank") is an Indian company incorporated under the Companies Act, 1956 and licensed as a bank under the Banking Regulation Act, 1949. ICICI Bank currently has its registered office at ICICI Bank Tower, Near Chakli Circle, Old Padra Road, Vadodara, 390 007, Gujarat, India and its corporate office at ICICI Bank Towers, Bandra Kurla Complex, Mumbai , India- 400 051.
+
+1.2 ICICI Bank is subject primarily to the regulation and supervision of the Reserve Bank of India, which is a statutory body constituted under the Reserve Bank of India Act, 1934.
+
+1.3 ICICI Bank owns and maintains the Website and offers a Registered User (as defined herein) access to and use of the Website and the opportunity to avail of the Facilities subject to the Terms and Conditions.
+
+1.4 These Terms and Conditions (the "Terms and Conditions") supersedes any prior versions hereof, and govern the terms under which you may access and use this Website and any of the Facilities (as defined herein). Capitalised terms, which are used in this Terms and Conditions and not defined elsewhere, shall have the meanings assigned to them under the Section of this Terms and Conditions.
+
+1.5 Do not access or use the Website or Remittance Tracking Facility if you do not agree to be bound by the Terms and Conditions. By virtue of continuing to access and use the Website and/or Remittance Tracking Facility, you are agreeing to the Terms and Conditions in effect at such time. The Terms and Conditions may be updated, modified or amended by ICICI Bank from time to time by posting the updated, amended or modified Terms and Conditions on this Website and the same shall be communicated to you. If any of the Terms and Conditions is not acceptable to you or you disagree with any material on the Website, unless otherwise stated herein, your sole and exclusive remedy is to discontinue using the Website and Remittance Tracking Facility.
+
+
+
+
+OVERVIEW OF REMITTANCE TRACKING FACILITY
+
+2.1 The Remittance Tracking Facility (as defined below) made available by ICICI Bank on the Website and further described below and elsewhere on the Website, among other things, provide a Registered User with a technology platform to record remittance requests, track the status of orders and manage electronic communication relating to a remittance that is transmitted (after conversion by ICICI Bank to Indian Rupees) and disbursed by ICICI Bank to a bank or other account in India as instructed by the Registered User using regular international banking channels that involve correspondent banking relationships that ICICI Bank enjoys with financial institutions in the Registered User’s local jurisdiction. No banking relationship is either intended or created, hereby or thereby, between the Registered User and/or the recipient of the remittance of the one part and ICICI Bank or its affiliates of the other part. In order to avail of the Facilities described above, it is mandatory that the Registered User is a customer of a local financial institution in the Registered User’s jurisdiction. Further the Registered User should make the transaction from the Registered user’s own account maintained with his/her local bank for personal banking purposes only with the same account name as registered on Money2India Website.
+
+ 
+
+FEES AND CHARGES
+
+3.1 ICICI Bank may set its own fees and charges for Facilities (including the Remittance Tracking Facility) and may revise the same at any time and the availability of Facilities displayed or offered on or through the Website are subject to change without prior notice. Nothing contained on the Website constitutes an offer, promise or commitment to grant or provide any Facility. While ICICI Bank endeavours to post accurate and updated information on the Website, the Registered User must verify the same before taking any action or entering into any transaction.
+
+3.2 When a Registered User makes a request to use the Remittance Tracking Facility using the Power Transfer option (as described on the Website), such Registered User will be requesting the Registered User’s local financial institution to initiate a wire transfer to ICICI Bank’s correspondent bank to fund the remittance. ICICI Bank does not control and is not responsible in any manner for any fees or charges, if any, that may be imposed by any such financial institution(s) or any other third parties in connection with the wire transfer. When a Registered User makes a request to use the Remittance Tracking Facility using the E-Transfer option (as described on the Website), ICICI Bank does not control and is not responsible in any manner for fees or charges, if any, that may be imposed on the Registered User by the Registered User’s financial institution in connection with the ACH debit processed as part of an E-Transfer.
+
+3.3 Registered Users acknowledge and understand that ICICI Bank may make monetary gains when funds in foreign currency remitted by a Registered User are converted by ICICI Bank. For transactions scheduled five or more days in advance, the foreign exchange conversion rate shown for the calculation on the Website is only an estimate, intended to help the Registered User to arrive at an approximate Indian Rupees equivalent amount that the Beneficiary recipient will receive and it in no way guarantees or represents the foreign exchange conversion rate that will actually be applied to the foreign exchange sent by the Registered User. ICICI Bank shall carry out the conversion of foreign currency to Indian Rupees, and will apply the foreign exchange conversion rates prevailing on the day of conversion.
+
+3.4. Neither the Registered User nor the Beneficiary/ recipient will be entitled to any interest for the period during which the funds to be remitted are with ICICI Bank, are in the course of remittance, or for any other period. Registered Users acknowledge and understand that, in providing the Remittance Tracking Facility, ICICI Bank may earn interest on funds remitted between the time that the foreign currency is remitted and the time that it is disbursed to the Beneficiary bank or other account in India.
+
+ 
+
+ELIGIBLE USERS
+
+4.1 In order to access and use the Website and avail of the Remittance Tracking Facility, the Registered User must be an individual of at least 18 years of age having the capacity to enter into legally binding contracts under the law applicable to the Registered User.
+
+ 
+
+REGISTRATION INFORMATION
+
+5.1 Only limited access to the Website is available to non-Registered Users. Non-Registered Users are not permitted to avail of the Remittance Tracking Facility. In order to obtain increased access to the Website and in order to avail of the Remittance Tracking Facility, every person who is desirous of availing such Facilities is required to register on the Website as a Registered User. Subject to the other Terms and Conditions, upon registration as a Registered User the Website will register the relevant Registered User ID and Registered User Password. The Registered User hereby agrees that he shall not get registered more than once in the Website for availing the Remittance Tracking Facility.
+
+5.2 The Registered User agrees to provide true, accurate, current and complete information, as prompted by the registration form on the Website, and to update this information to keep it true, accurate, current and complete at all times. If, in the judgment of or to the knowledge of ICICI Bank, any information provided by the Registered User is untrue, inaccurate, not current or incomplete, ICICI Bank retains the right to terminate the Registered User's registration and refuse the Registered User access to or use of the Website or any Facilities, including the cancellation of pending transactions. ICICI Bank reserves the right to request the Registered User, at any time and from time to time, for additional information (including credit card details and other payment information) and/or proof of authenticity of any information; the Registered User’s continued access to the Website and the Facilities, including the completion of any ongoing transaction, may be subject to the receipt by ICICI Bank of such additional information or proof thereof.
+
+5.3 The Registered User will be solely and absolutely responsible for maintaining the secrecy and confidentiality of all Registered User IDs and Registered User Passwords (which term includes T-PINs) and be fully responsible and liable for all transactions and activities that occur under the Registered User's ID and using the Registered User’s Password, including any unauthorised use or misuse of such Registered User ID and/or Registered User Password and ICICI Bank shall have no obligation to verify the authenticity of any such transaction or activity. In consideration of ICICI Bank agreeing to provide the Remittance Tracking Facility as per the Terms and Conditions, the Registered User hereby agrees unconditionally to indemnify ICICI Bank and hold ICICI Bank harmless against any liability, costs, damages, claims, suits, and proceedings based upon or relating to such unauthorized access and use. Without prejudice to the aforesaid, the Registered User agrees to log out from his or her Registered User Account at the end of each session and to immediately notify ICICI Bank via Email Us, or through the Call Centre, or registered post AD of any suspected loss, theft, unauthorised usage of the Registered User ID or Registered User’s Password, any other breach of security, or any receipt by the Registered User of confirmation of a transaction, funds or other activity which the Registered User did not authorise; or any inaccurate information in the Registered User's account balances or transaction history.
+
+5.4 If the Registered User forgets his/her Registered User Password, ICICI Bank may, subject to verification and ICICI Bank’s satisfaction as to the Registered User’s identity, send the Registered User the prevailing Registered User ID to his/her registered email address provided by the Registered User at registration. However, the Registered User’s Password would not be sent via email. The Registered User is required to generate a new temporary password through his Registered User ID on the Website. In the latter event, the Registered User must change the temporary password as soon as it is received, and until such time this password shall be deemed to be the Registered User's Password and the Registered User will be responsible and liable for all transactions pursuant thereto.
+
+5.5 To the extent permissible by applicable law, ICICI Bank shall have the right (but not the obligation) to require the Registered User to communicate instructions and authorise and execute transactions and other activities by means of secure electronic records and secure digital signatures in addition to, or in place of, the use of password(s).
+
+ 
+
+ACCEPTABLE USE
+
+6.1 Registered User/ Visitor shall not:
+
+use or access the Website or any Facility to do, facilitate or support any act that violates the Terms and Conditions or any rules and regulations of any jurisdiction, including but not limited to rules and regulations relating to money laundering, illegal gambling activities, fraud, or funding of terrorist organizations.
+restrict or inhibit any other person from accessing, using and enjoying the Website or the Facilities;
+modify, copy, distribute, transmit, display, perform, publish, licence, create derivative works from, transfer or sell any information, designs, logos, trademarks, software, Facilities, products or services obtained on or through the Website, except as permitted by the copyright owner or other right holder thereof;
+post or transmit any unlawful, fraudulent, libelous, defamatory, obscene, pornographic, profane, threatening, abusive, hateful, offensive, or otherwise objectionable information or statement of any kind including, without limitation, any information or statement constituting or encouraging conduct that would constitute a criminal offence, give rise to civil liability, or otherwise violate any local, state, national, foreign or other law;
+post or transmit any advertisements, solicitations, chain letters, pyramid schemes, investment opportunities or schemes or other unsolicited commercial communication (except as otherwise expressly permitted by ICICI Bank) or engage in spamming or flooding;
+post or transmit any information or software which contains a virus, Trojan horse, worm or other harmful component;
+post, publish, transmit, reproduce, distribute or in any way exploit any information, software or other material obtained from or through the Website for commercial purposes (other than as expressly permitted by the provider of such information, software or other material);
+upload, post, publish, transmit, reproduce or distribute in any way, information, software or other material obtained on or through the Website which is protected by copyright or other proprietary right, or derivative works with respect thereto, except as permitted by the copyright owner or other right holder thereof;
+upload, post, publish, reproduce, transmit or distribute in any way any component of the Website itself or derivative works with respect thereto, except as permitted by ICICI Bank or the copyright owner or other right holder thereof, the Website being copyrighted under the relevant laws;
+attempt to decompile or reverse engineer any of the software available on the Website;
+make any attempt to hack into the Website or otherwise attempt to subvert any firewall or other security measure of the Website and if the Registered User/ Visitor becomes aware of any shortcoming in the security on the Website the Visitor shall forthwith inform ICICI Bank of the same in writing;
+reproduce, duplicate, copy, sell, resell or exploit for any commercial purposes, any portion of the Website, use of the Facilities, or access to the Website or the Facilities, other than as provided within the scope of the Service;
+disclose to any other person, in any manner whatsoever, any information of a confidential nature relating to ICICI Bank or the Affiliate Partners obtained in the course of using or accessing the Website or availing of any Facility.
+Back to top
+
+ 
+
+LIMITATIONS OF OFFERINGS
+
+7.1 ICICI Bank shall not be under any duty to assess the prudence or otherwise of any instruction or transaction given or entered into by the Registered User. Nothing provided on the Website should be construed as advice of any nature and the Registered Users are advised to consult professionals in this regard prior to taking any decision.
+
+7.2 ICICI Bank shall have the right to verify any information provided by the Registered User and the Registered User hereby authorizes ICICI Bank to verify any such information.
+
+7.3 Except as otherwise provided by applicable law or regulation, ICICI Bank shall not be responsible for any error or omission made by the Registered User in keying in or otherwise providing the information required to avail of the Remittance Tracking Facility or any consequences as a result of such error or omission. If you provide us with an incorrect account number for the Beneficiary/ recipient or an incorrect identification or routing number for the Beneficiary/ recipient’s financial institution, you may lose the entire amount of the funds transferred. For remittance transfers in favor of a Beneficiary/ recipient holding an account with ICICI Bank, in case of any inconsistency in the Beneficiary/ recipient name and account number (and related details) provided by the Registered User as against the details available with ICICI Bank, the remittance transfer may be held and not processed to enable ICICI Bank to seek additional details and in some cases, such remittance transfer may even be cancelled.
+
+7.4 ICICI Bank shall endeavour to carry out the requests received under the Remittance Tracking Facility. However, ICICI Bank shall be entitled, in its sole and absolute discretion, to refuse to comply with all or any of a Registered User’s instructions or requests without assigning any reason.
+
+7.5 The Registered User cannot amend, cancel or revoke any request made of ICICI Bank under the Remittance Tracking Facility, save and except as specifically described on the Website or described to the Registered User in communications from ICICI Bank. Additionally, when the Registered User places a request to amend, cancel or revoke a transaction request that has already been authorized by the Registered User such request will only be acted upon if either one (1) it is received before the requested transaction or activity is executed, or (2) it is received in accordance with the procedures and timeframes that have been described to the Registered User.
+
+7.6 Any scheme for awarding or securing reward points or other rewards or prizes (by whatever name called) is available only to Persons who are eligible for the same under the rules of the concerned scheme and the applicable laws of India and other concerned jurisdictions. The Registered User is therefore required to verify the eligibility of the Registered User before participating in any such scheme. ICICI Bank is not responsible or liable for the performance, quality or any other aspect of any rewards, prizes or items manufactured or supplied by third parties against any redemption of the points or otherwise pursuant to such scheme, and the Registered User's recourse for the same will be only against the persons who have manufactured or supplied the same. ICICI Bank shall be entitled to have more than one promotional offer in existence and applicable at any given time. However, a Registered User shall be entitled to avail of only one offer per transaction and in case of multiple transactions under a given offer, he/she shall be eligible only for the first eligible transaction. It shall be entirely at the discretion of ICICI Bank to consider any exceptions to the above.
+
+7.7 The Registered User understands that the Website and the Facilities may not be available in whole or in part in different countries, states, territories and jurisdictions and ICICI Bank may in its sole discretion restrict the availability of the Facility to any country state, territory or jurisdiction.
+
+7.8 ICICI Bank has no control over, and is not responsible for, the quality, safety, legality, or delivery of any goods or services that the Registered User may pay for using the Website and/or the Facilities. Such use will be at the Registered User’s own risk.
+
+7.9 In order to avail of specific Facilities, the Registered User may have to agree to other terms and conditions in addition to the Terms and Conditions and may also have to execute agreements, powers of attorney and other writings and abide by the procedures as may be specified by ICICI Bank.
+
+7.10 ICICI Bank retains the right to terminate the registration of any Registered User and refuse the Registered User access to or use of the Website or any Facilities, including the cancellation of pending transactions, if the Registered User has not performed a transaction on the Website or not used the Facilities for a period of 365 days or more
+
+7.11 For transfers from USA, additional details/information is provided on the 'Confirm transaction page' before the Registered User authorizes the transaction.
+
+Back to top
+
+ 
+
+DISCLAIMERS
+
+8.1 The Website, all information on or available through the Website and the Facilities provided by ICICI Bank are made available to the Registered Users “as is” and without any representation or warranty of any kind, either express or implied, including without limitation, any representation or warranty for accuracy, continuity, uninterrupted access, timeliness, sequence, quality, performance, fitness for any particular purpose, completeness, title, compatibility, warranty of non-infringement, freedom from computer virus, warranties of merchantability or fitness for a particular purpose, each to the extent permissible by applicable law.
+
+8.2 Although ICICI Bank adopts security measures that it considers appropriate for the Website, it does not represent or warrant that the Website is immune from hacking, denial of service attacks, unauthorised access or other illegal subversion of these security measures that might impair the working of the Website, the availability of the Facilities or the integrity and confidentiality of Registered User’s personal and login information or accounts and ICICI Bank disclaims liability arising from any such acts or occurrences. Furthermore, while ICICI Bank takes reasonable precautions to avoid such eventualities, the Registered User understands that communications through Internet are not always secure and agrees that ICICI Bank shall not be responsible for any unauthorised or illegal interception of e-mail or other communication to or from ICICI Bank.
+
+8.3 Information and Facilities on the Website may be displayed and offered in a phased manner at the discretion of ICICI Bank. ICICI Bank shall have the right to from time to time and in its discretion, introduce new information and Facilities and add to, modify, suspend or withdraw any information or Facility or the terms thereof in whole or in part without any prior notice. While ICICI Bank makes every endeavour to ensure that the Facilities are offered to a Registered User without interruption or delay, continued provision of the Facilities may be impractical or impossible due to the failure of operational systems for reasons including but not limited to virus attacks, natural calamity, floods, fire and other natural disasters, legal restraints, faults in the telecommunication network or network failure, system maintenance, software or hardware error, labour problems, strikes or any other reason beyond the control of ICICI Bank, and ICICI Bank makes provides no guarantee that any instructions or transactions will definitely be communicated, processed or performed (whether or not before a particular time) using the Website or the Facilities.
+
+8.4 ICICI Bank has not verified and shall not be liable or responsible for any content or other information on the Website or on web-sites linked to or with the Website.
+
+8.5 ICICI Bank operates and offers the Website and the Facilities strictly on a no-liability and no-obligation basis as regards ICICI Bank, and ICICI Bank shall not be liable to the Registered User or any other third party for any claim for direct, indirect, incidental, special, exemplary, punitive, consequential or other damages (including, without limitation, loss of profits, loss or corruption of data, loss of profit or goodwill, work stoppage, computer failure or malfunction, or interruption of business) whether arising under contract, tort or any other theory arising out of or in connection with the Website, the inability to access the Website or any Facilities, products or services mentioned or advertised on or accessed or availed on or through the Website. The Registered User’s remedies for errors or unauthorized transactions shall be limited to those arising under the applicable laws and regulations , and as described on the Website and in the communications provided by ICICI Bank to the Registered User.
+
+8.6 To the extent any of the disclaimers or limitations of liability in the Terms and Conditions are held to be unenforceable, the maximum liability of ICICI Bank to the Registered User shall not exceed the amount of fees paid/payable by the Registered User to ICICI Bank for the Facilities availed by the Registered User through the Website, and any other amounts the Registered User may be entitled to recover under the applicable laws and regulations.
+
+8.7 The Registered User/ Visitor/ Referrer shall ensure that he/she shall not be in violation of any data protection laws in force at the time of referring potential users for the service to ICICI Bank or when registering for the Remittance Tracking Facility (as the case may be).
+
+ 
+
+Back to top
+
+ 
+
+FACILITIES PROVIDED BY THIRD PARTIES
+
+9.1 Certain of the Facilities mentioned or offered on or through the Website require the Registered User to independently contract for and use services provided by third party service providers and ICICI Bank makes no warranty on behalf of such third parties. ICICI Bank shall not be liable for any loss or damage of any sort incurred as a result of any transactions or dealings between the Registered Users and such third party service providers. The Registered User may be charged for such transactions/dealings by such third party service provider. Such third party service providers may have their own agreements, terms and conditions which will govern the services provided by them, which may be specific to each such service provider and vary from Facility to Facility. ICICI Bank recommends that the Registered User obtain the full text of such terms and warranties from such service providers before availing of any such service. All of the Registered User's rights and remedies and all maintenance, update, warranty, liability or any other obligations related to any such services shall be governed by the applicable terms, policies and procedures of the concerned service provider and ICICI Bank shall not be liable or responsible for the same in any manner. The Registered User shall have no claim, rights or remedies whatsoever against ICICI Bank in respect of any such services availed or sought to be availed by the Registered User from any such service provider. The Registered User agrees not to hold ICICI Bank liable for any loss or damage of any sort incurred as a result of any such dealings with any service provider.
+
+ 
+
+Back to top
+
+ 
+
+TERMS OF SPECIFIC FACILITIES
+
+The following (among other) Facilities are proposed to be offered on the Website. However, all the Facilities or all the various components and features of a Facility may not be offered at all times. ICICI Bank may discontinue, modify, change, and alter any of the features of the Facility at its sole discretion.
+
+10.1 Alerts
+
+ICICI Bank shall endeavour to ensure that Alerts are communicated to the Registered User in accordance with the Registered User's instructions. However, neither ICICI Bank nor the Service Providers would be responsible or liable for non-dispatch or delay in dispatch of the Alerts by ICICI Bank Service Providers or any delay in receipt or non-receipt of the Alerts for any reason whatsoever. Under no circumstances shall ICICI Bank and/or the Service Providers be liable for any costs, damages or other amount whatsoever for such non-dispatch or delay in dispatch or any non-receipt or delay in receipt of the Alerts. Non- receipt of Alerts will not discharge or reduce the Registered User's liability to pay any amount to ICICI Bank which would have been payable in the event of proper receipt of the Alerts.
+
+10.2 Remittance Tracking Facility
+
+10.2.1 Subject to the relevant regulatory approvals, terms and conditions imposed while granting the necessary approvals and other terms of the Remittance Tracking Facility, such Facility enables the Registered User to avail of a technology platform for a tracking facility that enables remitting funds from outside India into India. The tracking facility is offered by ICICI Bank by using ICICI Bank's web technology platform. ICICI Bank shall, under the Remittance Tracking Facility, convert the funds received through the correspondent bank into Indian Rupees and remit it to the Beneficiary in India as instructed by the Registered User.
+
+10.2.2 The Registered User should pay the foreign currency amount as per the instructions stated on the Website by acceptable mode described on the Website. The funds will be remitted into India only after ICICI Bank has received a confirmation that such foreign currency amount has been received in its account held with a correspondent bank. Thereafter, after deducting the appropriate charges/fees as may be applicable at the time of remittance, the money will be remitted to the Beneficiary bank account in India as designated by the Registered User.
+
+10.2.3 In case of non-availability of funds from the account from which the Registered User has requested the remittance of money, or in the case of non-collection of funds, ICICI Bank shall be entitled to reinitiate a debit request for the funds remitted for as many times as permitted by applicable laws and regulations. ICICI Bank shall also be entitled to cancel the requested remittance transaction and the Registered User shall bear full liability and responsibility for the same. The Registered User shall reimburse any direct or indirect expense which ICICI Bank may incur while providing such Remittance Tracking Facility. The Registered User also agrees to pay for all costs associated with the recovery of amounts owed to ICICI Bank, including reasonable attorney's fees and court fees. .The Registered User agrees to pay to ICICI Bank such amount immediately upon ICICI Bank's demand along with interest @ 2% per month from the date of the remittance by ICICI Bank till the receipt of funds by ICICI Bank from the Registered User. ICICI Bank shall also be entitled to inform any credit bureau or any other person or entity if the Registered User fails to pay/reimburse such amount or any part thereof to ICICI Bank.
+
+10.2.4 While it shall be ICICI Bank's endeavour to adhere to the time schedule indicated by it on the Website, ICICI Bank hereby disclaims liability or responsibility for any changes in the time schedule for execution of the Registered User's instructions or remittance or credit of funds for any reason, except as otherwise required by applicable law or regulation and as described to the Registered User on the Website and in communications provided by ICICI Bank to the Registered User.
+
+10.2.5 In the event the funds are for any reason required to be redirected to another account / location, or any other additional service is required, ICICI Bank shall levy additional charges and remit the amount after deducting such additional charges.
+
+10.2.6 ICICI Bank shall in no way be held responsible and/or be liable for any queries, errors, disputes or delays in messaging, money transmission, currency conversion, conversion rates offered, payment to the beneficiaries of the remittances or any other query, claim or dispute. ICICI Bank will, however, use reasonable efforts to assist the Registered User in contacting ICICI Bank or any third party to facilitate resolution of such queries, claims and disputes.
+
+
+10.2.7 The Registered User hereby authorizes ICICI Bank to check or to use a third party agency to check the Registered User's credit history/identity details at the time of and/or prior or subsequent to enrollment and to obtain follow-up credit reports relating to the Registered User.
+
+10.2.8 The Registered User hereby agrees that, where ICICI Bank so deems advisable or necessary as per its due diligence criteria, ICICI Bank may hold the money (to be remitted to India) for longer than the usual time for remittance, and may delay the remittance.
+
+10.2.9 The Registered User hereby agrees that ICICI Bank has no control over when the Beneficiary's financial institution (through whom the Beneficiary chooses to receive the remittance) makes such funds available for the Beneficiary's use and ICICI Bank shall not be responsible for any delay or default on the part of such financial institution, except as otherwise required by applicable law or regulation.
+
+10.2.10 The Registered User hereby agrees that the purpose of the remittances supported by the Remittance Tracking Facility will be strictly of personal nature and limited only for the purposes mentioned on the Website at the time of using the Remittance Tracking Facility. Trade related payments such as those for export of goods/services from India or Capital market investments such as those in the nature of Foreign Direct Investment, Investments in Equity/ Debt etc. or other remittances not permissible under the applicable regulations prevailing from time to time are not covered under, and should not be affected through this Remittance Tracking Facility.
+
+The purpose declared by the Registered User while using the Remittance Tracking Facility will be treated as final and binding and cannot be changed at a later date by the Registered User or the intended Beneficiary. The regulatory reporting by ICICI Bank Limited in India will be done on the basis of the purpose selected by the Registered User through the Remittance Tracking Facility.
+
+10.2.11 The Registered User shall provide to ICICI Bank all the information as may be required, in absence of which ICICI Bank shall not be liable to permit the Registered User to avail of the Remittance Tracking Facility.
+
+10.2.12 The Registered User hereby undertakes that by sending funds to India, he/she is not violating any exchange control laws stipulated by the Government of India and/or the Reserve Bank of India. The Registered User agrees to keep ICICI Bank indemnified for any such violation.
+
+10.2.13 The Registered User undertakes to inform ICICI Bank, before initiating a transaction on Money2India, that she/he is availing the facility from Indian territory. In such cases, charges, if any, payable by the Registered User to his/her local financial institution will attract withholding taxes as may be applicable in accordance with the tax laws of the jurisdiction in which the Registered User is tax resident.
+
+10.2.14 The request for remittance of funds by the Registered User to Visa Debit cards is only applicable for such cards issued in India.
+
+10.2.15 ICICI Bank shall endeavour to ensure that transfers are not made to any Beneficiary Card not issued in India. However, the obligation shall lie on the Registered User to ensure that there are no violations of any law, regulation, authorization including Foreign Exchange Management Act, 1999 of India (“FEMA”) or Exchange Control and the Registered User shall be solely liable for any violation thereof.
+
+Illustrative list of transactions prohibited under FEMA are given below:
+1) Purchase of agricultural land, farmhouse or plantation.
+2) Investments in securities, shares and/or any other similar instruments other than as permitted by laws of India.
+3) Lending to person resident in India whether in foreign currency/Indian Rupees where expressly prohibited by laws in India.
+
+10.2.16 The Registered User is aware that she/he may refer any beneficiary in India to be issued a Remittance Card. ICICI will endeavor to get in touch with the Beneficiary in India at the contact details provided by the Registered User but does not guarantee the same. The Registered User should also ask the Beneficiary to contact ICICI Bank. The Registered User understands that the issuance of the Remittance Card to the Beneficiary is subject to submission of requisite and sufficient documents by the Beneficiary to ICICI Bank. Such documents have to be in accordance with the regulations stipulated by the Reserve Bank of India. The Registered User hereby understands that the issuance of such Remittance Card is subject to such extraneous factors and hence is beyond the control of ICICI Bank. The Registered User hereby acknowledges and confirms that ICICI Bank shall not be liable for any loss or delay that occurs in the issuance of the Remittance Card to the Beneficiary.
+
+10.2.17 ICICI Bank shall send the funds only to the number of such Beneficiary Card as has been provided and validated by the Registered User. ICICI Bank at its discretion may obtain certain details of the Beneficiary but ICICI Bank may (but shall not be required to) verify or authenticate the same. ICICI Bank shall not be responsible for any erroneous credit, if any erroneous Beneficiary details provided by the Registered User to ICICI Bank. Furthermore, the Registered User shall be entirely responsible for providing the accurate amount to be credited on the Beneficiary account. ICICI Bank shall not be responsible for an erroneous credit, if an erroneous amount is provided by the Registered User to ICICI Bank and ICICI Bank shall not be liable to reverse such erroneous credit from the Beneficiary
+
+10.2.18 ICICI Bank may specify to the Registered User through the Website from time to time the limit on the funds that can be transferred from the Registered User’s account to the Beneficiary’s Visa Account.
+
+10.2.19 ICICI Bank shall assume no responsibility for the performance of Visa or any other entity involved in the process; and for any loss or damage incurred or suffered by the Registered User for any error, defect, failure or interruption of the Facility or consequences arising out of delayed payments.
+
+10.2.20 Fixed Rupee Transfers: The use of this channel is subject to daily limits on the value and volume of transactions permitted as per internal operational guidelines. ICICI Bank may change these limits at its own discretion. In the event that any of these operational limits are breached or held up, remittance through this channel will be temporarily unavailable till the permissible limits are cleared. ICICI Bank shall in no way be held responsible and/or liable for any rejections, queries or delays arising due to the temporary unavailability of this Facility.
+
+For Transfers from US :
+
+For Power Transfers, the confirmed exchange rate and the date Funds will be available is applicable only if ICICI Bank receives the exact foreign currency amount as mentioned in the request on or before the Validity Date with complete and correct details. In case ICICI Bank receives the funds after the Validity Date, ICICI Bank may, at its sole discretion, either cancel the transaction and return the funds to the registered user, or process the request. In case, ICICI Bank receives the funds after 5 business days from the date the transaction is initiated, ICICI Bank may process the request at the rate as applicable on the date and time of conversion of the funds. Please note that only if the funds are received in ICICI Bank's overseas correspondent bank account on working day 0 before the cut-off time of clearing overseas, the same is typically available to ICICI Bank Limited, India, for processing on the next working day i.e. Day 1. The funds will be credited into the Beneficiary’s ICICI Bank account within 1 working day of ICICI Bank receiving the funds. For electronic credit to non-ICICI Bank accounts or credit to a Visa debit card account or Demand Drafts (“DDs”), the money is sent for electronic clearing or a DD is issued and dispatched within one additional working day. The timelines shall exclude banking holidays, Saturdays and Sundays in remitting country and in India.
+
+ 
+
+For Transfers from countries other than US :
+
+The Rupee Transfer Request and the confirmed rate for Net Express and Power Transfer transaction, is applicable only if ICICI Bank receives the exact foreign currency amount as mentioned in the request on or before the Validity Date with complete and correct details of the Beneficiary. In case ICICI Bank receives the funds after the Validity Date, the request will be processed as a regular request and the rate as applicable at the date and time of the conversion of the funds will be applied to the transaction. The confirmed rate will not be valid for rupee transfer requests where the funds are received after the Validity Date. Please note that only if the funds are received in ICICI Bank's overseas correspondent bank account on working day 0 before the cut-off time of clearing overseas, the same is typically available to ICICI Bank Limited, India, for processing on the next working day i.e. Day 1. The funds will be credited into the Beneficiary’s ICICI Bank account within 1 working day of ICICI Bank receiving the funds. For electronic credit to non-ICICI Bank accounts or credit to a Visa debit card account or DDs, the money is sent for electronic clearing or a DD is issued and dispatched within one additional working day. The timelines shall exclude banking holidays, Saturdays and Sundays in remitting country and in India.
+
+ 
+
+For the purpose of this clause, “Validity Date” shall mean the date by when the funds are available to ICICI Bank, India for further processing and disbursal to the Beneficiary. Please note that typically ICICI Bank correspondent bank receives the funds within the clearing cycle in the remitting country, however, the funds are made available to ICICI Bank in India on the next working day along with all relevant details required for processing.
+
+
+10.2.21 E-Transfer and affiliated products: In the event that ICICI Bank receives a reversal/ return request from the Registered User's overseas bank for a transaction already processed and credited to the Beneficiary account in India on the grounds, including but not limited to, unauthorized or fraudulent instructions, such refund shall be made by ICICI Bank immediately upon receipt of reversal/ return instructions, by debiting the Beneficiary account in India at the prevailing buying rate for the currency in question including all costs, charges, expenses and interest (where applicable). In case we are unable to recover the funds from the Beneficiary, the Registered User is liable to refund back the amount in foreign currency to ICICI Bank including costs, charges, expenses and interest (where applicable).ICICI Bank can initiate recovery proceedings for such outstanding amounts against the Registered User as well as the Beneficiary in India. Such amounts may also be recovered from any subsequent transfers made by the Registered User or from any other transfers received by the Beneficiary/ recipient.
+
+RESOLUTION OF ERROR
+
+10.2.22 The registered user has a right to dispute any error in his/her transactions by contacting ICICI Bank within 180 days on toll-free number at 1866 42424 48 or via an email to nri@icicibank.com. The registered user can also contact ICICI Bank for a written explanation of the rights of registered user.
+
+ 
+
+10.3 Missed call Facility terms and conditions:
+
+On dialing the number for the missed call facility, your call would be disconnected within 3 rings and you shall receive a call from our customer service representative within 24 hours of this request. If you do not receive the call within 24 hours, you can write to us at nri@icicibank.com. The callback is intended to contact you for providing the details of our products/ services that you are interested to know about. We would return your call for assisting you and in answering your queries regarding our products / services, and for initiation of a relationship with us, if so required by you. In addition, your information may be used for internal quality/Analytics/Retention purposes.
+
+ 
+
+10.4 ICICI Bank offers the Social Pay Service to enable the Registered User to add Beneficiary Details by sharing a link with his her intended Social Pay Beneficiary via social apps downloaded on his/her phone.  The Registered User will be directed to the selected social apps installed on his phone once he opts for Social Pay Service. ICICI Bank will not be responsible for the data exchanged on these apps or their performance. Furthermore, ICICI Bank is a mere facilitator of the Social Pay Service and will not vouch for the correctness of the Beneficiary Details, nor will it be required to authenticate the same. The Registered User is responsible for setting the passcode and sharing it with the Beneficiary, and ICICI Bank does not take any responsibility for the same.
+
+ 
+
+Back to top
+
+ 
+
+PROPRIETARY AND INTELLECTUAL PROPERTY RIGHTS
+
+11.1 ICICI Bank is the owner and/or authorized user of any trademark, registered trademark and/or service mark appearing on the Website, and is the copyright owner or licensee of the content and/or information on the Website including but not limited to any text, links, images, logos, illustrations, audio clips, video clips, screens and product and Registered Users or any Visitor shall not download and/or save a copy of the Website or any part thereof including any of the screens or part thereof and/or reproduce, store it in a retrieval system or transmit it in any form or by any means - electronic, electrostatic, magnetic tape, mechanical printing, photocopying, recording or otherwise including the right of translation in any language without the express permission of ICICI Bank (except as otherwise provided on the Website or in the Terms and Conditions for any purpose) or use or modify it in any manner that is likely to cause confusion or deception among persons or in any manner disparages or discredits ICICI Bank or any service providers. However, Visitors may print a copy of the information on this Website for the personal use or records. ICICI Bank, the Alliance Partners and/or the Service Providers do not grant any license to or other authorization, and none should be implied or presumed, for use of their respective trademarks, registered trademarks, service marks, or other copyrightable material or other intellectual property by placing them on the Website.
+
+11.2 This Website is for the Visitor’s personal use. If the Visitor makes any other use of this Website, except as otherwise provided above, the Visitor may violate copyright, trademark and other laws of India and other countries, and may be subject to penalties.
+
+Back to top
+
+ 
+
+USE OF INFORMATION
+
+12.1 By agreeing to the Terms and Conditions, the Registered User and the Visitor consents to ICICI Bank’s Privacy Policy, a copy of which may be found elsewhere on the Website.
+
+12.2 The Registered user/ Visitor undertakes and authorises ICICI Bank, its group companies to exchange, share or part with all the information, data or documents relating to his/her application to other ICICI group companies / banks / financial institutions / credit bureaus / agencies / statutory bodies /tax authorities /central information bureaus/ dispute resolution institutions / platforms (including Sama) / such other persons as ICICI Bank / its group companies may deem necessary or appropriate as may be required for use or processing of the said information / data by such person/s or furnishing of the processed information / data / products thereof to other banks / financial institutions / credit providers / users registered with such persons and shall not hold ICICI Bank and/ or its group companies liable for use of this information.
+
+I/ We hereby irrevocably authorise ICICI Bank to extract my/our call records or related information as may have been disclosed by me/ us with/ to any third party service providers in relation to services and Facilities offered to me/us by such third party service providers on account of my/ our existing banking relationship with ICICI Bank.
+
+I/We further authorize dispute resolution institutions / platforms (including Sama) to contact me/us in relation to disputes (pertaining to products and services of ICICI Bank) that have been referred to such institutions by me / us or ICICI Bank.
+
+12.3 From time to time, it will be necessary for Registered user/ Visitors to supply ICICI Bank with data in connection with the opening or continuation of accounts or the provision of services and Facilities. Failure to supply such data may result in ICICI Bank being unable to provide any of the above services or Facilities. It is also the case that data are collected from Registered user/ Visitors in the ordinary course of ICICI Banking relationship, for example, when Registered user/ Visitors write cheques, deposit money or apply for credit. This includes information obtained from credit reference agencies.
+
+12.4 The purpose(s) for which Registered user/ Visitor data may be used / processed are as follows:
+(i) the processing of applications for, and the daily operation of the services and credit facilities provided to Registered user/ Visitors;
+(ii) conducting credit checks (including without limitation upon an application for consumer credit and upon periodic review of the credit) and data verification;
+(iii) assisting other financial institutions to conduct credit checks and collect debts;
+(iv) ensuring ongoing creditworthiness of Registered user/ Visitors;
+(v) designing financial services or related products for Registered user/ Visitors' use;
+(vi) marketing financial services or related products to Registered user/ Visitors;
+(vii) determining the amount of indebtedness owed to or by Registered user/ Visitors;
+(viii) creating and maintaining ICICI Bank's credit and risk related models;
+(ix) collection of amounts outstanding from Registered user/ Visitors and bills providing security for Registered user/ Visitors obligations;
+(x) meeting the requirements to make disclosure under the requirements of any law, rule, regulation, order, ruling, judicial interpretation or directive (whether or not having the force of law) applicable to ICICI Bank or (any of its branches) and its agents and affiliates;
+(xi) enabling an actual or proposed assignee of ICICI Bank, or participant or sub participant of ICICI Bank's rights in respect of the Registered user/ Visitor to evaluate the transaction intended to be the subject of the assignment, participation or sub participation;
+(xii) resolving disputes through dispute resolution institutions / platforms (including SAMA) pertaining to products and services availed by Customers from ICICI Bank;
+(xiii) any other purposes permitted by law; and
+(xiv) purposes relating to any of the above.
+
+12.5 Data held by ICICI Bank relating to Registered user/ Visitors will be kept confidential but ICICI Bank may, at its sole discretion, provide such information to the categories of persons set out below. The Registered user/ Visitor hereby irrevocably authorises ICICI Bank to disclose, as and when ICICI Bank is required to do so by applicable law or when ICICI Bank regards such disclosure as necessary or expedient (including but not limited to disclosures for the purpose of credit review of any account or the Facilities availed by the Registered user/ Visitor with ICICI Bank or any of its branches whether singly or jointly with others or otherwise), any information relating to the Registered user/ Visitor, his account(s) or other assets or credit facilities whatsoever held on the Registered user/ Visitor's behalf to:-
+
+(i) the head office, affiliates or any other branches or subsidiaries of ICICI Bank Limited;
+(ii) his auditors, professional advisers and any other person(s) under a duty of confidentiality to ICICI Bank;
+(iii) vendors, installers, maintainers or servicers of ICICI Bank's computer systems;
+(iv) any exchange, market, or other authority or regulatory body having jurisdiction over ICICI Bank, its head office or any other branch of ICICI Bank or over any transactions effected by the Registered user/ Visitor or for the Registered user/ Visitor's account;
+(v) any party lawfully authorised by law to make such demand or request;
+(vi) any person with whom ICICI Bank contracts or proposes to contract with regard to the sale or transfer or sharing of any of its rights, obligations or risks under the Terms and Conditions;
+(vii) any person (including any agent, contractor, dispute resolution institutions / platforms or third party service provider) with whom ICICI Bank contracts or proposes to contract with regard to the provision of services and/or Facilities in respect of the Registered user/ Visitor's (as the case may be) or in connection with the operation of ICICI Bank's business;
+(viii) any person employed with, or engaged as an agent by, ICICI Bank or its head office or affiliates, including any relationship officers, whether in India or elsewhere, for the purposes of or in connection with interactions with the Registered user/ Visitors or providing services to the Registered user/ Visitors or processing transactions pertaining to the Registered user/ Visitors' accounts or Facilities;
+(ix) (to enable ICICI Bank to centralise or outsource its data processing and other administrative operations) to ICICI Bank's head office, its affiliates or third parties engaged by ICICI Bank (whether within or outside the relevant jurisdiction) for any such services/operations;
+(x) in case of a wire transfer to the beneficiary bank to whom the transfer is being made.
+(xi) a drawee bank providing a copy of a paid cheque (which may contain information about the payee) to the drawee;
+(xii) a person making payment into the Registered user/ Visitor's account (by providing a copy of a deposit confirmation slip which may contain the name of the Registered user/ Visitor);
+(xiii) credit reference agencies and, in the event of default, debt collection agencies;
+(xiv) any person to whom ICICI Bank is under an obligation to make disclosure under the requirement of any law binding on ICICI Bank or any of its branches; and
+(xv) any person to whom disclosure may be required by applicable law and regulation.
+
+12.6 Any Registered user/ Visitor with an account/service/ Facilities with any branch of ICICI Bank located outside India hereby agrees to provide on a voluntary basis all his/her/its personal and account information and records to ICICI Bank which, together with any information generated or received by ICICI Bank, may be:
+
+(i) collected and kept by ICICI Bank (including any agent or subcontractor appointedby ICICI Bank) in any country (as ICICI Bank may consider appropriate) for the purposes of ICICI Bank maintaining its relationship with the Registered user/ Visitor and offering or providing services on accounts or investments made with or through ICICI Bank or other future services or products;
+(ii) used by ICICI Bank to carry out matching procedures whether or not for the purpose of taking adverse action against the Registered user/ Visitor(s) or maintain a credit history (whether or not the relationship with ICICI Bank is terminated) for ICICI Bank's present or future reference.
+
+12.7 The Registered user/ Visitor hereby agrees and consents that ICICI Bank shall be entitled, in connection with the Registered user/ Visitor's application for any account, Facilities or services provided by ICICI Bank, or during the course of the Registered user/ Visitor's relationship with ICICI Bank, to obtain and procure information pertaining to the Registered user/ Visitor any of his/ her/ its accounts, legal or financial position from whatever sources available to ICICI Bank.
+
+12.8 Data may be transferred overseas pursuant to the provisions of this clause. The information disclosed pursuant to this clause may be subject to further disclosure by the recipient to other parties in accordance with the laws of the country in which the recipient is located. Such laws may be wider in scope and implemented under less restrictive terms than would otherwise be the case in India due to the difference in applicable laws and regulations.
+
+Back to top
+
+ 
+
+NO AGENCY OR BANKING RELATIONSHIP
+
+13.1 The Terms and Conditions and the use by the Registered User or access to the Website or any Facilities are not intended to create an agency, partnership, joint-venture, employer-employee or banker-customer relationship between the Registered User or the beneficiary of the one part and ICICI Bank or Service Provider of the other part, except where otherwise specifically agreed or appointed. Specifically, the use of Remittance Tracking Facility does not establish a checking account or any other form of a bank account for the Registered User or the Beneficiary with ICICI Bank and neither does it constitute or create a fiduciary or escrow capacity between the Visitor or the Beneficiary and ICICI Bank. Funds held while processing a remittance payment request are not insured by any government authority. None of the Facilities offered hereby is a funds transfer or transmission service , and a Registered User’s request or instruction while using a Facility is not a payment order or other request for a funds transfer.
+
+Back to top
+
+ 
+
+INDEMNITY
+
+14.1 Each Visitor and/or Registered User agrees to defend, indemnify and hold ICICI Bank, and Service Providers and each of their respective affiliates, directors, officers and employees, harmless from any and all claims, liabilities, damages, costs, expenses and proceedings, including reasonable attorneys' fees, arising in any way from the Visitor’s or Registered User's use of the Website, whether in India or any other jurisdiction, the inaccuracy or incompleteness of registration information, or the placement or transmission of any message, information, software or other materials through the Website by the Visitor, the Registered User or users of the Registered User's ID and password or related to any violation of the Terms and Conditions by the Visitor or Registered User or users of the Registered User's ID and password, and any claims dispute or differences between the Visitor or Registered User and any supplier of services that are part of the Facilities.
+
+ 
+
+Back to top
+
+SUSPENSION OR TERMINATION OF ACCESS
+
+15.1 The Registered User acknowledges and agrees that ICICI Bank may, without notice, suspend or terminate the Registered User's ID, Password or account or deny the Registered User access to all or part of the Website or any Facilities if the Registered User engages in any conduct or activity that ICICI Bank, in its sole discretion, believes violates any of the Terms and Conditions, violates the rights of ICICI Bank, or is otherwise inappropriate for continued access, or if ICICI Bank learns of the Registered User's death, bankruptcy or lack of legal capacity or of circumstances that impact the Registered User's creditworthiness or for any other reason which ICICI Bank thinks fit and proper.
+
+15.2 The Registered User may request ICICI Bank to disable the Registered User’s ID, password or account by giving a written notice of at least 15 days to ICICI Bank. The termination shall take effect on the completion of the fifteenth day from the date of receipt of the notice by ICICI Bank.
+
+15.3 3 Until suspension or termination of the Registered User’s ID takes effect, as above, the Registered User will remain responsible for any transactions entered into using the Registered User’s ID and all obligations incurred thereby or otherwise by the Registered User.
+
+15.4 All termination notices delivered by the Registered User via e-mail or otherwise should be marked "Termination" in the subject line.
+
+Back to top
+
+ 
+
+GOVERNING LAW AND DISPUTE RESOLUTION
+
+16.1 The Website, the Facilities, the Terms and Conditions, all transactions entered into on or through the Website or through the availment of any Facility and the relationship between the Visitor and ICICI Bank shall be governed by and construed in accordance with the laws of India and no other nation, without regard to the laws relating to conflicts of law.
+
+16.2 Any claim or dispute whatsoever (whether in contract, tort or otherwise) arising out of, pursuant to or in connection with the Website, availment of any Facility, the Terms and Conditions, any transactions entered into on or through the Website , the relationship between the Registered User and ICICI Bank, including any question regarding its construction, meaning, existence, validity, breach, recall, recovery or termination, shall be resolved and settled in terms of Customer Grievance Redressal Policy of ICICI Bank (hosted at www.icicibank.com/managed-assets/docs/personal/general-links/code-of-commitment/customergrievance-redressal-policy.pdf) within the period stipulated therein. If the Parties are unable to resolve the claim or dispute in terms of Customer Grievance Redressal Policy of ICICI Bank within the period stipulated therein, such claim or dispute may be referred for resolution by means of arbitration in terms of the applicable rules of Sama which shall be conducted (including for recording of evidence or tendering of documents), concluded and administered online by Sama through its website/platform www.sama.live or mobile application. The arbitral tribunal shall consist of an independent sole arbitrator appointed in accordance with the applicable arbitration rules of Sama. The seat of arbitration proceedings shall be Mumbai, India. The procedural law of arbitration shall be rules of Sama
+
+16.3 ICICI Bank hereby disclaims all liability, direct or indirect, for non-compliance with the laws of any jurisdiction other than India. The fact that it is technologically possible to access or use the Website and avail of any Facility in any jurisdiction other India should not in itself suggest that it is legal to do so. It shall be the sole responsibility of the Visitor to verify whether the Website and the Facilities can be legally and legitimately accessed, utilized and availed in the relevant jurisdiction and the Visitor understands that by accessing, using and availing of the Website and the Facilities, he or she may be violating the local laws in India and/or such jurisdiction. Further, ICICI Bank hereby explicitly disclaims any responsibility, direct or indirect, for non-compliance by a Visitor of the laws of any jurisdiction whatsoever.
+
+Back to top
+
+ 
+
+NO WAIVER
+
+17.1 The failure or delay of ICICI Bank to exercise or enforce any right or provision of the Terms and Conditions shall not constitute a waiver of such right or provision. No waiver on the part of ICICI Bank shall be valid unless it is in writing signed by or on behalf of ICICI Bank. A waiver of any right or provision by ICICI Bank on a particular occasion shall not prevent ICICI Bank from enforcing such right or provision on a subsequent occasion.
+
+ 
+
+SEVERABILITY
+
+18.1 If any provision of the Terms and Conditions shall be held to be invalid or unenforceable by reason of any law or any rule, order, judgement, decree, award or decision of any court, tribunal or regulatory or self-regulatory agency or body, such invalidity or unenforceability shall attach only to such provision or condition, and the Visitor, Registered User, ICICI Bank, the court, tribunal or regulatory or self-regulatory agency or body should endeavour to give effect to the parties' intentions as reflected in the provision to the extent possible. The validity of the remaining provisions and conditions shall not be affected thereby and these Terms and Conditions shall be carried out as if any such invalid or unenforceable provision or condition was not contained herein.
+
+ 
+
+Back to top
+
+ 
+
+LIMITATION
+
+Notwithstanding any statute or law to the contrary, but to the extent permitted by law, any claim or cause of action arising out of or related to access or use of the Website or any Facility or the Terms and Conditions must be filed within three (3) months after such claim or cause of action arose failing which it shall be forever barred.
+
+ 
+
+NOTICES
+
+20.1 ICICI Bank may give notice to the Registered User by e-mail, letter, telephone or any other means as ICICI Bank may deem fit to the address last given by the Registered User. Notices under the Terms and Conditions may be given to ICICI Bank by the Registered User in writing by delivering them by hand or by sending them by post to ICICI Bank's address mentioned on the Website. ICICI Bank may, but shall not be bound to, act upon notices and instructions given by the Registered User to ICICI Bank by e-mail, letter, telephone or any other means as ICICI Bank may deem fit.
+
+20.2 In addition, ICICI Bank may (but shall not be bound to) also publish notices of general nature, which are applicable to all Visitors and/or Registered Users in a newspaper circulating in India and/or on its Website. Such notices will have the same effect as a notice served individually to each Visitor and/or Registered User.
+
+20.3 Documents which may be sent by electronic communication between the parties may be in the form of an electronic mail, an electronic mail attachment, or in the form of an available download from the Website. ICICI Bank shall be deemed to have duly communicated and delivered any communication or document to the Registered User if such communication or document is sent via e-mail to the e-mail address provided by the Registered User to ICICI Bank. ICICI Bank shall also be entitled to act on the basis of any instructions received or purported to be received by ICICI Bank from the Registered User by e-mail or other electronic means or via the Internet. ICICI Bank shall also be entitled (but not bound) to act upon fax instructions and communications.
+
+Back to top
+
+MISCELLANEOUS
+
+21.1 ICICI Bank may sub-contract or employ agents to carry out any functions or services relating to the Website, any Facility or any of its obligations under the Terms and Conditions.
+
+21.2 In order to access the Website and avail of the Facilities, the Visitor will, at the registered users own cost, have to: (a) obtain access to the World Wide Web and pay any service fees, telephone charges and online service usage associated therewith, and (b) obtain access to all equipment necessary for the registered user to connect to the World Wide Web, including a computer and modem.
+
+21.3 The content presented on or through the Website may vary depending upon the Visitor’s browser limitations and ICICI Bank disclaims any responsibility for the unavailability of any Facility or any error in processing of a transaction through the Website caused by the Visitor’s browser limitations.
+
+21.4 All communications under these Terms and Conditions shall be conducted in the English language.
+
+ 
+
+Back to top
+
+ 
+
+OFFLINE REGISTRATIONS
+
+22.1 All services including the Remittance Facility availed of through the Website, whether registered offline or otherwise, shall be governed by the Terms and Conditions applicable to Money2India as appearing on the website www.money2india.com. These terms will be in addition and not in derogation to the aforesaid terms and conditions.
+
+22.2 The registrant by signing the offline registration application form, shall be deemed to have accepted the Terms and Conditions and other terms and conditions specified therein.
+
+22.3 Instructions for first log-in (in case of offline registration) will be mailed to the applicant. After the first log-in, the user shall mandatorily change the password.
+
+22.4 All information provided by the registrant on the offline registration application form shall be deemed to be true and accurate. For the purpose of registrant verification as also to ensure that the offline registration for the Website is successfully completed, ICICI Bank reserves the right to call for such further information from the registrant, as ICICI Bank in its sole discretion deems fit.
+
+22.5 The registrant acknowledges, represents and warrants that the password that would be issued to such registrant, provides access to the Remittance Facility and that the registrant is the sole and exclusive owner and is the only authorized user of the password and accepts sole responsibility for use, confidentiality and protection of the password, as well as for all orders and information changes entered into Money2India system using such password.
+
+22.6 The registrant shall maintain the secrecy of all information of confidential nature and shall ensure that the same is not disclosed to any person voluntarily, accidentally or by mistake. The registrant shall comply with such guidelines, instructions or terms as ICICI Bank may prescribe from time to time with respect to the password.
+
+ 
+
+Back to top
+
+ 
+
+TERMS APPLICABLE TO THE UNITED KINGDOM
+
+23.1 These italicised terms and conditions are applicable only to Registered Users availing the Facility from United Kingdom ("UK Terms") and they are in addition to the other Terms and Conditions. Wherever there is a conflict between the UK Terms, the Terms and Conditions, the terms contained in UK Terms shall prevail.
+
+23.2 The Registered User may request for termination of the Facility within fourteen days from the time of registration on the Website by providing a notice to ICICI Bank in accordance with Clause 23.3 below. Provided however ICICI Bank shall not be liable to reimburse any funds that has been remitted to the recipient or where ICICI Bank has acted upon the instruction given by the Registered User to remit the funds prior to receiving any notice of termination. After the expiry of fourteen days from the time of registration, the Registered User may request for termination of the Facility in accordance with Clause 15.2 of the Terms and Conditions.
+
+23.3 ICICI Bank may give notice to the Registered User by e-mail, letter, telephone or any other means as ICICI Bank may deem fit to the address last given by the Registered User. Notices under the Terms and Conditions may be given to ICICI Bank by the Registered User in writing by delivering them by hand or by sending them by post to ICICI Bank's address mentioned on the Website or Email Us. All termination notices should be marked "Termination" in the subject line.
+
+23.4 Special terms and conditions applicable to Insta Net Express Facility
+
+Insta Net Express Facility is an online remittance facility offered by ICICI Bank Limited, India (“ICICI Bank”) on its online platform Money2India (“Facility”). This Facility allows users registered on www.money2india.com (Website) (“Registered User(s)”) to remit or send foreign currency (i.e. currency other than Indian Rupees) from United Kingdom to bank accounts to the beneficiaries in India _instantly. This Facility may also be offered in any other country as may be decided by ICICI Bank from time to time. The Facility shall be subject to the relevant regulatory approvals, terms and conditions imposed while granting the necessary approvals and other terms of this Facility.
+The terms and conditions detailed below are the terms unique to this Facility in addition to theterms and conditions agreed upon by the Registered User while registering for the Money2India facility (M2I Terms and Conditions) and any additional terms and conditions relating to the Money2India facility appearing elsewhere on the Website or otherwise now or hereafter agreed or deemed to be agreed by the Registered User. All capitalised terms used herein shall have the meaning ascribed in the M2I Terms and Conditions.
+In the event, ICICI Bank does not receive funds from the Registered User’s bank account, even after the funds have been successfully credited to the account of the Beneficiary. ICICI Bank shall notify the Registered User on its registered email id to pay the Bank such amounts (Notice). The Registered User shall be liable to reimburse ICICI Bank with such amounts remitted to the Beneficiary’s account within seven (7) days from the date of Notice to the Registered User.
+Where the Registered User fails to pay ICICI Bank such amount within the period mentioned above the Registered User shall be liable to reimburse such amount, any other charges and costs and interest payable at the rate of 2% per month to ICICI Bank . Such interest shall be charged on the entire amount payable by the Beneficiary from the eighth (8) day from the date of Notice till time the funds are received by ICICI Bank from the Registered User.
+The Registered User agrees to indemnify and hold ICICI Bank harmless from and against (i) all losses, damages, expenses harm or injury suffered or incurred by ICICI Bank and (ii) all notices, claims, demands, action, suits or proceedings given or initiated by ICICI Bank on account of the Registered User not paying the amount payable in the Notice or arising out of any breach committed by the Registered User in the performance of all or any of its obligations hereunder.
+ICICI Bank shall also be entitled to inform any credit bureau/ credit rating agency or any other person or entity if the Registered User fails to pay/reimburse such amount or any part thereof to ICICI Bank.
+ICICI Bank may use the services of third party services providers to provide technology solutions for funding the transactions from the Registered User. ICICI Bank shall in no way be held responsible and/or be liable for any queries, errors, disputes or delays by such third party service providers. ICICI Bank will, however, use reasonable efforts to assist the Registered User in contacting such third party service providers to facilitate resolution of such queries, claims and disputes.
+ 
+
+Back to top
+
+ 
+
+DEFINITIONS AND INTERPRETATIONS
+
+24.1 In these Terms and Conditions, unless the context otherwise requires, the following words and phrases shall have the meanings assigned to them hereunder -
+
+"Alerts" means notices relating to various matters issued or to be issued by ICICI Bank to the Visitor from time to time e.g. notices of market information, reminders for bill payments, etc.
+
+"Alliance Partner"
+means any Person, other than ICICI Bank, who displays content or offers any Facility on the Website.
+
+"Beneficiary"
+means a Person whose details have been provided by the Registered User to ICICI Bank for the transfer of funds.
+
+"Beneficiary - Social Pay"
+means a Person whose details have been provided by him/her on the Social Pay secured link and approved by the Registered User to ICICI Bank for the transfer of funds.
+
+"Beneficiary Bank"
+means the bank in India, with whom the Beneficiary holds an Account.
+
+"Beneficiary’s Card"
+means debit card issued by the Beneficiary Bank to the Beneficiary in India.
+
+"Call Centre"
+means the call center which may be set up by ICICI Bank or a Service Provider to assist Visitors in connection with the Website including the Facilities displayed or offered thereon and any transactions entered into or proposed to be entered into by the Visitors in respect of such Facilities.
+
+"E-transfer"
+refers to the facility available, presently in USA and Canada, wherein basis the remitter’s transfer instruction on the website, the transfer amount is directly debited from the remitter’s local bank account via the Automated Clearing System available in these countries for disbursing it to a receiver in India.
+
+"Facility"
+means any present and future product, service or facility displayed or offered on or through or associated with the Website (whether by ICICI Bank or by any Alliance Partner). and includes the Remittance Tracking Facility, any loans, hire-purchase facilities, lease facilities, services and facilities for acquiring, selling and dealing in shares, units and other securities, bill payment facilities, application forms and other documents downloading facilities, insurance policies, credit cards, remittance facilities, Alerts, Portfolio Tracking facilities, Customised News and taxation advisory and assistance services.
+
+"Net Express"
+is a facility wherein a remitter generates a tracking number and transfers the funds from his bank account using internet banking, mentioning such tracking number, to a recipient in India.
+
+"Person"
+includes an individual, a company, a body corporate, an association of persons (whether incorporated or not), a trust, a partnership firm, a society and the government.
+
+"Power Transfer"
+is a facility wherein a remitter generates a tracking number and transfers the funds from his bank account by taking a print of filled-in wire instruction form generated on Money2India.com with such tracking number. This eliminates errors associated with offline wire transfers and helps in tracking the status of the transfer request.
+
+"Referrer"
+means an individual or a person, who may be an existing Registered User, who refers/recommends/suggests to another individual or person the services offered by ICICI Bank vide the Money2India platform, irrespective of whether the concerned individual/person avails the service.
+
+"Registered User"
+means any Visitor who has registered himself, herself or itself with the Website in the appropriate manner.
+
+"Registered User Account"
+means an online account created by registered user on the Money2India website to avail the Remittance tracking facility.
+
+"Registered User ID"
+means the user name that is chosen by the Registered User and registered by the Website which, along with the Registered User Password, will enable the Registered User to -
+
+(i) avail of Facilities and enter into transactions in respect of the Facilities,
+(ii) access one or more Registered User Accounts, download application forms for Facilities and register a change in address; and
+(iii) do such other acts as the Website may permit.
+
+"Registered User Password"
+means the password that is chosen by the Registered User and registered by the Website for access to the Website which, along with the Registered User ID, will enable the Registered User to -
+
+(i) avail of Facilities and enter into transactions in respect of the Facilities offered on the Website,
+(ii) access one or more Registered User Accounts, download application forms for Facilities change in nominee details, payments, payment of dues, bill payments, trading and make online applications register a change in address; and
+(iii) do such other acts as the Website may permit.
+
+"Remittance Card"
+means a debit card linked to an INR savings account which has some special privileges and subject to certain restrictions.
+
+"Remittance Tracking Facility"
+means the services provided by ICICI Bank on the Website for managing and tracking the transmission of funds by a Registered User to a Beneficiary in India.
+
+"Rupee Transfer Request"
+means a request to transfer a specified amount of Indian rupees (net of all taxes and charges) to a recipient in India
+
+"Service Provider"
+means a Person who provides a service to ICICI Bank in order to enable ICICI Bank to operate and/or maintain the Website, provide any feature on the Website or provide any Facility which is provided by ICICI Bank.
+
+"T-PIN"
+is an abbreviation for Personal Identification Number, and means a password which may be allotted by ICICI Bank to a Registered User to enable him to perform such activities as ICICI Bank may permit over the telephone through the Call Centre or otherwise.
+
+"Visa Account"
+means the VISA Card Account of the Beneficiary.
+
+"Visitor"
+means any person who accesses or visits the Website, whether or not such person has registered himself as a Registered User.
+
+"Website"
+means the Website presently maintained by ICICI Bank at www.money2india.com, and includes the pages of the Website and any applets, software and content contained in and on the Website.
+
+24.2 In these Terms and Conditions, unless the context otherwise requires:
+(a) words of any gender are deemed to include each other gender;
+(b) words using the singular or plural also include the plural or singular, respectively;
+(c) the terms "hereof", "herein", "hereby", "hereto" and derivative or similar words refer to this entire Website;
+(d) the term "Article" refers to the specified clause of these Terms and Conditions;
+(e) headings and bold typeface are only for convenience and shall be ignored for the purposes of interpretation;
+(f) reference to any legislation or law or to any provision thereof shall include references to any such law as it may, after the date hereof, from time to time, be amended, supplemented or re-enacted, and any reference to a statutory provision shall include any subordinate legislation made from time to time under that provision;
+(g) any term or expression used but not defined herein shall have the same meaning attributable to it under applicable law;
+(h) references to the word "include" or "including" shall be construed without limitation.
+
+"Social Pay Service"
+Registered User can add a new beneficiary on Money2India by sending a secured link to the intended recipient through the social media apps on the user’s phone. The beneficiary can update the bank account details on the link. The link is valid for 24 hours. Beneficiary can submit details of only one bank account via the link.
