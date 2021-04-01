@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';    
+import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -55,6 +55,10 @@ export default function EditBiller() {
         console.log("indexwa " + index);
     }
 
+    const handleSetDescription = (e) => {
+        setDescription(e.target.value);
+    }
+
     const handleEditBiller = () => {
 
         console.log("biller name" + biller);
@@ -71,10 +75,10 @@ export default function EditBiller() {
             setDescriptionError({ error: true, errorText: "Description should not be empty" });
         }
 
-        if (biller != "" && accountNumber != "" && description != "") {
+        if (biller !== "" && accountNumber !== "" && description !== "") {
             const desc = descriptionList[description].description;
-            CustomerService.editBiller(biller, accountNumber, desc).then(() => {
-                handleClick();
+            CustomerService.editBiller(biller, accountNumber, desc).then((response) => {
+                handleClick(response.data);
             },
                 (error) => {
                     const resMessage =
@@ -89,27 +93,39 @@ export default function EditBiller() {
     }
 
     const handleDeleteBiller = () => {
-        console.log("description dekh loooooo |"+description+"|");
-        CustomerService.deleteBiller(description).then((response) => {
-            console.log("description dekh loooooo "+description);
-            handleClick(response.data);
-        },
-            (error) => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-            });
+        if (description == "") {
+            console.log("adsadaadasd");
+            setDescriptionError({ error: true, errorText: "Please select a description" });
+        }
+        else {
+            CustomerService.deleteBiller(descriptionList[description].description).then((response) => {
+                handleClick(response.data);
+            },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                });
+        }
     }
 
     useEffect(() => {
         CustomerService.getAllGlobalBillers().then((response) => {
-            if (response.data)
+            if (response.data?.length) {
                 setBillerList(response.data);
-            setBiller(response.data[0].biller);
-            setAccountNumber(response.data[0].accountNumber);
+                setBiller(response.data[0].biller);
+                setAccountNumber(response.data[0].accountNumber);
+                setDescription(0);
+            }
+            else {
+                setBillerList({});
+                setBiller('');
+                setAccountNumber('');
+                setDescription('');
+            }
         },
             (error) => {
                 const _content =
@@ -119,8 +135,17 @@ export default function EditBiller() {
             });
 
         CustomerService.getAllBillers().then((response) => {
-            if (response.data)
+            if (response.data?.length) {
                 setDescriptionList(response.data);
+                setAccountNumber(response.data[0].billerAccountNumber);
+                setBiller(response.data[0].globalBiller.billerName);
+            }
+            else {
+                setDescriptionList({});
+                setAccountNumber('');
+                setBiller('');
+            }
+
         },
             (error) => {
                 const _content =
@@ -129,83 +154,86 @@ export default function EditBiller() {
                     error.toString();
             });
 
-    }, []);
+    }, [open.open]);
 
     return (
-        <div class="content">
-            <section class="trasfer-beneficiary">
-                <h1 class="title">Edit Biller</h1>
-                <div class="container">
-                    <div class="transfer-form row">
-                        <div class="form-field col-lg-6">
-                            <FormControl fullWidth error={billerError.error}>
-                                <InputLabel id="description">Description</InputLabel>
-                                <Select
-                                    labelId="description"
-                                    value={description}
-                                    onChange={(e) => { setDescription(e.target.value); handleSetBiller(e); setAccountNumber(descriptionList[e.target.value].billerAccountNumber) }}
-                                >
-                                    {
-                                        Object.entries(descriptionList).map(([key, value]) => {
-                                            return <MenuItem value={key}>{value.description}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                                {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
-                            </FormControl>
-                            {console.log(biller)}
-                        </div>
-
-                        <div class="form-field col-lg-6">
-                            <FormControl fullWidth error={billerError.error}>
-                                <InputLabel id="biller">Biller</InputLabel>
-                                <Select
-                                    labelId="biller"
-                                    value={biller}
-                                    onChange={(e) => { setBiller(e.target.value); setBillerError({ error: false, errorText: '' }) }}
-                                >
-                                    {
-                                        Object.entries(billerList).map(([key, value]) => {
-                                            return <MenuItem value={value.billerName}>{value.billerName}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                                {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
-                            </FormControl>
-                        </div>
-
-                        <div class="form-field col-lg-6">
-                            <TextField
-                                id="account"
-                                required
-                                fullWidth
-                                label="Customer Account Number"
-                                value={accountNumber}
-                                onChange={(e) => { setAccountNumber(e.target.value) }}
-                                onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
-                                error={accountNumberError.error}
-                                helperText={accountNumberError.errorText} />
-                        </div>
-                        <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
-                            <Alert onClose={handleClose} severity="success">
-                                {open.text}
-                            </Alert>
-                        </Snackbar>
-
-                        <div class="row justify-content-center">
-                            <div class="form-field col-lg-4">
-                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleEditBiller} />
+        <React.Fragment>
+            <div class="content">
+                <section class="trasfer-beneficiary">
+                    <h1 class="title">Edit Biller</h1>
+                    <div class="container">
+                        <div class="transfer-form row">
+                            <div class="form-field col-lg-6">
+                                <FormControl fullWidth error={descriptionError.error}>
+                                    <InputLabel id="description">Description</InputLabel>
+                                    <Select
+                                        labelId="description"
+                                        value={description}
+                                        onChange={(e) => { handleSetDescription(e); handleSetBiller(e); setAccountNumber(descriptionList[e.target.value].billerAccountNumber) }}
+                                    >
+                                        {
+                                            Object.entries(descriptionList).map(([key, value]) => {
+                                                return <MenuItem value={key}>{value.description}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {descriptionError.error && <FormHelperText>{descriptionError.errorText}</FormHelperText>}
+                                </FormControl>
+                                {console.log(biller)}
                             </div>
-                            <div class="form-field col-lg-4">
-                                <input class="submit-btn bg-danger" type="submit" value="delete" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" name="" onClick={handleDeleteBiller} />
-                            </div>
-                        </div>
 
+                            <div class="form-field col-lg-6">
+                                <FormControl fullWidth error={billerError.error}>
+                                    <InputLabel id="biller">Biller</InputLabel>
+                                    <Select
+                                        labelId="biller"
+                                        value={biller}
+                                        onChange={(e) => { setBiller(e.target.value); setBillerError({ error: false, errorText: '' }) }}
+                                    >
+                                        {
+                                            Object.entries(billerList).map(([key, value]) => {
+                                                return <MenuItem value={value.billerName}>{value.billerName}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
+                                </FormControl>
+                            </div>
+
+                            <div class="form-field col-lg-6">
+                                <TextField
+                                    id="account"
+                                    required
+                                    fullWidth
+                                    label="Customer Account Number"
+                                    value={accountNumber}
+                                    onChange={(e) => { setAccountNumber(e.target.value) }}
+                                    onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
+                                    error={accountNumberError.error}
+                                    helperText={accountNumberError.errorText} />
+                            </div>
+
+
+                            <div class="row justify-content-center">
+                                <div class="form-field col-lg-4">
+                                    <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleEditBiller} />
+                                </div>
+                                <div class="form-field col-lg-4">
+                                    <input class="submit-btn bg-danger" type="submit" value="delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal" name="" onClick={handleDeleteBiller} />
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+            <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {open.text}
+                </Alert>
+            </Snackbar>
+        </React.Fragment>
 
     );
 }

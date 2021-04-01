@@ -94,74 +94,77 @@ export default function Pay() {
 
 
     return (
-        <div class="content">
-            <section class="trasfer-beneficiary">
-                <h1 class="title">Pay Bill</h1>
-                <div class="container">
-                    <div class="transfer-form row">
+        <React.Fragment>
+            <div class="content">
+                <section class="trasfer-beneficiary">
+                    <h1 class="title">Pay Bill</h1>
+                    <div class="container">
+                        <div class="transfer-form row">
 
-                        <div class="form-field col-lg-6">
-                            <FormControl fullWidth error={selectedAccountError.error}>
-                                <InputLabel id="from-account">From account</InputLabel>
-                                <Select
-                                    labelId="from-account"
-                                    value={selectedAccount}
-                                    onChange={(e) => { setSelectedAccount(e.target.value); setSelectedAccountError({ error: false, errorText: '' }) }}
-                                >
-                                    {
-                                        Object.entries(accounts).map(([key, value]) => {
-                                            return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                                {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
-                            </FormControl>
-                        </div>
+                            <div class="form-field col-lg-6">
+                                <FormControl fullWidth error={selectedAccountError.error}>
+                                    <InputLabel id="from-account">From account</InputLabel>
+                                    <Select
+                                        labelId="from-account"
+                                        value={selectedAccount}
+                                        onChange={(e) => { setSelectedAccount(e.target.value); setSelectedAccountError({ error: false, errorText: '' }) }}
+                                    >
+                                        {
+                                            Object.entries(accounts).map(([key, value]) => {
+                                                return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
+                                </FormControl>
+                            </div>
 
-                        <div class="form-field col-lg-6">
-                            <FormControl fullWidth error={selectedDescriptionError.error}>
-                                <InputLabel id="description">Description</InputLabel>
-                                <Select
-                                    labelId="description"
-                                    value={selectedDescription}
-                                    onChange={(e) => { setSelectedDescription(e.target.value); setSelectedDescriptionError({ error: false, errorText: '' }) }}
-                                >
-                                    {
-                                        Object.entries(descriptionList).map(([key, value]) => {
-                                            return <MenuItem value={value.description}>{value.description}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                                {selectedDescriptionError.error && <FormHelperText>{selectedDescriptionError.errorText}</FormHelperText>}
-                            </FormControl>
-                        </div>
+                            <div class="form-field col-lg-6">
+                                <FormControl fullWidth error={selectedDescriptionError.error}>
+                                    <InputLabel id="description">Description</InputLabel>
+                                    <Select
+                                        labelId="description"
+                                        value={selectedDescription}
+                                        onChange={(e) => { setSelectedDescription(e.target.value); setSelectedDescriptionError({ error: false, errorText: '' }) }}
+                                    >
+                                        {
+                                            Object.entries(descriptionList).map(([key, value]) => {
+                                                return <MenuItem value={value.description}>{value.description}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {selectedDescriptionError.error && <FormHelperText>{selectedDescriptionError.errorText}</FormHelperText>}
+                                </FormControl>
+                            </div>
 
-                        <div class="form-field col-lg-6">
-                            <TextField
-                                id="amount"
-                                required
-                                fullWidth
-                                label="Amount"
-                                type="number"
-                                onChange={e => { setAmount(e.target.value) }}
-                                onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
-                                error={amountError.error}
-                                helperText={amountError.errorText}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-                                }} />
-                        </div>
-                        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                            <Alert onClose={handleClose} severity="success">
-                                Bill payed Successfully!
-                            </Alert>
-                        </Snackbar>
-                        <div class="form-field col-lg-12">
-                            <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handlePay}/>
+                            <div class="form-field col-lg-6">
+                                <TextField
+                                    id="amount"
+                                    required
+                                    fullWidth
+                                    label="Amount"
+                                    type="number"
+                                    onChange={e => { setAmount(e.target.value) }}
+                                    onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
+                                    error={amountError.error}
+                                    helperText={amountError.errorText}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                                    }} />
+                            </div>
+
+                            <div class="form-field col-lg-12">
+                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handlePay} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Bill payed Successfully!
+                </Alert>
+            </Snackbar>
+        </React.Fragment>
     );
 }

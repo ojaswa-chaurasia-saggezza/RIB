@@ -29,9 +29,6 @@ export default function AddBiller() {
     const [accountNumber, setAccountNumber] = useState('');
     const [accountNumberError, setAccountNumberError] = useState({ error: false, errorText: '' });
 
-    const [amount, setAmount] = useState('');
-    const [amountError, setAmountError] = useState({ error: false, errorText: '' });
-
     const [description, setDescription] = useState('');
     const [descriptionError, setDescriptionError] = useState({ error: false, errorText: '' });
 
@@ -59,14 +56,14 @@ export default function AddBiller() {
             CustomerService.addBiller(biller, accountNumber, description).then(() => {
                 handleClick();
             },
-            (error) => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-            });
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                });
         }
 
 
@@ -87,81 +84,70 @@ export default function AddBiller() {
     }, []);
 
     return (
-        // <div id="wrapper">
-        <div class="content">
-            <section class="trasfer-beneficiary">
-                <h1 class="title">Add Biller</h1>
-                <div class="container">
-                    <div class="transfer-form row">
+        <React.Fragment>
+            <div class="content">
+                <section class="trasfer-beneficiary">
+                    <h1 class="title">Add Biller</h1>
+                    <div class="container">
+                        <div class="transfer-form row">
 
-                        <div class="form-field col-lg-6">
-                            <FormControl fullWidth error={billerError.error}>
-                                <InputLabel id="biller">Biller</InputLabel>
-                                <Select
-                                    labelId="biller"
-                                    value={biller}
-                                    onChange={(e) => { setBiller(e.target.value); setBillerError({ error: false, errorText: '' }) }}
-                                >
-                                    {
-                                        Object.entries(billerList).map(([key, value]) => {
-                                            return <MenuItem value={value.billerName}>{value.billerName}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                                {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
-                            </FormControl>
+                            <div class="form-field col-lg-6">
+                                <FormControl fullWidth error={billerError.error}>
+                                    <InputLabel id="biller">Biller</InputLabel>
+                                    <Select
+                                        labelId="biller"
+                                        value={biller}
+                                        onChange={(e) => { setBiller(e.target.value); setBillerError({ error: false, errorText: '' }) }}
+                                    >
+                                        {
+                                            Object.entries(billerList).map(([key, value]) => {
+                                                return <MenuItem value={value.billerName}>{value.billerName}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {billerError.error && <FormHelperText>{billerError.errorText}</FormHelperText>}
+                                </FormControl>
+                            </div>
+
+                            <div class="form-field col-lg-6">
+                                <TextField
+                                    id="account"
+                                    required
+                                    fullWidth
+                                    label="Customer Account Number"
+                                    onChange={(e) => { setAccountNumber(e.target.value) }}
+                                    onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
+                                    error={accountNumberError.error}
+                                    helperText={accountNumberError.errorText} />
+                            </div>
+
+                            <div class="form-field col-lg-6">
+                                <TextField
+                                    id="description"
+                                    required
+                                    fullWidth
+                                    label="Description"
+                                    onChange={(e) => { setDescription(e.target.value) }}
+                                    onKeyPress={() => { if (description != "") setDescriptionError({ error: false, errorText: "" }) }}
+                                    error={descriptionError.error}
+                                    helperText={descriptionError.errorText} />
+                            </div>
+
+
+                            <div class="form-field col-lg-12">
+                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleAddBiller} />
+                            </div>
+
                         </div>
-
-                        <div class="form-field col-lg-6">
-                            <TextField
-                                id="account"
-                                required
-                                fullWidth
-                                label="Customer Account Number"
-                                onChange={(e) => { setAccountNumber(e.target.value) }}
-                                onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
-                                error={accountNumberError.error}
-                                helperText={accountNumberError.errorText} />
-                        </div>
-
-                        <div class="form-field col-lg-6">
-                            <TextField
-                                id="amount"
-                                required
-                                fullWidth
-                                label="Billing Amount"
-                                onChange={(e) => { setAmount(e.target.value) }}
-                                onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
-                                error={amountError.error}
-                                helperText={amountError.errorText} />
-                        </div>
-
-                        <div class="form-field col-lg-6">
-                            <TextField
-                                id="description"
-                                required
-                                fullWidth
-                                label="Description"
-                                onChange={(e) => { setDescription(e.target.value) }}
-                                onKeyPress={() => { if (description != "") setDescriptionError({ error: false, errorText: "" }) }}
-                                error={descriptionError.error}
-                                helperText={descriptionError.errorText} />
-                        </div>
-                        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                            <Alert onClose={handleClose} severity="success">
-                                Biller Added Successfully!
-                            </Alert>
-                        </Snackbar>
-
-                        <div class="form-field col-lg-12">
-                            <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleAddBiller} />
-                        </div>
-
                     </div>
-                </div>
-            </section>
-        </div>
-        // </div>
+                </section>
+            </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Biller Added Successfully!
+                </Alert>
+            </Snackbar>
+        </React.Fragment>
 
     );
 }

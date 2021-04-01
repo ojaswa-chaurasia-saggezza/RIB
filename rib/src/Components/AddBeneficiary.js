@@ -58,7 +58,7 @@ export default function AddBeneficiary(props) {
             error.message ||
             error.toString();
           var msg = resMessage.split(':');
-          switch(msg[0]) {
+          switch (msg[0]) {
             case '1':
               setAccountNumberError({ error: true, errorText: msg[1] });
               break;
@@ -77,55 +77,58 @@ export default function AddBeneficiary(props) {
 
 
   return (
-    <div class="content">
-      <section class="trasfer-beneficiary">
-        <h1 class="title bg-primary">Add beneficiary</h1>
-        <div class="container">
-          <div class="transfer-form row">
-            <div class="form-field col-lg-6">
-              <TextField
-                id="account"
-                required
-                fullWidth
-                label="Account Number"
-                onChange={(e) => { setAccountNumber(e.target.value) }}
-                onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
-                error={accountNumberError.error}
-                helperText={accountNumberError.errorText} />
-            </div>
-            <div class="form-field col-lg-6">
-              <TextField
-                id="name"
-                required
-                fullWidth
-                label="Name"
-                onChange={(e) => { setNickName(e.target.value) }}
-                onKeyPress={() => { if (accountNumber != "") setNickNameError({ error: false, errorText: "" }) }}
-                error={nickNameError.error}
-                helperText={nickNameError.errorText} />
-            </div>
-            <div class="form-field col-lg-6">
-              <TextField
-                id="ifsc"
-                required
-                fullWidth
-                label="IFSC CODE"
-                onChange={(e) => { setIfsc(e.target.value) }}
-                onKeyPress={() => { if (accountNumber != "") setIfscError({ error: false, errorText: "" }) }}
-                error={ifscError.error}
-                helperText={ifscError.errorText} />
-            </div>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                Beneficiary Added Successfully!
-                        </Alert>
-            </Snackbar>
-            <div class="form-field col-lg-12">
-              <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleAddBeneficiary} />
+    <React.Fragment>
+      <div class="content">
+        <section class="trasfer-beneficiary">
+          <h1 class="title bg-primary">Add beneficiary</h1>
+          <div class="container">
+            <div class="transfer-form row">
+              <div class="form-field col-lg-6">
+                <TextField
+                  id="account"
+                  required
+                  fullWidth
+                  label="Account Number"
+                  onChange={(e) => { setAccountNumber(e.target.value) }}
+                  onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
+                  error={accountNumberError.error}
+                  helperText={accountNumberError.errorText} />
+              </div>
+              <div class="form-field col-lg-6">
+                <TextField
+                  id="name"
+                  required
+                  fullWidth
+                  label="Name"
+                  onChange={(e) => { setNickName(e.target.value) }}
+                  onKeyPress={() => { if (accountNumber != "") setNickNameError({ error: false, errorText: "" }) }}
+                  error={nickNameError.error}
+                  helperText={nickNameError.errorText} />
+              </div>
+              <div class="form-field col-lg-6">
+                <TextField
+                  id="ifsc"
+                  required
+                  fullWidth
+                  label="IFSC CODE"
+                  onChange={(e) => { setIfsc(e.target.value) }}
+                  onKeyPress={() => { if (accountNumber != "") setIfscError({ error: false, errorText: "" }) }}
+                  error={ifscError.error}
+                  helperText={ifscError.errorText} />
+              </div>
+
+              <div class="form-field col-lg-12">
+                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleAddBeneficiary} />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Beneficiary Added Successfully!
+        </Alert>
+      </Snackbar>
+    </React.Fragment>
   );
 }

@@ -26,15 +26,15 @@ export default function FTWithinBankBeneficiary() {
 
   const [amount, setAmount] = useState('');
   const [amountError, setAmountError] = useState({ error: false, errorText: "" });
-  
+
   const [allBeneficiaries, setAllBeneficiaries] = useState({});
-  
+
   const [selectedAccount, setSelectedAccount] = useState('');
   const [selectedAccountError, setSelectedAccountError] = useState({ error: false, errorText: "" });
-  
+
   const [selectedMode, setSelectedMode] = useState('');
   const [selectedModeError, setSelectedModeError] = useState({ error: false, errorText: "" });
-  
+
   const [selectedBeneficiary, setSelectedBeneficiary] = useState('');
   const [selectedBeneficiaryError, setSelectedBeneficiaryError] = useState({ error: false, errorText: "" });
 
@@ -83,7 +83,7 @@ export default function FTWithinBankBeneficiary() {
               error.response.data.message) ||
             error.message ||
             error.toString();
-            setAmountError({error: true, errorText: resMessage});
+          setAmountError({ error: true, errorText: resMessage });
         });
     }
   }
@@ -109,98 +109,101 @@ export default function FTWithinBankBeneficiary() {
         error.message ||
         error.toString();
       setAllBeneficiaries({});
-      console.log("Error:      "+_content);
+      console.log("Error:      " + _content);
 
     });
   }, []);
 
   return (
-    <div class="content">
-      <section class="trasfer-beneficiary">
-        <h1 class="title">Transfer within bank Beneficiary</h1>
-        <div class="container">
-          <div class="transfer-form row">
+    <React.Fragment>
+      <div class="content">
+        <section class="trasfer-beneficiary">
+          <h1 class="title">Transfer within bank Beneficiary</h1>
+          <div class="container">
+            <div class="transfer-form row">
 
-            <div class="form-field col-lg-6">
-              <FormControl fullWidth error={selectedAccountError.error}>
-                <InputLabel id="from-account">From account</InputLabel>
-                <Select
-                  labelId="from-account"
-                  value={selectedAccount}
-                  onChange={(e)=>{handleSelectedAccount(e);setSelectedAccountError({error:false, errorText:''})}}
-                >
-                  {
-                    Object.entries(accounts).map(([key, value]) => {
-                      return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
-                    })
-                  }
-                </Select>
-                {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
-              </FormControl>
-            </div>
+              <div class="form-field col-lg-6">
+                <FormControl fullWidth error={selectedAccountError.error}>
+                  <InputLabel id="from-account">From account</InputLabel>
+                  <Select
+                    labelId="from-account"
+                    value={selectedAccount}
+                    onChange={(e) => { handleSelectedAccount(e); setSelectedAccountError({ error: false, errorText: '' }) }}
+                  >
+                    {
+                      Object.entries(accounts).map(([key, value]) => {
+                        return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
+                      })
+                    }
+                  </Select>
+                  {selectedAccountError.error && <FormHelperText>{selectedAccountError.errorText}</FormHelperText>}
+                </FormControl>
+              </div>
 
-            <div class="form-field col-lg-6">
-              <FormControl fullWidth error={selectedModeError.error}>
-                <InputLabel id="transfer-mode">Transfer mode</InputLabel>
-                <Select
-                  labelId="transfer-mode"
-                  value={selectedMode}
-                  onChange={(e)=>{handleSelectedMode(e);setSelectedModeError({error:false, errorText:''})}}
-                >
-                  <MenuItem value='NEFT'>NEFT</MenuItem>
-                  <MenuItem value='RTGS'>RTGS</MenuItem>
-                  <MenuItem value='IMPS'>IMPS</MenuItem>
-                </Select>
-                {selectedModeError.error && <FormHelperText>{selectedModeError.errorText}</FormHelperText>}
-              </FormControl>
-            </div>
+              <div class="form-field col-lg-6">
+                <FormControl fullWidth error={selectedModeError.error}>
+                  <InputLabel id="transfer-mode">Transfer mode</InputLabel>
+                  <Select
+                    labelId="transfer-mode"
+                    value={selectedMode}
+                    onChange={(e) => { handleSelectedMode(e); setSelectedModeError({ error: false, errorText: '' }) }}
+                  >
+                    <MenuItem value='NEFT'>NEFT</MenuItem>
+                    <MenuItem value='RTGS'>RTGS</MenuItem>
+                    <MenuItem value='IMPS'>IMPS</MenuItem>
+                  </Select>
+                  {selectedModeError.error && <FormHelperText>{selectedModeError.errorText}</FormHelperText>}
+                </FormControl>
+              </div>
 
-            <div class="form-field col-lg-6">
-              <FormControl fullWidth error={selectedBeneficiaryError.error}>
-                <InputLabel id="beneficiary">Beneficiary</InputLabel>
-                <Select
-                  labelId="beneficiary"
-                  value={selectedBeneficiary}
-                  onChange={(e)=>{handleSelectedBeneficiary(e);setSelectedBeneficiaryError({error:false, errorText:''})}}
-                >
-                  {
-                    Object.entries(allBeneficiaries).map(([key, value]) => {
-                      return <MenuItem value={value.nickName}>{value.nickName}</MenuItem>
-                    })
-                  }
-                </Select>
-                {selectedBeneficiaryError.error && <FormHelperText>{selectedBeneficiaryError.errorText}</FormHelperText>}
-              </FormControl>
-            </div>
+              <div class="form-field col-lg-6">
+                <FormControl fullWidth error={selectedBeneficiaryError.error}>
+                  <InputLabel id="beneficiary">Beneficiary</InputLabel>
+                  <Select
+                    labelId="beneficiary"
+                    value={selectedBeneficiary}
+                    onChange={(e) => { handleSelectedBeneficiary(e); setSelectedBeneficiaryError({ error: false, errorText: '' }) }}
+                  >
+                    {
+                      Object.entries(allBeneficiaries).map(([key, value]) => {
+                        return <MenuItem value={value.nickName}>{value.nickName}</MenuItem>
+                      })
+                    }
+                  </Select>
+                  {selectedBeneficiaryError.error && <FormHelperText>{selectedBeneficiaryError.errorText}</FormHelperText>}
+                </FormControl>
+              </div>
 
-            <div class="form-field col-lg-6">
-              <TextField
-                id="amount"
-                required
-                fullWidth
-                label="Amount"
-                type="number"
-                onChange={e => { setAmount(e.target.value) }}
-                onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
-                error={amountError.error}
-                helperText={amountError.errorText}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-                }} />
-            </div>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                Fund transfered Successfully!
-                        </Alert>
-            </Snackbar>
-            <div class="form-field col-lg-12">
-              <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
-            </div>
+              <div class="form-field col-lg-6">
+                <TextField
+                  id="amount"
+                  required
+                  fullWidth
+                  label="Amount"
+                  type="number"
+                  onChange={e => { setAmount(e.target.value) }}
+                  onKeyPress={() => { if (amount != "") setAmountError({ error: false, errorText: "" }) }}
+                  error={amountError.error}
+                  helperText={amountError.errorText}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                  }} />
+              </div>
 
+              <div class="form-field col-lg-12">
+                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
+              </div>
+
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Fund transfered Successfully!
+        </Alert>
+      </Snackbar>
+    </React.Fragment>
 
   );
 }

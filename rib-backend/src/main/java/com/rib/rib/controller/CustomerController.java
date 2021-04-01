@@ -529,8 +529,12 @@ public class CustomerController {
 		Customer customer = customerRepository.findByUsername(auth.getName()).orElse(null);
 
 		List<Biller> billers= customer.getBillers();
+		
+		System.out.println(description+"    orignal description");
 
 		description = description.split(":")[1].split("\"")[1];
+		
+		System.out.println(description+" descriptionnn");
 		
 		int index = -1;
 		for (int i = 0; i < billers.size(); i++) {
