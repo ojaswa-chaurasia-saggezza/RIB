@@ -18,7 +18,7 @@ public class Biller {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long billerId;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = GlobalBiller.class )
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, targetEntity = GlobalBiller.class )
 	@JoinColumn(name = "global_biller_id")
 	private GlobalBiller globalBiller;
 	
