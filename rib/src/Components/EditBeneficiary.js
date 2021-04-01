@@ -109,7 +109,7 @@ export default function Editbeneficiary() {
                   <Select
                     labelId="beneficiary"
                     value={selectedBeneficiary}
-                    onChange={e => { setSelectedBeneficiary(e.target.value); setAccountNumber(allBeneficiaries[e.target.value].account.accountNumber); setNickName(allBeneficiaries[e.target.value].nickName) }}
+                    onChange={e => { setSelectedBeneficiary(e.target.value); setAccountNumber(allBeneficiaries[e.target.value].account.accountNumber);setNickName(allBeneficiaries[e.target.value].nickName); setIfsc(allBeneficiaries[e.target.value].account.ifsc)}}
                   >
                     {
                       Object.entries(allBeneficiaries).map(([key, value]) => {
