@@ -167,7 +167,7 @@ export default function FTWithinBankAccount() {
             </div>
 
 
-            <PlainDialog data={termsAndConditions} open={openTNC} handleClose={handleCloseTNC} title="Terms and Contitions" />
+            <PlainDialog data={termsAndConditions} open={openTNC} handleClose={handleCloseTNC} title="Terms and Contitions for Fund Transfer" />
         </React.Fragment>
     );
 }

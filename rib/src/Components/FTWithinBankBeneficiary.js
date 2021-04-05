@@ -13,13 +13,19 @@ import MuiAlert from '@material-ui/lab/Alert';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 
-import CustomerService from '../Services/Customer.service'
+import CustomerService from '../Services/Customer.service';
+import MetaDataService from "../Services/MetaData.sevice";
+
+import PlainDialog from "../Elements/PlainDialog";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default function FTWithinBankBeneficiary() {
+
+  const [termsAndConditions, setTermsAndConditions] = useState("Empty");
+  const [openTNC, setOpenTNC] = React.useState(false);
 
   const [open, setOpen] = useState(false);
   const [accounts, setAccounts] = useState({});
@@ -56,6 +62,10 @@ export default function FTWithinBankBeneficiary() {
 
   const handleClose = () => {
     setOpen(false);
+  }
+
+  const handleCloseTNC = () => {
+    setOpenTNC(false);
   }
 
   const handleFundTransfer = () => {
@@ -110,6 +120,14 @@ export default function FTWithinBankBeneficiary() {
         error.toString();
       setAllBeneficiaries({});
       console.log("Error:      " + _content);
+
+    });
+  }, []);
+
+  useEffect(() => {
+    MetaDataService.getTermsAndConditions().then((response) => {
+      if (response.data)
+        setTermsAndConditions(response.data);
 
     });
   }, []);
@@ -190,6 +208,8 @@ export default function FTWithinBankBeneficiary() {
                   }} />
               </div>
 
+              <div role="button" className="col-lg-12 text-danger text-start " onClick={()=>{setOpenTNC(true)}}> {"*Terms & Conditions"} </div>
+
               <div class="form-field col-lg-12">
                 <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
               </div>
@@ -203,6 +223,8 @@ export default function FTWithinBankBeneficiary() {
           Fund transfered Successfully!
         </Alert>
       </Snackbar>
+
+      <PlainDialog data={termsAndConditions} open={openTNC} handleClose={handleCloseTNC} title="Terms and Contitions for Fund Transfer" />
     </React.Fragment>
 
   );

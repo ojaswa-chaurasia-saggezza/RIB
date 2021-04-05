@@ -12,13 +12,20 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import CustomerService from '../Services/Customer.service'
+import CustomerService from '../Services/Customer.service';
+import MetaDataService from "../Services/MetaData.sevice";
+
+import PlainDialog from "../Elements/PlainDialog";
+
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default function Pay() {
+
+    const [termsAndConditions, setTermsAndConditions] = useState("Empty");
+    const [openTNC, setOpenTNC] = React.useState(false);
 
     const [open, setOpen] = useState(false);
     const [accounts, setAccounts] = useState({});
@@ -32,6 +39,10 @@ export default function Pay() {
 
     const [amount, setAmount] = useState('');
     const [amountError, setAmountError] = useState({ error: false, errorText: "" });
+
+    const handleCloseTNC = () => {
+        setOpenTNC(false);
+    }
 
     const handleClick = () => {
         setOpen(true);
@@ -91,6 +102,14 @@ export default function Pay() {
             });
 
     }, []);
+
+    useEffect(() => {
+        MetaDataService.getTermsAndConditions().then((response) => {
+          if (response.data)
+            setTermsAndConditions(response.data);
+    
+        });
+      }, []);
 
 
     return (
@@ -153,6 +172,8 @@ export default function Pay() {
                                     }} />
                             </div>
 
+                            <div role="button" className="col-lg-12 text-danger text-start " onClick={()=>{setOpenTNC(true)}}> {"*Terms & Conditions"} </div>
+
                             <div class="form-field col-lg-12">
                                 <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handlePay} />
                             </div>
@@ -165,6 +186,8 @@ export default function Pay() {
                     Bill payed Successfully!
                 </Alert>
             </Snackbar>
+
+            <PlainDialog data={termsAndConditions} open={openTNC} handleClose={handleCloseTNC} title="Terms and Contitions for Bill Payment " />
         </React.Fragment>
     );
 }
