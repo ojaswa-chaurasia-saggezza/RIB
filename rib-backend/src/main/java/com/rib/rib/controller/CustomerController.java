@@ -268,9 +268,9 @@ public class CustomerController {
 
 		Account newAccount = accountRepository.findById(beneficiaryRequest.getAccountNumber()).orElse(null);
 		if (newAccount == null) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Account not found"));
+			return ResponseEntity.badRequest().body(new MessageResponse("1:Account not found"));
 		} else if (!newAccount.getIFSC().equals(beneficiaryRequest.getIfsc())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Invalid IFSC Code"));
+			return ResponseEntity.badRequest().body(new MessageResponse("2:Invalid IFSC code"));
 		} else {
 			currentBeneficiary.setAccount(newAccount);
 			customer.setBeneficiaries(list);
