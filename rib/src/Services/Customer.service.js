@@ -2,8 +2,8 @@ import axios from "axios";
 import authHeader from "./Auth-header";
 import otpHeader from "./Otp-header";
 
-const API_URL = "http://localhost:8080/api/v1/";
-const API_URL_OTP = "http://localhost:8080/";
+const API_URL = "/api/v1/";
+const API_URL_OTP = "/";
 
 
 const getPublicContent = () => {
