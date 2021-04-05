@@ -114,7 +114,7 @@ export default function FTWithinBankAccount() {
                                     >
                                         {
                                             Object.entries(accounts).map(([key, value]) => {
-                                                return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
+                                                return toAccount == value.accountNumber ? null : <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
                                             })
                                         }
                                     </Select>
@@ -132,7 +132,7 @@ export default function FTWithinBankAccount() {
                                     >
                                         {
                                             Object.entries(accounts).map(([key, value]) => {
-                                                return <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
+                                                return fromAccount == value.accountNumber ? null : <MenuItem value={value.accountNumber}>{value.accountNumber}</MenuItem>
                                             })
                                         }
                                     </Select>
@@ -155,8 +155,8 @@ export default function FTWithinBankAccount() {
                                         startAdornment: <InputAdornment position="start">₹</InputAdornment>,
                                     }} />
                             </div>
-                            
-                            <div role="button" className="col-lg-12 text-danger text-start " onClick={()=>{setOpenTNC(true)}}> {"*Terms & Conditions"} </div>
+
+                            <div role="button" className="col-lg-12 text-danger text-start " onClick={() => { setOpenTNC(true) }}> {"*Terms & Conditions"} </div>
 
                             <div class="form-field col-lg-12">
                                 <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
@@ -165,6 +165,11 @@ export default function FTWithinBankAccount() {
                     </div>
                 </section>
             </div>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Fund transfered Successfully!
+                </Alert>
+            </Snackbar>
 
 
             <PlainDialog data={termsAndConditions} open={openTNC} handleClose={handleCloseTNC} title="Terms and Contitions for Fund Transfer" />

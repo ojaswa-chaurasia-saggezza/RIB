@@ -15,7 +15,7 @@ function Alert(props) {
 
 
 export default function Editbeneficiary() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState({open: false, text: ''});
 
   const [accountNumber, setAccountNumber] = useState("");
   const [accountNumberError, setAccountNumberError] = useState({ error: false, errorText: "" });;
@@ -26,11 +26,87 @@ export default function Editbeneficiary() {
   const [selectedBeneficiary, setSelectedBeneficiary] = useState(0);
   const [ifscError, setIfscError] = useState({ error: false, errorText: "" });;
   const [deleteBeneficiary, setDeleteBeneficiay] = useState();
+  const [isdeleted , setIsDeleted] = useState(0);
+  const [loading, setLoading] = useState(false);
 
 
 
 
 
+  
+
+  const handleClick = (data) => {
+    setOpen({open: true,text: data.message});
+  }
+  const handleClose = () => {
+    setOpen({open:false,text: ''});
+  }
+  const handleEditbeneficiary = () => {
+     setNickNameError({error: false, errorText: ""});
+     setAccountNumberError({error:false,errorText: ""});
+     setIfscError({error: false,errorText: ""});
+    console.log("ho ra h");
+    console.log(accountNumber + "   " + nickName + "    " + ifsc);
+    if (accountNumber == "")
+      setAccountNumberError({error:true,errorText: "Account Number should not be empty"});
+
+    if (ifsc =="")
+      setIfscError({error:true,errorText:"Ifsc should not be empty"});
+
+    if (accountNumber != "" && nickName != "" && ifsc != "") {
+      console.log(accountNumber + "   " + nickName + "    " + ifsc);
+      CustomerService.editBeneficiary(accountNumber, nickName, ifsc).then((response) => {
+        handleClick(response.data);
+      },
+      (error) => {
+        const resMessage =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+            var msg=resMessage.split(':');
+            switch(msg[0])
+            {
+              case '1':
+              setAccountNumberError({ error: true, errorText: msg[1] });
+              break;
+              case '2':
+                setIfscError({error:true,errorText:msg[1]});
+                break;
+            }
+            setLoading(false);
+      }
+      );
+
+    }
+  }
+
+  const handleDeleteBeneficiary = () => {
+    setNickNameError({error: false, errorText: ""});
+     setAccountNumberError({error:false,errorText: ""});
+     setIfscError({error: false,errorText: ""});
+     if(nickName == '')
+     {
+       setNickNameError({error:true, errorText:"please select a nickname"});
+     }
+     else{
+    CustomerService.deleteBeneficiary(nickName).then((response) => {
+      setIsDeleted(prevDelete =>prevDelete+1);
+      handleClick(response.data);
+    },
+    (error)=>{
+      const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+    });
+  }
+}
+
+  
   useEffect(() => {
     CustomerService.getAllBeneficiaries().then((response) => {
       if (response.data  && response.data.length>0) {
@@ -57,44 +133,9 @@ export default function Editbeneficiary() {
 
     });
 
-  }, [open, setOpen]);
+  }, [isdeleted, setIsDeleted]);
 
 
-
-  const handleClick = () => {
-    setOpen(true);
-  }
-  const handleEditbeneficiary = () => {
-
-    console.log("ho ra h");
-    console.log(accountNumber + "   " + nickName + "    " + ifsc);
-    if (accountNumber == '')
-      setAccountNumberError("Enter Valid account number");
-
-    if (nickName == '')
-      setNickNameError("Nickname must be unique");
-
-    if (ifsc == '')
-      setIfscError("Entered Otp is not correct");
-
-    if (accountNumber != "" && nickName != "" && ifsc != "") {
-      console.log(accountNumber + "   " + nickName + "    " + ifsc);
-      CustomerService.editBeneficiary(accountNumber, nickName, ifsc).then((response) => {
-        handleClick();
-      });
-    }
-
-  }
-
-  const handleDeleteBeneficiary = () => {
-    CustomerService.deleteBeneficiary(nickName).then((response) => {
-      handleClick();
-    });
-  }
-
-  const handleClose = () => {
-    setOpen(false);
-  }
   return (
     <React.Fragment>
       <div class="content">
@@ -180,9 +221,9 @@ export default function Editbeneficiary() {
 
 
       </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Beneficiary edit Successfully!
+        {open.text}
               </Alert>
       </Snackbar>
     </React.Fragment>
