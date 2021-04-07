@@ -119,14 +119,16 @@ var AccordionStyle = withStyles({
 
 function Dashboard(props) {
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const listOfNavs = ["CASA", "CREDIT CARD", "AddBeneficiary", "EditBeneficiary", "FTWithinBankAccount", "FTWithinBankBeneficiary", "AddBiller", "EditBiller", "Pay", "ChequeRequest", "ViewExistingChequeRequest", "CreditLimitIncrease", "ResetPassword", "CasaType", "CardType"];
+    const [selectedIndex, setSelectedIndex] = React.useState( Math.max(0,listOfNavs.indexOf(props.location.pathname.split('/')[2])));
+    
 
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
     };
 
 
-    const [Customer, setCustomer] = useState( {} );
+    const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
     function convertTZ(date, tzString) {
@@ -139,7 +141,7 @@ function Dashboard(props) {
         if (currentCustomer)
             CustomerService.getCustomerDetails().then(
                 (response) => {
-                    if(response.data)
+                    if (response.data)
                         setCustomer(response.data);
                     console.log(response.data);
                 },
@@ -196,7 +198,7 @@ function Dashboard(props) {
                     </ListItem>
                 ))}
                 <ListItem button key={'FUND TRANSFER'} style={{ padding: 0, }}>
-                    <AccordionStyle >
+                    <AccordionStyle defaultExpanded={[2, 3, 4, 5].includes(selectedIndex)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -225,7 +227,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'BILL PAYMENT'} style={{ padding: 0, }}>
-                    <AccordionStyle>
+                    <AccordionStyle defaultExpanded={[6, 7, 8].includes(selectedIndex)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -251,7 +253,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'SERVICE REQUEST'} style={{ padding: 0, }}>
-                    <AccordionStyle>
+                    <AccordionStyle defaultExpanded={[9, 10, 11, 12].includes(selectedIndex)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -279,7 +281,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'PRODUCT OPENING'} style={{ padding: 0, }}>
-                    <AccordionStyle>
+                    <AccordionStyle defaultExpanded={[13, 14].includes(selectedIndex)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"

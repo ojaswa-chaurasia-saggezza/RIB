@@ -113,7 +113,7 @@ export default function CreditCard() {
                     setCustomer({});
                     setErrorMessage(_content);
                     console.log(_content);
-        })
+        });
     }
     
 
