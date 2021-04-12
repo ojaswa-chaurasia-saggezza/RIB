@@ -3,18 +3,18 @@ package com.rib.rib.payload.request;
 public class ProductOpeningRequest {
 	
 	private String type;
-	private String productType;
+	private Long fromAccount;
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getProductType() {
-		return productType;
+	public Long getFromAccount() {
+		return fromAccount;
 	}
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setFromAccount(Long fromAccount) {
+		this.fromAccount = fromAccount;
 	}
 	
 

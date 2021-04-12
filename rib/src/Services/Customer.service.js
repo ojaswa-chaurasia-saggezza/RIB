@@ -93,6 +93,12 @@ const deleteBiller = (description) => {
 const pay = (fromAccount, description, amount) => {
   return axios.post(API_URL + "Pay/", { fromAccount, description, amount }, { headers: authHeader() });
 }
+
+const requestCASA = (type,fromAccount)=>{
+  return axios.post(API_URL+"productOpening/CASA" , {type,fromAccount} , {headers : authHeader()});
+}
+
+
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -117,5 +123,6 @@ export default {
   editBiller,
   deleteBiller,
   pay,
-  deleteBeneficiary
+  deleteBeneficiary,
+  requestCASA,
 };

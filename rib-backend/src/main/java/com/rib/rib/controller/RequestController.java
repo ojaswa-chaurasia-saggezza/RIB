@@ -28,21 +28,31 @@ import com.rib.rib.repository.ProductOpeningRepository;
 public class RequestController {
 	@Autowired
 	private ProductOpeningRepository productOpeningRepository;
-	
+
 	@Autowired
-	
+
 	private CustomerRepository customerRepository;
-	
+
 	@GetMapping("/productOpening/CreditCard/{typeOfCreditCard}")
-	
-	public OpeningProduct productOpeningApi(@PathVariable String typeOfCreditCard)
-	{
+	public OpeningProduct productOpeningApi(@PathVariable String typeOfCreditCard) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow();
-		
-		
-		OpeningProduct openingProduct = new OpeningProduct(new Date(),"pending",customer,typeOfCreditCard,"Credit Card",null);
+
+		OpeningProduct openingProduct = new OpeningProduct(new Date(), "pending", customer, typeOfCreditCard,
+				"Credit Card", null);
 		return productOpeningRepository.save(openingProduct);
+	}
+	
+	@PostMapping("/productOpening/CASA")
+	public OpeningProduct CASAopeningAPI(@RequestBody ProductOpeningRequest productOpeningRequest) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow();
+
+		OpeningProduct openingProduct = new OpeningProduct(new Date(), "pending", customer, productOpeningRequest.getType(),
+				"CASA", productOpeningRequest.getFromAccount());
+		return productOpeningRepository.save(openingProduct);
+
+		
 	}
 
 }
