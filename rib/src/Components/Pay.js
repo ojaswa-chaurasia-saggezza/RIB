@@ -175,7 +175,7 @@ export default function Pay() {
                             <div role="button" className="col-lg-12 text-danger text-start " onClick={()=>{setOpenTNC(true)}}> {"*Terms & Conditions"} </div>
 
                             <div class="form-field col-lg-12">
-                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handlePay} />
+                                <input class="submit-btn bg-success" type="submit" value="Transfer" name="" onClick={handlePay} />
                             </div>
                         </div>
                     </div>

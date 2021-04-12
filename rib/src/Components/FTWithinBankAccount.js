@@ -159,7 +159,7 @@ export default function FTWithinBankAccount() {
                             <div role="button" className="col-lg-12 text-danger text-start " onClick={() => { setOpenTNC(true) }}> {"*Terms & Conditions"} </div>
 
                             <div class="form-field col-lg-12">
-                                <input class="submit-btn bg-success" type="submit" value="submit" name="" onClick={handleFundTransfer} />
+                                <input class="submit-btn bg-success" type="submit" value="transfer" name="" onClick={handleFundTransfer} />
                             </div>
                         </div>
                     </div>

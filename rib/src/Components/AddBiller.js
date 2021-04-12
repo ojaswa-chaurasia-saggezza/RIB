@@ -18,6 +18,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 export default function AddBiller() {
 
     const [billerList, setBillerList] = useState({});
@@ -40,6 +41,26 @@ export default function AddBiller() {
         setOpen(false);
     }
 
+    const handeleDescriptionError = () => {
+        
+        if (description == "") {
+            setDescriptionError({ error: true, errorText: "Description should not be empty" });
+        }
+        else if(description.match(format))
+        {
+            setDescriptionError({error: true, errorText: "Description should not contain special characters"});
+        }
+        else if(description.length>15)
+        {
+            setDescriptionError({error: true, errorText: "Please enter 15 characters only"});
+        }
+        else {
+            setDescriptionError({error: false, errorText: ""});
+        }
+        
+
+    }
+
     const handleAddBiller = () => {
 
         if (biller == "") {
@@ -48,11 +69,7 @@ export default function AddBiller() {
         if (accountNumber == "") {
             setAccountNumberError({ error: true, errorText: "Account Number should not be empty" });
         }
-        if (description == "") {
-            setDescriptionError({ error: true, errorText: "Description should not be empty" });
-        }
-
-        if (biller != "" && accountNumber != "" && description != "") {
+        if (biller != "" && accountNumber != "" && description != "" && description.length<15 && !descriptionError.error) {
             CustomerService.addBiller(biller, accountNumber, description).then(() => {
                 handleClick();
             },
@@ -128,7 +145,7 @@ export default function AddBiller() {
                                     fullWidth
                                     label="Description"
                                     onChange={(e) => { setDescription(e.target.value) }}
-                                    onKeyPress={() => { if (description != "") setDescriptionError({ error: false, errorText: "" }) }}
+                                    onKeyPress={() => { if (description != "") handeleDescriptionError() }}
                                     error={descriptionError.error}
                                     helperText={descriptionError.errorText} />
                             </div>
