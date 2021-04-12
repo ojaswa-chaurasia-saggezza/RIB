@@ -98,6 +98,11 @@ const requestCreditCard = (typeOfCreditCard)=>
 {
   return axios.get(API_URL+"/productOpening/CreditCard/"+typeOfCreditCard,{headers: authHeader()});
 }
+const requestCASA = (type,fromAccount)=>{
+  return axios.post(API_URL+"productOpening/CASA" , {type,fromAccount} , {headers : authHeader()});
+}
+
+
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -124,4 +129,5 @@ export default {
   pay,
   deleteBeneficiary,
   requestCreditCard,
+  requestCASA,
 };
