@@ -30,11 +30,6 @@ export default function Editbeneficiary() {
   const [loading, setLoading] = useState(false);
 
 
-
-
-
-  
-
   const handleClick = (data) => {
     setOpen({open: true,text: data.message});
   }

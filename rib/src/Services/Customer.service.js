@@ -93,6 +93,11 @@ const deleteBiller = (description) => {
 const pay = (fromAccount, description, amount) => {
   return axios.post(API_URL + "Pay/", { fromAccount, description, amount }, { headers: authHeader() });
 }
+
+const requestCreditCard = (typeOfCreditCard)=>
+{
+  return axios.get(API_URL+"/productOpening/CreditCard/"+typeOfCreditCard,{headers: authHeader()});
+}
 export default {
   getPublicContent,
   getCustomerDetails,
@@ -117,5 +122,6 @@ export default {
   editBiller,
   deleteBiller,
   pay,
-  deleteBeneficiary
+  deleteBeneficiary,
+  requestCreditCard,
 };
