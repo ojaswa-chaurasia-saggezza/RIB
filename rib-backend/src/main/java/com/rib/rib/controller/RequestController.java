@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Optional;
+import com.rib.rib.model.CheckOrder;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.OpeningProduct;
+import com.rib.rib.payload.request.CheckOrderRequest;
 import com.rib.rib.payload.request.ProductOpeningRequest;
+import com.rib.rib.repository.CheckOrderRepository;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.repository.ProductOpeningRepository;
 
@@ -30,9 +33,11 @@ public class RequestController {
 	private ProductOpeningRepository productOpeningRepository;
 
 	@Autowired
-
 	private CustomerRepository customerRepository;
 
+	@Autowired
+	private CheckOrderRepository checkOrderRepository;
+	
 	@GetMapping("/productOpening/CreditCard/{typeOfCreditCard}")
 	public OpeningProduct productOpeningApi(@PathVariable String typeOfCreditCard) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -54,5 +59,16 @@ public class RequestController {
 
 		
 	}
+	
+	@PostMapping("/serviceRequest/checkOrder")
+	public CheckOrder checkOrderAPI(@RequestBody CheckOrderRequest checkOrderRequest)
+	{
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Customer customer = customerRepository.findByUsername(username).orElseThrow();
+		CheckOrder checkOrder = new CheckOrder(new Date(),"pending",customer,checkOrderRequest.getAccountNumber(),checkOrderRequest.getLeaf());
+		return checkOrderRepository.save(checkOrder);
+		
+	}
+	
 
 }
