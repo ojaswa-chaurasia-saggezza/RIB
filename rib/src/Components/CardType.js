@@ -39,7 +39,7 @@ export default function CardType() {
             <div class="content" >
                 <section class="trasfer-beneficiary">
                     <h1 class="title bg-primary" >Open New Credit Card</h1>
-                    <br /><br /><br />
+                    <br />
                     <div class="container">
                         <div class="transfer-form row">
 

@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import '../CSS/style.css';
 import '../CSS/ErrorStyling.css';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import CustomerService from "../Services/Customer.service";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function CasaType() {
 
   const [accountType, setAccountType] = useState("Savings");
   const [fromAccount, setFromAccount] = useState("");
   const [Accounts, setAccounts] = useState([]);
-
+  const[open, setOpen] = React.useState({ open: false, text: ''});
+  
+  const handleClose = () =>
+  {
+    setOpen({open:false,text: ''});
+  }
 
   const handleClickSubmit = () => {
     CustomerService.requestCASA(accountType, fromAccount).then((response) => { 
       if(response.data)
-        console.log(response.data);
+        setOpen({open:true,text: 'Your response has been recorded'})
 
     },(error) => {
 
-      });
+      })
 
   }
 
@@ -42,6 +53,7 @@ export default function CasaType() {
   }, []);
 
   return (
+    <>
     <div class="content" >
       <section class="trasfer-beneficiary">
         <h1 class="title bg-primary" >Open New CASA Account</h1>
@@ -65,11 +77,16 @@ export default function CasaType() {
             <div class="form-field col-lg-12">
               <input class="submit-btn bg-success" onClick={handleClickSubmit} type="submit" value="submit" name="" />
             </div>
+            <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {open.text}
+                </Alert>
+            </Snackbar>
 
           </div>
         </div>
       </section>
     </div>
-
+    </>
   );
 }
