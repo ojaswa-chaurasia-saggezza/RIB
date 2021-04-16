@@ -56,7 +56,7 @@ const editBeneficiary = (accountNumber, nickName, ifsc) => {
   return axios.put(API_URL + "EditBeneficiary/", { accountNumber, nickName, ifsc }, { headers: authHeader() });
 }
 const deleteBeneficiary = (nickName) => {
-  return axios.delete(API_URL + "DeleteBeneficiary/", {data : { nickName } , headers : authHeader()});// { accountNumber, nickName, ifsc }, { headers: authHeader() });
+  return axios.delete(API_URL + "DeleteBeneficiary/", { data: { nickName }, headers: authHeader() });// { accountNumber, nickName, ifsc }, { headers: authHeader() });
 }
 const getAllBeneficiaries = () => {
   return axios.get(API_URL + "GetAllBeneficiaries/", { headers: authHeader() });
@@ -67,7 +67,7 @@ const fundTransferWithinBankBeneficiary = (fromAccount, beneficiary, transferMod
 }
 
 const fundTransferWithinBankAccount = (fromAccountNumber, toAccountNumber, amount) => {
-  return axios.post(API_URL + "TransferWithinBankAccounts/", {fromAccountNumber, toAccountNumber, amount}, {headers: authHeader()});
+  return axios.post(API_URL + "TransferWithinBankAccounts/", { fromAccountNumber, toAccountNumber, amount }, { headers: authHeader() });
 }
 
 const getAllGlobalBillers = () => {
@@ -87,19 +87,24 @@ const editBiller = (billerName, billerAccountNumber, description) => {
 }
 
 const deleteBiller = (description) => {
-  return axios.delete(API_URL + "DeleteBiller/", { data : {description}, headers: authHeader() });
+  return axios.delete(API_URL + "DeleteBiller/", { data: { description }, headers: authHeader() });
 }
 
 const pay = (fromAccount, description, amount) => {
   return axios.post(API_URL + "Pay/", { fromAccount, description, amount }, { headers: authHeader() });
 }
 
-const requestCreditCard = (typeOfCreditCard)=>
-{
-  return axios.get(API_URL+"/productOpening/CreditCard/"+typeOfCreditCard,{headers: authHeader()});
+const requestCreditCard = (typeOfCreditCard) => {
+  return axios.get(API_URL + "/productOpening/CreditCard/" + typeOfCreditCard, { headers: authHeader() });
 }
-const requestCASA = (type,fromAccount)=>{
-  return axios.post(API_URL+"productOpening/CASA" , {type,fromAccount} , {headers : authHeader()});
+const requestCASA = (type, fromAccount) => {
+  return axios.post(API_URL + "productOpening/CASA", { type, fromAccount }, { headers: authHeader() });
+}
+const checkOrder = (accountNumber, leaf) => {
+  return axios.post(API_URL + "/serviceRequest/checkOrder", { accountNumber:accountNumber, leaf:leaf }, { headers: authHeader() });
+}
+const creditLimitIncrease = (creditCardNumber, limit) => {
+  return axios.post(API_URL +"/serviceRequest/creditLimitIncrease",{creditCardNumber,limit}, {headers:authHeader()});
 }
 
 
@@ -130,4 +135,6 @@ export default {
   deleteBeneficiary,
   requestCreditCard,
   requestCASA,
+  checkOrder,
+  creditLimitIncrease,
 };
