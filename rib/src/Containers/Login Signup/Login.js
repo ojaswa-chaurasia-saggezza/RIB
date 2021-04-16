@@ -190,8 +190,8 @@ export default function Login(props) {
             error={passwordError.error}
             helperText={passwordError.errorText}
           />
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleLogin}>
-            <Alert onClose={handleLogin} severity="success">
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
               Login Successfully!
                         </Alert>
           </Snackbar>
