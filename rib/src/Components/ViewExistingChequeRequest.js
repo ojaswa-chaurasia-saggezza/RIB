@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CSS/style.css';
 import '../CSS/ErrorStyling.css';
 
@@ -7,6 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from "@material-ui/core/CardHeader";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import CustomerService from '../Services/Customer.service';
+import { convertTZ } from "../Helpers/HelperFunctions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,81 +26,63 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         // justifyContent: 'space-between',
     },
-    
+
 }));
 
 
 export default function ViewExistingChequeRequest() {
     const classes = useStyles();
-    
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        CustomerService.getCheckOrder().then((response) => {
+
+            if (response.data)
+                setData(response.data);
+
+        }, (error) => {
+
+        });
+    }, []);
+
 
     return (
 
         <Card className={classes.root} variant="outlined">
-                <CardHeader
-                    title="View Existing"
-                />
-                <CardContent>
-                <table id="example" class="table table-striped table-bordered" style={{width:"100%"}}>
-                <thead>
-                    <tr>
-                        <th>Request Id</th>
-                        <th>Account Number</th>
-                        <th>Leaf</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1092</td>
-                        <td>345768980975</td>
-                        <td>34</td>
+            <CardHeader
+                title="View Existing"
+            />
+            <CardContent>
+                <table id="example" class="table table-striped table-bordered" style={{ width: "100%" }}>
+                    <thead>
+                        <tr>
+                            <th>Request Id</th>
+                            <th>Date</th>
+                            <th>Account Number</th>
+                            <th>Leaf</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    </tr>
-                    <tr>
-                        <td>7342</td>
-                        <td>764538234163</td>
-                        <td>12</td>
+                        {data.map((value) =>
+                            <tr>
+                                <td>{value.requestId}</td>
+                                <td>{convertTZ(value.date).toString()}</td>
+                                <td>{value.accountNumber}</td>
+                                <td>{value.leaf}</td>
+                                <td>{value.status}</td>
+                            </tr>
+                        )}
 
-                    </tr>
-                    <tr>
-                        <td>1092</td>
-                        <td>345768980975</td>
-                        <td>34</td>
-
-                    </tr>
-                    <tr>
-                        <td>7342</td>
-                        <td>764538234163</td>
-                        <td>12</td>
-
-                    </tr>
-                    <tr>
-                        <td>1092</td>
-                        <td>345768980975</td>
-                        <td>34</td>
-
-                    </tr>
-                    <tr>
-                        <td>7342</td>
-                        <td>764538234163</td>
-                        <td>12</td>
-
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Request Id</th>
-                        <th>Account Number</th>
-                        <th>Leaf</th>
-
-                    </tr>
-                </tfoot>
-            </table>
+                    </tbody>
+                </table>
 
 
-                </CardContent>
+            </CardContent>
 
-            </Card>
+        </Card>
 
 
         // <div class="content" style={{textAlign: "left", paddingLeft: "50px"}}>

@@ -1,6 +1,7 @@
 package com.rib.rib.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -78,6 +79,15 @@ public class RequestController {
 		Customer customer = customerRepository.findByUsername(username).orElseThrow();
 		CheckOrder checkOrder = new CheckOrder(new Date(),"pending",customer,checkOrderRequest.getAccountNumber(),checkOrderRequest.getLeaf());
 		return checkOrderRepository.save(checkOrder);
+		
+	}
+	
+	@GetMapping("/serviceRequest/getCheckOrder")
+	public List<CheckOrder> getCheckOrderAPI() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow();
+		
+		return customer.getCheckorder();
 		
 	}
 	

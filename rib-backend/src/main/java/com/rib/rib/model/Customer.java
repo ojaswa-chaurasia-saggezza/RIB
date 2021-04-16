@@ -17,8 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "customer", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
@@ -31,6 +34,11 @@ public class Customer {
 
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = Account.class)
 	private List<Account> accounts = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = CheckOrder.class)
+	@JsonIgnore
+	@OrderBy("date DESC")
+	private List<CheckOrder> checkorder = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = CreditCard.class)
 	@JoinColumn(name = "customer_id")
@@ -208,6 +216,14 @@ public class Customer {
 
 	public List<Biller> getBillers() {
 		return billers;
+	}
+
+	public List<CheckOrder> getCheckorder() {
+		return checkorder;
+	}
+
+	public void setCheckorder(List<CheckOrder> checkorder) {
+		this.checkorder = checkorder;
 	}
 
 	public void setBillers(List<Biller> billers) {

@@ -101,10 +101,14 @@ const requestCASA = (type, fromAccount) => {
   return axios.post(API_URL + "productOpening/CASA", { type, fromAccount }, { headers: authHeader() });
 }
 const checkOrder = (accountNumber, leaf) => {
-  return axios.post(API_URL + "/serviceRequest/checkOrder", { accountNumber:accountNumber, leaf:leaf }, { headers: authHeader() });
+  return axios.post(API_URL + "/serviceRequest/checkOrder", { accountNumber: accountNumber, leaf: leaf }, { headers: authHeader() });
 }
 const creditLimitIncrease = (creditCardNumber, limit) => {
-  return axios.post(API_URL +"/serviceRequest/creditLimitIncrease",{creditCardNumber,limit}, {headers:authHeader()});
+  return axios.post(API_URL + "/serviceRequest/creditLimitIncrease", { creditCardNumber, limit }, { headers: authHeader() });
+}
+
+const getCheckOrder = () => {
+  return axios.get(API_URL + "/serviceRequest/getCheckOrder", { headers: authHeader() });
 }
 
 
@@ -137,4 +141,5 @@ export default {
   requestCASA,
   checkOrder,
   creditLimitIncrease,
+  getCheckOrder,
 };
