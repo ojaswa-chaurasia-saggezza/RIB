@@ -11,10 +11,14 @@ export default function PieChart(props) {
             width='100%'
             height='80%'
             chartType="PieChart"
-            loader={<div style={{
-                display: "flex", alignItems: 'center', justifyContent: 'center', width:'100%'
-                , height:'100%'
-            }}><CircularProgress /></div>}
+            loader={
+                <div style={{
+                    display: "flex", alignItems: 'center', justifyContent: 'center', width: '100%'
+                    , height: '100%'
+                }}>
+                    <CircularProgress />
+                </div>
+            }
             data={props.data}
             options={{
                 // Just add this option
