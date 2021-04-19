@@ -60,7 +60,7 @@ public class OTPController {
 		replacements.put("otpnum", String.valueOf(otp));
 		String message = template.getTemplate(replacements);
 		try {
-			emailService.sendOtpMessage(email, "OTP - RIB", message);
+			emailService.sendMessage(email, "OTP - RIB", message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

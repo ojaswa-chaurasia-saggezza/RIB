@@ -22,6 +22,9 @@ const resetPassword = (username, password) => {
   return axios.post(API_URL + 'resetPassword', { username, password }, { headers: otpHeader() });
 }
 
+const resetPasswordAfterLogin = (username, password) => {
+  return axios.post(API_URL + 'resetPassword', { username, password }, { headers: authHeader() });
+}
 
 const getCustomerDetails = () => {
   return axios.get(API_URL + "CustomerDetails", { headers: authHeader() });
@@ -130,4 +133,5 @@ export default {
   deleteBeneficiary,
   requestCreditCard,
   requestCASA,
+  resetPasswordAfterLogin
 };

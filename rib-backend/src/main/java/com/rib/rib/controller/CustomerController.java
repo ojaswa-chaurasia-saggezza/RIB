@@ -66,18 +66,15 @@ public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
-	AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 	@Autowired
 	private AccountRepository accountRepository;
-	@Autowired
-	private TransactionRepositary transactionRepositary;
 	@Autowired
 	private GlobalBillerRepository globalBillerRepository;
 	@Autowired
 	private CreditCardRepository creditCardRepository;
-
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/Customer") // Retrieve all Customers
 	public List<Customer> getallCustomers() {
@@ -131,7 +128,7 @@ public class CustomerController {
 
 		} catch (Exception e) {
 			System.out.println(e);
-			return ResponseEntity.badRequest().body(new MessageResponse("The Old Password is incorrect"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Current password is incorrect"));
 		}
 	}
 
@@ -623,7 +620,7 @@ public class CustomerController {
 
 		return ResponseEntity.ok(new MessageResponse("kitna paisa loge"));
 	}
-
+	
 	public void generateTransaction(List<Transaction> transactions, Random rand, int i) {
 		String category = rand.nextInt(10) < 5 ? rand.nextInt(10) < 5 ? "Travel" : "Others"
 				: rand.nextInt(10) < 5 ? "Bill" : "Food";

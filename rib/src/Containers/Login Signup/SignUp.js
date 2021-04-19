@@ -132,7 +132,6 @@ export default function SignUp(props) {
                         error.message ||
                         error.toString();
 
-                    setLoading(false);
                     setUsernameError({ error: false, errorText: "" });
                     setPasswordError({ error: true, errorText: resMessage })
                     console.log(resMessage);

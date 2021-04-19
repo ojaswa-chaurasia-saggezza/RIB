@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import { Link, useHistory } from 'react-router-dom';
+import LinkM from '@material-ui/core/Link';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { ContactSupportOutlined, HistoryRounded, LaptopWindows } from '@material-ui/icons';
@@ -22,6 +23,11 @@ import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import ForgotPasswordDialog from '../../Elements/ForgotPasswordDialog';
+import ResetPasswordDialog from '../../Elements/ResetPasswordDialog';
+import ForgotService from "../../Services/Forgot.service";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Copyright() {
   return (
@@ -57,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     backgroundColor: "#fafafa"
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 10000,
+    color: '#fff',
   }
 }));
 
@@ -67,6 +77,18 @@ function Alert(props) {
 // This is the main login funciton that is being exported
 export default function Login(props) {
   const [open, setOpen] = React.useState(false);
+  const [forgot, setForgot] = useState('');
+  const [openForgotDialog, setOpenForgotDialog] = useState(false);
+  const [openResetDialog, setOpenResetDialog] = useState(false);
+
+  const [dialogError, setDialogError] = useState({ error: false, errorText: '' });
+
+  const [tempPassword, setTempPassword] = useState('');
+  const [tempError, setTempError] = useState({ error: false, errorText: '' });
+  const [newPassword, setNewPassword] = useState('');
+  const [newError, setNewError] = useState({ error: false, errorText: '' });
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmError, setConfirmError] = useState({ error: false, errorText: '' });
 
   const classes = useStyles();  // for styling
 
@@ -81,11 +103,33 @@ export default function Login(props) {
   const HISTORY = useHistory();
 
   const [loading, setLoading] = useState(false);  // This is for loading when the login process is in place
+  const [loadingMail, setLoadingMail] = useState(false);
   const [message, setMessage] = useState(""); // Message to be displayed
 
   const handleClick = () => {
     setOpen(true);
   };
+  const handleOpenForgotDialog = () => {
+    setOpenForgotDialog(true);
+  }
+  const handleCloseForgotDialog = () => {
+    setDialogError({ error: false, errorText: '' });
+    setOpenForgotDialog(false);
+  }
+
+  const handleOpenResetDialog = () => {
+    setOpenResetDialog(true);
+  }
+  const handleCloseResetDialog = () => {
+    setForgot('');
+    setTempPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setTempError({ error: false, errorText: '' });
+    setNewError({ error: false, errorText: '' });
+    setConfirmError({ error: false, errorText: '' });
+    setOpenResetDialog(false);
+  }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -94,6 +138,92 @@ export default function Login(props) {
 
     setOpen(false);
   };
+
+  var passwordStrength = (pass) => {
+    var strength = 1;
+    var arr = [/^.{8,16}$/, /[a-z]+/, /[0-9]+/, /[A-Z]+/, /[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+/];
+    arr.map(function (regexp) {
+      if (pass.match(regexp))
+        strength++;
+    });
+    console.log(strength);
+    return strength
+  }
+
+  const forgotPassword = () => {
+    setLoadingMail(true);
+    ForgotService.generateTempPassword(forgot).then(() => {
+      handleCloseForgotDialog();
+      setLoadingMail(false);
+      handleOpenResetDialog();
+    },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          setLoadingMail(false);
+
+        setDialogError({ error: true, errorText: resMessage })
+      });
+    
+  }
+
+  const forgotUsername = () => {
+    setLoadingMail(true);
+    ForgotService.forgotUsername(forgot).then(() => {
+      handleCloseForgotDialog();
+      setLoadingMail(false);
+    },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          setLoadingMail(false);
+        setDialogError({ error: true, errorText: resMessage })
+      });
+      
+      
+  }
+
+  const resetPassword = () => {
+    if (tempPassword == "")
+      setTempError({ error: true, errorText: 'Temporary password should not be empty' });
+
+    if (newPassword == "")
+      setNewError({ error: true, errorText: 'New password should not be empty' });
+
+    else if (passwordStrength(newPassword) <= 5)
+      setNewError({ error: true, errorText: "The password must be of 8-16 letters and include atleast one small letter, capital letter, digit and a special character" });
+
+    if (confirmPassword == "")
+      setConfirmError({ error: true, errorText: 'Confirm password should not be empty' });
+
+    else if (newPassword != confirmPassword)
+      setConfirmError({ error: true, errorText: "Confirm password does not match with the given password" });
+
+    if (tempPassword != "" && newPassword != "" && confirmPassword != "" && passwordStrength(newPassword) > 5) {
+
+      ForgotService.resetTempPassword(forgot, tempPassword, newPassword).then(() => {
+        handleCloseResetDialog();
+      },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setTempError({ error: true, errorText: resMessage });
+        });
+    }
+  }
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -131,9 +261,6 @@ export default function Login(props) {
           console.log(resMessage);
         }
       );
-
-
-
     setLoading(false);
   };
 
@@ -160,8 +287,8 @@ export default function Login(props) {
             required
             fullWidth
             id="username"
-            label="UserName"
-            name="UserName"
+            label="Username"
+            name="Username"
             autoComplete="username"
             autoFocus
             onChange={(val) => { changeusername(val.target.value) }}
@@ -190,8 +317,8 @@ export default function Login(props) {
             error={passwordError.error}
             helperText={passwordError.errorText}
           />
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleLogin}>
-            <Alert onClose={handleLogin} severity="success">
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
               Login Successfully!
                         </Alert>
           </Snackbar>
@@ -210,19 +337,24 @@ export default function Login(props) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/ForgotPassword" >
-                Forgot password?
-              </Link>
+              <LinkM onClick={handleOpenForgotDialog} >
+                {"Forgot password?"}
+              </LinkM>
             </Grid>
             <Grid item>
-              <Link to="/SignUp" >
+              <Link to="/SignUp"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-
+      <ForgotPasswordDialog open={openForgotDialog} handleCloseDialog={handleCloseForgotDialog} forgotPassword={forgotPassword} forgotUsername={forgotUsername} error={dialogError} setError={setDialogError} setForgot={setForgot} />
+      <ResetPasswordDialog open={openResetDialog} handleCloseDialog={handleCloseResetDialog} resetPassword={resetPassword} tempError={tempError} setTempError={setTempError} newError={newError} setNewError={setNewError} confirmError={confirmError} setConfirmError={setConfirmError} setTempPassword={setTempPassword} setNewPassword={setNewPassword} setConfirmPassword={setConfirmPassword} />
+      <Backdrop className={classes.backdrop} open={loadingMail}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box mt={8}>
         {/* <Copyright /> */}
       </Box>
