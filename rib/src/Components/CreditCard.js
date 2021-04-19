@@ -154,6 +154,7 @@ export default function CreditCard() {
 
     const handleChange = (event) => {
         setCreditCard(event.target.value);
+        changeChartData(new Date(1900,0), new Date(), event.target.value);
     };
 
     const handleAccountChange = (creditCardNumber) => {
@@ -235,8 +236,8 @@ export default function CreditCard() {
                         <Grid container item xs={12} sm={3} spacing={1}>
                             <div style={{ justifyContent: "center", display: 'flex-box', width: '200px', height: '200px' }}>
                                 <div style={{ textAlign: 'center' }}><strong>PFA</strong></div>
-                                <PieChart data={chartData}/>
-                                <div className="input-group-sm ms-2" style={{ display: 'flex', }}>Select Range :<DateRangeSelector changeDate={changeChartData} width='90%' />
+                                <PieChart data={chartData}></PieChart>
+                                <div className="input-group-sm ms-2" style={{ display: 'flex', }}>Select Range :<DateRangeSelector key={selectedCreditCard} changeDate={(start,end)=> {changeChartData(start,end)}} width='90%' />
                                 </div>
                             </div>
                         </Grid>

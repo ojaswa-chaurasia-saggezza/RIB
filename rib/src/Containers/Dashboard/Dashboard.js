@@ -50,6 +50,8 @@ import CasaType from '../../Components/CasaType';
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
 
+import {convertTZ } from "../../Helpers/HelperFunctions";
+
 
 import { Grid } from '@material-ui/core';
 
@@ -131,10 +133,7 @@ function Dashboard(props) {
     const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Please Login first");
 
-    function convertTZ(date, tzString) {
-        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", { timeZone: tzString }));
-    }
-
+    
     useEffect(() => {
         const currentCustomer = AuthService.getCurrentUser();
 
@@ -330,19 +329,21 @@ function Dashboard(props) {
                         <Typography variant="h6" noWrap className={classes.title}>
                             Demo Bank
                 </Typography>
-                        <Grid container item xs={2}>
-                            <Grid item xs={12}>
+                <Typography noWrap display="inline">
+                        <Grid xs={2}>
+                            <Grid  xs={12}>
                                 <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
                                     Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
                                 </Button>
                             </Grid>
-                            <Grid item xs={12}>
+                            
+                            <Grid  xs={12}>
                                 <Typography variant="caption" noWrap className={classes.lastLogin}>
                                     Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
                                 </Typography>
                             </Grid>
                         </Grid>
-
+                        
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -370,7 +371,7 @@ function Dashboard(props) {
                                 </ListItemIcon>
                              Logout</MenuItem>
                         </Menu>
-
+                        </Typography>
 
                     </Toolbar>
                 </AppBar>
