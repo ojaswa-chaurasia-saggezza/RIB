@@ -113,7 +113,7 @@ public class ForgotController {
 		String message = template.getTemplate(replacements);
 		
 		try {
-			emailService.sendMessage(email, "RIB - Forgot username", message);
+			emailService.sendMessage(email, "RIB - Forgot Username", message);
 		}
 		catch (MessagingException e) {
 			e.printStackTrace();

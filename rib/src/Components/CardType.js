@@ -4,6 +4,7 @@ import '../CSS/ErrorStyling.css';
 import CustomerService from '../Services/Customer.service';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 
 
 function Alert(props) {
@@ -13,6 +14,8 @@ function Alert(props) {
 export default function CardType() {
     const [creditCardType, setCreditCardType] = useState("General");
     const [open, setOpen] = React.useState({ open: false, text: '' });
+
+    const types = ['General', 'Travel'];
 
     const handleClose = () => {
         setOpen({open:false,text: ''});
@@ -35,7 +38,7 @@ export default function CardType() {
         )
     }
     return (
-        <>
+        <React.Fragment>
             <div class="content" >
                 <section class="trasfer-beneficiary">
                     <h1 class="title bg-primary" >Open New Credit Card</h1>
@@ -43,14 +46,21 @@ export default function CardType() {
                     <div class="container">
                         <div class="transfer-form row">
 
-                            <div class="form-field col-lg-6">
-                                <label for="productType" class="label drop-label text-primary">Card Product type</label>
-                                <select onChange={(e) => {
-                                    setCreditCardType(e.target.value);
-                                }} id="productType" class="form-select" aria-label="Default select example" value={creditCardType}>
-                                    <option value={"General"}>General</option>
-                                    <option value={"Travel"}>Travel</option>
-                                </select>
+                            <div class="form-field col-lg-12">
+                                <FormControl fullWidth>
+                                    <InputLabel id="product-type">Card Product Type</InputLabel>
+                                    <Select
+                                        labelId="product-type"
+                                        value={creditCardType}
+                                        onChange={e=>{setCreditCardType(e.target.value)}}
+                                    >
+                                        {
+                                            types.map((value)=>{
+                                                return <MenuItem value={value} key={value}>{value}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div class="form-field col-lg-12">
                                 <input class="submit-btn bg-success" onClick={handleSubmit} type="submit" value="submit" name="" />
@@ -66,6 +76,6 @@ export default function CardType() {
                 </section>
             </div>
             
-        </>
+        </React.Fragment>
     );
 }
