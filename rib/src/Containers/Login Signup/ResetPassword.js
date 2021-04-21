@@ -101,7 +101,8 @@ function ResetPassword(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState({ error: false, errorText: "" });
 
-    const handleResetPassword = () => {
+    const handleResetPassword = (e) => {
+        e.preventDefault();
 
         console.log("Inside handleResetPassword" + currentPassword + password + confirmPassword);
 
@@ -233,7 +234,7 @@ function ResetPassword(props) {
                                 type="password"
                                 id="confirm-password"
                                 autoComplete="current-password"
-                                onKeyPress={() => { if (confirmPassword != "") setConfirmPasswordError({ error: false, errorText: "" }) }}
+                                onKeyPress={(e) => { if (e.key == "Enter") handleResetPassword(e); if (confirmPassword != "") setConfirmPasswordError({ error: false, errorText: "" }) }}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                             />
                         </Grid>

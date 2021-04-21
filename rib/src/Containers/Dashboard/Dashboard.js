@@ -131,7 +131,7 @@ function Dashboard(props) {
 
 
     const [Customer, setCustomer] = useState({});
-    const [ErrorMessage, setErrorMessage] = useState("Please Login first");
+    const [ErrorMessage, setErrorMessage] = useState("Loading...");
 
     
     useEffect(() => {

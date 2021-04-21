@@ -154,7 +154,8 @@ export default function SignUp(props) {
 
 
 
-    const handleSignUp = () => {
+    const handleSignUp = (e) => {
+        e.preventDefault();
 
         setLoading(true);
 
@@ -257,7 +258,7 @@ export default function SignUp(props) {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                onKeyPress={() => { if (password != "") setPasswordError({ error: false, errorText: "" }) }}
+                                onKeyPress={(e) => { if (e.key == "Enter") handleSignUp(e); if (password != "") setPasswordError({ error: false, errorText: "" }) }}
 
                                 onChange={(e) => { setPassword(e.target.value) }}
                             />

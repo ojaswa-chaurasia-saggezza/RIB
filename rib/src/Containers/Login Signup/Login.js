@@ -164,11 +164,11 @@ export default function Login(props) {
             error.response.data.message) ||
           error.message ||
           error.toString();
-          setLoadingMail(false);
+        setLoadingMail(false);
 
         setDialogError({ error: true, errorText: resMessage })
       });
-    
+
   }
 
   const forgotUsername = () => {
@@ -184,11 +184,11 @@ export default function Login(props) {
             error.response.data.message) ||
           error.message ||
           error.toString();
-          setLoadingMail(false);
+        setLoadingMail(false);
         setDialogError({ error: true, errorText: resMessage })
       });
-      
-      
+
+
   }
 
   const resetPassword = () => {
@@ -312,7 +312,11 @@ export default function Login(props) {
             type="password"
             id="password"
             onChange={(val) => { changepassword(val.target.value) }}
-            onKeyPress={() => { if (pass_word != "") setPasswordError({ error: false, errorText: "" }) }}
+            onKeyPress={(e) => {
+              if (e.key == "Enter") handleLogin(e);
+              if (pass_word != "") setPasswordError({ error: false, errorText: "" });
+            }}
+            on={handleLogin}
             autoComplete="current-password"
             error={passwordError.error}
             helperText={passwordError.errorText}
@@ -338,7 +342,7 @@ export default function Login(props) {
           <Grid container>
             <Grid item xs>
               <LinkM onClick={handleOpenForgotDialog} >
-                {"Forgot password?"}
+                {"Forgot Password/Username?"}
               </LinkM>
             </Grid>
             <Grid item>

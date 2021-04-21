@@ -49,7 +49,10 @@ public class ForgotController {
 	
 	@PostMapping("/generateTempPassword")
 	public ResponseEntity<?> generateTempPassword(@RequestBody String username) {
+		
+		// We need to do the below line because the username string will be like {"username":"theUsername"}
 		username = username.split(":")[1].split("\"")[1];
+		
 		System.out.println(username);
 		Customer customer = customerRepository.findByUsername(username).orElse(null);
 		if(customer == null)
@@ -60,7 +63,7 @@ public class ForgotController {
 		
 		EmailTemplate template = new EmailTemplate("SendTempPassword.html");
 		Map<String, String> replacements = new HashMap<>();
-		replacements.put("user", username);
+		replacements.put("user", customer.getName());
 		replacements.put("password", tempPassword);
 		
 		String message = template.getTemplate(replacements);
@@ -83,7 +86,7 @@ public class ForgotController {
 		
 		System.out.println("username:"+username+"    tempPassword:"+tempPassword +"     newPassword:"+newPassword+"      serverPassword"+serverPassword );
 		
-		if(tempPassword.length()!=10 || serverPassword==null || !serverPassword.equals(tempPassword))
+		if(serverPassword==null || !serverPassword.equals(tempPassword))
 			return ResponseEntity.badRequest().body(new MessageResponse("Invalid temporary pasword"));
 		
 		Customer customer = customerRepository.findByUsername(username).orElse(null);
@@ -97,6 +100,7 @@ public class ForgotController {
 	@PostMapping("/forgotUsername")
 	public ResponseEntity<?> forgotUsername(@RequestBody String email) {
 		 
+		// We need to do the below line because the email string will be like {"email":"theEmail"}
 		email = email.split(":")[1].split("\"")[1];
 		Customer customer = customerRepository.findByEmail(email).orElse(null);
 		if(customer == null)
