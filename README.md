@@ -37,11 +37,11 @@ The [reference documentation](https://docs.spring.io/spring-boot/docs/current-SN
 
 1. Run the backend
     1. Open the backend in eclipse.
-    2. Open the [application.properties](rib-backend\src\main\resources\application.properties) file
+    2. Open the [application.properties](rib-backend/src/main/resources/application.properties) file
         1. Change the 1<sup>st</sup> line to ` spring.datasource.url = [URL to your mysql database]`
         2. Change the 2<sup>nd</sup> line to `spring.datasource.username = [Username for DB]`
         3. Change the 3<sup>rd</sup> line to `spring.datasource.password = [Password for DB]` 
-    3. Run the [RibApplication.java](rib-backend\src\main\java\com\rib\rib\RibApplication.java) file as Java Application
+    3. Run the [RibApplication.java](rib-backend/src/main/java/com/rib/rib/RibApplication.java) file as Java Application
     4. Your backend would start running at port 8080.
 2. Run the frontend
     1. Go to the [Rib](rib) folder
