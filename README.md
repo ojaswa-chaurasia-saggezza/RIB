@@ -58,6 +58,8 @@ The [reference documentation](https://docs.spring.io/spring-boot/docs/current-SN
 
 
 # Developers
-Shanti Mukati
-Ojaswa chaurasia
-Nayan Verma
+<a href="https://github.com/ojaswa-chaurasia-saggezza/RIB/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ojaswa-chaurasia-saggezza/RIB" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
