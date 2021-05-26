@@ -253,7 +253,7 @@ function ResetPassword(props) {
                         onClick={handleResetPassword}
                     >
                         Change Password
-          </Button>
+                    </Button>
                 </div>
             </div>
             <Box mt={5}>

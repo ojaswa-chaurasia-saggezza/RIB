@@ -128,6 +128,8 @@ function Dashboard(props) {
 
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
+        if(index==0 || index==1)
+            setExpanded(false);
     };
 
 
@@ -170,6 +172,11 @@ function Dashboard(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChangeExpanded = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+      };
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -200,7 +207,7 @@ function Dashboard(props) {
                     </ListItem>
                 ))}
                 <ListItem button key={'FUND TRANSFER'} style={{ padding: 0, }}>
-                    <AccordionStyle defaultExpanded={[2, 3, 4, 5].includes(selectedIndex)}>
+                    <AccordionStyle expanded={expanded==='fundTransfer'} onChange={handleChangeExpanded('fundTransfer')}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -229,7 +236,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'BILL PAYMENT'} style={{ padding: 0, }}>
-                    <AccordionStyle defaultExpanded={[6, 7, 8].includes(selectedIndex)}>
+                    <AccordionStyle expanded={expanded==='billPayment'} onChange={handleChangeExpanded('billPayment')}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -255,7 +262,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'SERVICE REQUEST'} style={{ padding: 0, }}>
-                    <AccordionStyle defaultExpanded={[9, 10, 11, 12].includes(selectedIndex)}>
+                    <AccordionStyle expanded={expanded==='serviceRequest'} onChange={handleChangeExpanded('serviceRequest')}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
@@ -283,7 +290,7 @@ function Dashboard(props) {
                     </AccordionStyle>
                 </ListItem>
                 <ListItem button key={'PRODUCT OPENING'} style={{ padding: 0, }}>
-                    <AccordionStyle defaultExpanded={[13, 14].includes(selectedIndex)}>
+                    <AccordionStyle expanded={expanded==='productOpening'} onChange={handleChangeExpanded('productOpening')}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
