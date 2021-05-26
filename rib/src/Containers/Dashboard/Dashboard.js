@@ -295,7 +295,7 @@ function Dashboard(props) {
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
-                            className={[13, 14].includes(selectedIndex) ? classes.activeAccordion : null}
+                            className={[13, 14,15].includes(selectedIndex) ? classes.activeAccordion : null}
                         >
                             <Typography >PRODUCT OPENING</Typography>
                         </AccordionSummary>
@@ -306,6 +306,9 @@ function Dashboard(props) {
                                 </ListItem>
                                 <ListItem selected={selectedIndex === 14} button component={Link} to='/Dashboard/CardType' onClick={(e) => handleListItemClick(e, 14)}>
                                     <ListItemText primary={'Open New Credit Card'} />
+                                </ListItem>
+                                <ListItem selected={selectedIndex === 15} button component={Link} to='/Dashboard/Status' onClick={(e) => handleListItemClick(e, 15)}>
+                                    <ListItemText primary={'Status'} />
                                 </ListItem>
 
                             </List>
