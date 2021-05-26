@@ -91,6 +91,13 @@ public class RequestController {
 		
 	}
 	
+	@GetMapping("/productOpening/getAllRequests")
+	public List<OpeningProduct> getallProductOpeningRequests(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow();
+		return customer.getProductOpening();
+	}
+	
 	@PostMapping("/serviceRequest/creditLimitIncrease")
 	public ResponseEntity<?> creditLimitIncreaseAPI(@RequestBody CreditLimitIncreaseRequest creditLimitIncreaseRequest)
 	{

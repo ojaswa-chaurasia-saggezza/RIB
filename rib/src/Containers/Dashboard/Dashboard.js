@@ -45,12 +45,13 @@ import EditBeneficiary from '../../Components/EditBeneficiary';
 import AddBeneficiary from '../../Components/AddBeneficiary';
 import CardType from '../../Components/CardType';
 import CasaType from '../../Components/CasaType';
+import StatusProductOpening from "../../Components/StatusProductOpening";
 
 
 import AuthService from "../../Services/Auth.service";
 import CustomerService from "../../Services/Customer.service";
 
-import {convertTZ } from "../../Helpers/HelperFunctions";
+import { convertTZ } from "../../Helpers/HelperFunctions";
 
 
 import { Grid } from '@material-ui/core';
@@ -121,9 +122,9 @@ var AccordionStyle = withStyles({
 
 function Dashboard(props) {
 
-    const listOfNavs = ["CASA", "CREDIT CARD", "AddBeneficiary", "EditBeneficiary", "FTWithinBankAccount", "FTWithinBankBeneficiary", "AddBiller", "EditBiller", "Pay", "ChequeRequest", "ViewExistingChequeRequest", "CreditLimitIncrease", "ResetPassword", "CasaType", "CardType"];
-    const [selectedIndex, setSelectedIndex] = React.useState( Math.max(0,listOfNavs.indexOf(props.location.pathname.split('/')[2])));
-    
+    const listOfNavs = ["CASA", "CREDIT CARD", "AddBeneficiary", "EditBeneficiary", "FTWithinBankAccount", "FTWithinBankBeneficiary", "AddBiller", "EditBiller", "Pay", "ChequeRequest", "ViewExistingChequeRequest", "CreditLimitIncrease", "ResetPassword", "CasaType", "CardType", "Status"];
+    const [selectedIndex, setSelectedIndex] = React.useState(Math.max(0, listOfNavs.indexOf(props.location.pathname.split('/')[2])));
+
 
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
@@ -133,7 +134,7 @@ function Dashboard(props) {
     const [Customer, setCustomer] = useState({});
     const [ErrorMessage, setErrorMessage] = useState("Loading...");
 
-    
+
     useEffect(() => {
         const currentCustomer = AuthService.getCurrentUser();
 
@@ -142,7 +143,9 @@ function Dashboard(props) {
                 (response) => {
                     if (response.data)
                         setCustomer(response.data);
-                    console.log(response.data);
+                    else
+                        setErrorMessage("Your session has expired please login again");
+
                 },
                 (error) => {
                     const _content =
@@ -150,7 +153,7 @@ function Dashboard(props) {
                         error.message ||
                         error.toString();
                     setCustomer({});
-                    setErrorMessage("Your session has expired please login again");
+                    setErrorMessage(_content);
                     console.log(_content);
                 }
             );
@@ -329,48 +332,48 @@ function Dashboard(props) {
                         <Typography variant="h6" noWrap className={classes.title}>
                             Demo Bank
                 </Typography>
-                <Typography noWrap display="inline">
-                        <Grid xs={2}>
-                            <Grid  xs={12}>
-                                <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
-                                    Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
-                                </Button>
+                        <Typography noWrap display="inline">
+                            <Grid xs={2}>
+                                <Grid xs={12}>
+                                    <Button variant="contained" color="primary" disableElevation onClick={handleMenu}>
+                                        Welcome {Customer.name ? Customer.name.split(" ")[0] : ""}
+                                    </Button>
+                                </Grid>
+
+                                <Grid xs={12}>
+                                    <Typography variant="caption" noWrap className={classes.lastLogin}>
+                                        Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
+                                    </Typography>
+                                </Grid>
                             </Grid>
-                            
-                            <Grid  xs={12}>
-                                <Typography variant="caption" noWrap className={classes.lastLogin}>
-                                    Last Login : {Customer.previousLogin ? convertTZ(Customer.previousLogin, 'Asia/Kolkata').toLocaleString() : null}
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={handleClose}
-                            TransitionComponent={Fade}
-                        >
-                            <MenuItem onClick={handleClose} className={classes.MenuItem}>
-                                <ListItemIcon>
-                                    <PersonIcon fontSize="small" />
-                                </ListItemIcon>{Customer.name}
-                            </MenuItem>
-                            <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
-                                <ListItemIcon>
-                                    <ExitToAppIcon fontSize="small" />
-                                </ListItemIcon>
+
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={handleClose}
+                                TransitionComponent={Fade}
+                            >
+                                <MenuItem onClick={handleClose} className={classes.MenuItem}>
+                                    <ListItemIcon>
+                                        <PersonIcon fontSize="small" />
+                                    </ListItemIcon>{Customer.name}
+                                </MenuItem>
+                                <MenuItem onClick={handleLogOut} className={classes.MenuItem}>
+                                    <ListItemIcon>
+                                        <ExitToAppIcon fontSize="small" />
+                                    </ListItemIcon>
                              Logout</MenuItem>
-                        </Menu>
+                            </Menu>
                         </Typography>
 
                     </Toolbar>
@@ -427,6 +430,7 @@ function Dashboard(props) {
                                 <Route path='/Dashboard/AddBeneficiary' component={AddBeneficiary}></Route>
                                 <Route path='/Dashboard/CardType' component={CardType}></Route>
                                 <Route path='/Dashboard/CasaType' component={CasaType}></Route>
+                                <Route path="/Dashboard/Status" component={StatusProductOpening}></Route>
                             </Switch>) :
 
                             (<div>{ErrorMessage}</div>)

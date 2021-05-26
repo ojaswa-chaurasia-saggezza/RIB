@@ -76,7 +76,7 @@ function Alert(props) {
 
 // This is the main login funciton that is being exported
 export default function Login(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false); 
   const [forgot, setForgot] = useState('');
   const [openForgotDialog, setOpenForgotDialog] = useState(false);
   const [openResetDialog, setOpenResetDialog] = useState(false);
@@ -224,6 +224,8 @@ export default function Login(props) {
         });
     }
   }
+
+  
   const handleLogin = (e) => {
     e.preventDefault();
 

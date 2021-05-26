@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React,{useEffect, useState} from "react";
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,7 +6,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CustomerService from '../Services/Customer.service';
 import { convertTZ } from "../Helpers/HelperFunctions";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+export default function StatusProductOpening(props) {
 
-export default function ViewExistingChequeRequest() {
     const classes = useStyles();
 
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        CustomerService.getCheckOrder().then((response) => {
+        CustomerService.getProductOpeningRequests().then((response) => {
 
             if (response.data)
                 setData(response.data);
@@ -44,8 +43,8 @@ export default function ViewExistingChequeRequest() {
     }, []);
 
 
-    return (
 
+    return (
         <Card className={classes.root} variant="outlined">
             <CardHeader
                 title="View Existing"
@@ -56,29 +55,30 @@ export default function ViewExistingChequeRequest() {
                         <tr>
                             <th>Request Id</th>
                             <th>Date</th>
-                            <th>Account Number</th>
-                            <th>Leaf</th>
+                            <th>Type of Request</th>
+                            <th>Type of Card/Account</th>
+                            <th>Fees to be deducted from account</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {console.log(data)}
 
                         {data.map((value) =>
                             <tr>
                                 <td>{value.requestId}</td>
                                 <td>{convertTZ(value.date).toString()}</td>
-                                <td>{value.accountNumber}</td>
-                                <td>{value.leaf}</td>
+                                <td>{value.productType}</td>
+                                <td>{value.type}</td>
+                                <td>{value.fromAccount ?? '-'}</td>
                                 <td>{value.status}</td>
                             </tr>
                         )}
 
                     </tbody>
                 </table>
-
-
             </CardContent>
-
         </Card>
     );
-}
+    
+} 

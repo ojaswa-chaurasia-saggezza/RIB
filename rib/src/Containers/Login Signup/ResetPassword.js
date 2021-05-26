@@ -134,8 +134,8 @@ function ResetPassword(props) {
 
                     handleClick();
                     setTimeout(() => {
-                        props.history.push("/");
-                        localStorage.clear();
+                        props.history.push("/"); // Redirect to the Login page
+                        localStorage.clear();   // Clear the Local Storage (get rid of the SignUpToken)
                     }, 2000);
 
                 }

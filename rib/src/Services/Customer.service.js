@@ -114,6 +114,10 @@ const getCheckOrder = () => {
   return axios.get(API_URL + "/serviceRequest/getCheckOrder", { headers: authHeader() });
 }
 
+const getProductOpeningRequests = () => {
+  return axios.get(API_URL + "/productOpening/getAllRequests", { headers: authHeader() });
+}
+
 
 export default {
   getPublicContent,
@@ -146,4 +150,5 @@ export default {
   checkOrder,
   creditLimitIncrease,
   getCheckOrder,
+  getProductOpeningRequests,
 };

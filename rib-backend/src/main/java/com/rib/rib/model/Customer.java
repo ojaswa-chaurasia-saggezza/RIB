@@ -40,6 +40,12 @@ public class Customer {
 	@OrderBy("date DESC")
 	private List<CheckOrder> checkorder = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = OpeningProduct.class)
+	@JsonIgnore
+	@OrderBy("date DESC")
+	private List<OpeningProduct> productOpening = new ArrayList<>();
+	
+	
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = CreditCard.class)
 	@JoinColumn(name = "customer_id")
 	private List<CreditCard> creditCard;
@@ -224,6 +230,14 @@ public class Customer {
 
 	public void setCheckorder(List<CheckOrder> checkorder) {
 		this.checkorder = checkorder;
+	}
+
+	public List<OpeningProduct> getProductOpening() {
+		return productOpening;
+	}
+
+	public void setProductOpening(List<OpeningProduct> productOpening) {
+		this.productOpening = productOpening;
 	}
 
 	public void setBillers(List<Biller> billers) {
