@@ -26,6 +26,8 @@ import com.rib.rib.payload.response.MessageResponse;
 import com.rib.rib.repository.CustomerRepository;
 import com.rib.rib.security.services.EmailService;
 import com.rib.rib.security.services.OTPService;
+import com.rib.rib.security.services.ResetPassOtpService;
+import com.sun.mail.iap.Response;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -33,6 +35,9 @@ public class OTPController {
 
 	@Autowired
 	public OTPService otpService;
+	
+	@Autowired
+	public ResetPassOtpService resetOtpService;
 
 	@Autowired
 	public EmailService emailService;
@@ -103,6 +108,53 @@ public class OTPController {
 		}
 		invalidAttempts = otpService.updateInvalidAttempts(username, otpService.getInvalidAttempts(username) + 1);
 		return FAIL + " Invalid Attempts: " + invalidAttempts;
+
+	}
+	
+	@GetMapping("/generateResetOtp")
+	public ResponseEntity<?> generateResetOtp() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		String username = auth.getName();
+
+		Customer customer = customerRepository.findByUsername(username).orElseThrow(null);
+		
+		String email = customer.getEmail();
+		int otp = resetOtpService.generateOtp(username);
+
+		EmailTemplate template = new EmailTemplate("SendOtp.html");
+		Map<String, String> replacements = new HashMap<String, String>();
+		replacements.put("user", username);
+		replacements.put("otpnum", String.valueOf(otp));
+		String message = template.getTemplate(replacements);
+		try {
+			emailService.sendMessage(email, "OTP - RIB", message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.ok("OTP sent");
+	}
+	
+	@GetMapping("/validateResetOtp/{otpnum}")
+	public ResponseEntity<?> validateResetOtp(@PathVariable int otpnum) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		String username = auth.getName();
+
+		if (otpnum >= 0) {
+			int serverOtp = resetOtpService.getOtp(username);
+			
+			if (serverOtp > 0) {
+
+				if (otpnum == serverOtp) {
+					resetOtpService.clearOtp(username);
+					return ResponseEntity.ok(new MessageResponse("Password Reset Successfully"));
+				}
+			}
+		}
+		return ResponseEntity.badRequest().body(new MessageResponse("Invalid Otp"));
 
 	}
 

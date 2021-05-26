@@ -26,7 +26,7 @@ class OtpObject {
 
 @Service
 public class OTPService {
-	// Assigning the expiry time of OTP to 3 minutes
+	// Assigning the expire time of OTP to 3 minutes
 	private static final Integer EXPIRE_MINS = 3;
 	private LoadingCache<String, OtpObject> otpCache;
 

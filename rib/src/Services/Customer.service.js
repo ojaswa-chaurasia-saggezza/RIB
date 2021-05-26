@@ -114,6 +114,17 @@ const getCheckOrder = () => {
   return axios.get(API_URL + "/serviceRequest/getCheckOrder", { headers: authHeader() });
 }
 
+const authenticate = (password) => {
+  return axios.get(API_URL + "/authenticate/" + password, {headers: authHeader() });
+}
+
+const validateResetOTP = (otp) => {
+  return axios.get('/validateResetOtp/' + otp, { headers: authHeader() });
+}
+
+const generateResetOtp = () => {
+  return axios.get('/generateResetOtp/', { headers: authHeader() });
+}
 
 export default {
   getPublicContent,
@@ -146,4 +157,7 @@ export default {
   checkOrder,
   creditLimitIncrease,
   getCheckOrder,
+  authenticate,
+  validateResetOTP,
+  generateResetOtp
 };
