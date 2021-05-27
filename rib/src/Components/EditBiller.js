@@ -220,7 +220,7 @@ export default function EditBiller() {
                                     required
                                     fullWidth
                                     label="Customer Account Number"
-                                    value={accountNumber}
+                                    value={accountNumber||''}
                                     onChange={(e) => { setAccountNumber(e.target.value) }}
                                     onKeyPress={() => { if (accountNumber != "") setAccountNumberError({ error: false, errorText: "" }) }}
                                     error={accountNumberError.error}
