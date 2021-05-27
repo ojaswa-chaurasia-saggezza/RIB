@@ -85,6 +85,20 @@ public class CustomerController {
 	public Optional<Customer> getCustomerByUsername(@PathVariable String username) {
 		return customerRepository.findByUsername(username);
 	}
+	
+	@GetMapping("/authenticate/{password}")
+	public ResponseEntity<?> authenticateUser(@PathVariable String password) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		try {
+			Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			return ResponseEntity.ok(new MessageResponse("True"));
+		}
+		catch(Exception e) {
+			return ResponseEntity.ok(new MessageResponse("False"));
+		}
+	}
 
 	@GetMapping("/CustomerDetails") // Retrieve Customer Details using the jwt token
 	public Optional<Customer> getCustomerByUsernameAuthentication() {

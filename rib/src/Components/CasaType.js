@@ -13,7 +13,7 @@ function Alert(props) {
 
 export default function CasaType() {
 
-  const [accountType, setAccountType] = useState("Savings");
+  const [accountType, setAccountType] = useState("Saving");
   const [fromAccount, setFromAccount] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = React.useState({ open: false, text: '' });

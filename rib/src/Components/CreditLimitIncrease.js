@@ -50,7 +50,7 @@ export default function CreditLimitIncrease() {
 
     useEffect(() => {
         CustomerService.getCustomerDetails().then((response) => {
-            var creditCardList = response.data.creditCard.map((val) => [val.cardNumber, val.creditLimit]);
+            var creditCardList = response.data?.creditCard?.map((val) => [val.cardNumber, val.creditLimit]);
             setCreditCardList(creditCardList);
             // setCreditCardNumber(creditCardList[0][0]);
             // setCurrentlimit(creditCardList[0][1]);

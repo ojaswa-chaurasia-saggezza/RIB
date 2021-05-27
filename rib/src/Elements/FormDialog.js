@@ -25,6 +25,7 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="name"
+            type="number"
             error={props.error.error}
             helperText={props.error.errorText}
             onChange={(e) => { props.setOtp(Number(e.target.value)) }}
