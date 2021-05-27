@@ -58,7 +58,7 @@ export default function CasaType() {
     <React.Fragment>
       <div class="content" >
         <section class="trasfer-beneficiary">
-          <h1 class="title" >Open New CASA Account</h1>
+          <h1 class="title" >Choose the type of Account to be created</h1>
           <div class="container">
             <div class="transfer-form row">
 

@@ -18,7 +18,7 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 export default function AddBiller() {
 
     const [billerList, setBillerList] = useState({});

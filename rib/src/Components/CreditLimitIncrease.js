@@ -20,12 +20,19 @@ export default function CreditLimitIncrease() {
     const [open, setOpen] = React.useState({ open: false, text: '' });
     const [currentLimit, setCurrentlimit] = useState(0);
 
+    const [limitError, setLimitError] = useState({ error: false, errorText: '' });
+
     const handleClose = () => {
         setOpen({ open: false, text: '' });
     }
 
     const handleClickSubmit = () => {
+        if (limit < currentLimit) {
+            setLimitError({ error: true, errorText: 'Limit can not be less then current limit' });
+            return;
+        }
         CustomerService.creditLimitIncrease(creditCardNumber, limit).then((response) => {
+
             if (response.data)
                 setOpen({ open: true, text: 'your response has been recorded' })
         }, (error) => {
@@ -38,7 +45,9 @@ export default function CreditLimitIncrease() {
             if (e.target.value == creditCardList[i][0])
                 setCurrentlimit(creditCardList[i][1]);
         }
+
     }
+
     useEffect(() => {
         CustomerService.getCustomerDetails().then((response) => {
             var creditCardList = response.data.creditCard.map((val) => [val.cardNumber, val.creditLimit]);
@@ -101,14 +110,18 @@ export default function CreditLimitIncrease() {
                                     label="limit"
 
                                     onChange={(e) => { setLimit(e.target.value) }}
-
+                                    onKeyPress={() => { if (limit != 0) setLimitError({ error: false, errorText: "" }) }}
+                                    error={limitError.error}
+                                    helperText={limitError.errorText}
                                 />
                             </div>
                             <div class="form-field col-lg-12">
                                 <input class="submit-btn bg-success" onClick={handleClickSubmit} type="submit" value="submit" name="" />
                             </div>
-                            <Snackbar open={open.open} autoHideDuration={6000} onClose={handleClose}>
-                                <Alert onClose={handleClose} severity="success">{open.text}</Alert>
+                            <Snackbar open={open.open} autoHideDuration={1000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="success">
+                                    Your response has been recorded
+                                </Alert>
                             </Snackbar>
                         </div>
                     </div>
