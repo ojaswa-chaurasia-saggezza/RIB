@@ -13,7 +13,7 @@ function Alert(props) {
 
 export default function CasaType() {
 
-  const [accountType, setAccountType] = useState("Savings");
+  const [accountType, setAccountType] = useState("Saving");
   const [fromAccount, setFromAccount] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [open, setOpen] = React.useState({ open: false, text: '' });
@@ -58,7 +58,7 @@ export default function CasaType() {
     <React.Fragment>
       <div class="content" >
         <section class="trasfer-beneficiary">
-          <h1 class="title" >Open New CASA Account</h1>
+          <h1 class="title" >Choose the type of Account to be created</h1>
           <div class="container">
             <div class="transfer-form row">
 

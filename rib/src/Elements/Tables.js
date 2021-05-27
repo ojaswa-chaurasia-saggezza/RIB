@@ -93,11 +93,6 @@ class Tables extends React.Component {
 
     componentDidMount() {
         //initialize datatable
-        var formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'INR',
-
-        });
         this.setState({ data: this.props.data });
 
         var DATA = this.props.data.map((val) => {
@@ -125,6 +120,7 @@ class Tables extends React.Component {
                 responsive: true,
                 deferRender:true,
                 data: DATA,
+                order: [[1,"desc"]],
                 columns: [
                     { title: "Transaction ID" },
                     { title: "Date" },
@@ -260,6 +256,8 @@ class Tables extends React.Component {
                                             <div style={{ display: 'flex', width: '200px', paddingLeft: '10px' }}>
 
                                                 <CustomSlider
+                                                    key= {this.props.accountNumber}
+                                                    id ={this.props.accountNumber}
                                                     value={this.state.rangeValue}
                                                     onChange={this.handleSliderChange}
                                                     max={this.state.whatIsSelected == '4' ? Math.max(...this.props.data.map((val) => val.withdraw)) : Math.max(...(this.props.data.map((val) => val.deposit)))}

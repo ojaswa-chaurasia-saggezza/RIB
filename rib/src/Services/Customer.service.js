@@ -114,6 +114,10 @@ const getCheckOrder = () => {
   return axios.get(API_URL + "/serviceRequest/getCheckOrder", { headers: authHeader() });
 }
 
+const getProductOpeningRequests = () => {
+  return axios.get(API_URL + "/productOpening/getAllRequests", { headers: authHeader() });
+}
+
 const authenticate = (password) => {
   return axios.get(API_URL + "/authenticate/" + password, {headers: authHeader() });
 }
@@ -157,7 +161,8 @@ export default {
   checkOrder,
   creditLimitIncrease,
   getCheckOrder,
+  getProductOpeningRequests,
   authenticate,
   validateResetOTP,
-  generateResetOtp
+  generateResetOtp,
 };
