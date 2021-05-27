@@ -7,6 +7,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CustomerService from '../Services/Customer.service';
 import { convertTZ } from "../Helpers/HelperFunctions";
 
+import PlainDialog from "../Elements/PlainDialog";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,54 +33,82 @@ export default function ViewExistingChequeRequest() {
     const classes = useStyles();
 
     const [data, setData] = useState([]);
+    const [open , setOpen] =useState(false);
+    const [dialogData, setdialogData] = useState(null);
 
     useEffect(() => {
-        CustomerService.getCheckOrder().then((response) => {
+        CustomerService.getServiceRequests().then((response) => {
 
             if (response.data)
                 setData(response.data);
 
         }, (error) => {
 
+        }).then(() => {
+
         });
     }, []);
+
+    const handleRowClick = (value) => {
+        var string=``;
+        for (let key in value){
+            string = `${string}  \n${key}: ${value[key]}\n`;
+        }
+        
+        setdialogData(string);
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
 
 
     return (
 
-        <Card className={classes.root} variant="outlined">
-            <CardHeader
-                title="View Existing"
-            />
-            <CardContent>
-                <table id="example" class="table table-striped table-bordered" style={{ width: "100%" }}>
-                    <thead>
-                        <tr>
-                            <th>Request Id</th>
-                            <th>Date</th>
-                            <th>Account Number</th>
-                            <th>Leaf</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {data.map((value) =>
+        <React.Fragment>
+            <Card className={classes.root} variant="outlined">
+                <CardHeader
+                    title="View Existing"
+                />
+                <CardContent>
+                    <table id="example" class="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead>
                             <tr>
-                                <td>{value.requestId}</td>
-                                <td>{convertTZ(value.date).toString()}</td>
-                                <td>{value.accountNumber}</td>
-                                <td>{value.leaf}</td>
-                                <td>{value.status}</td>
+                                <th>Request Id</th>
+                                <th>Date</th>
+                                <th>Request For</th>
+                                {/* <th>Account Number</th> */}
+                                {/* <th>Leaf</th> */}
+                                <th>Status</th>
                             </tr>
-                        )}
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                            {data.map((value) =>
+                                <tr key={value.requestId} onClick={() => handleRowClick(value)}>
+                                    <td>{value.requestId}</td>
+                                    <td>{convertTZ(value.date).toString()}</td>
+                                    {console.log(data)}
+                                    {/* <td>{value.accountNumber}</td>
+                                <td>{value.leaf}</td> */}
+                                    <td>{value.leaf ? "Cheque Order" : "Credit Limit Increase"}</td>
+                                    <td>{value.status}</td>
+                                </tr>
+                            )}
+
+                        </tbody>
+                    </table>
 
 
-            </CardContent>
+                </CardContent>
 
-        </Card>
+
+            </Card>
+
+
+            <PlainDialog open={open} title={"Summary"} handleClose={handleClose} data={dialogData} />
+
+        </React.Fragment>
     );
 }

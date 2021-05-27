@@ -110,8 +110,8 @@ const creditLimitIncrease = (creditCardNumber, limit) => {
   return axios.post(API_URL + "/serviceRequest/creditLimitIncrease", { creditCardNumber, limit }, { headers: authHeader() });
 }
 
-const getCheckOrder = () => {
-  return axios.get(API_URL + "/serviceRequest/getCheckOrder", { headers: authHeader() });
+const getServiceRequests = () => {
+  return axios.get(API_URL + "/serviceRequest/getAllRequests", { headers: authHeader() });
 }
 
 const getProductOpeningRequests = () => {
@@ -160,7 +160,7 @@ export default {
   resetPasswordAfterLogin,
   checkOrder,
   creditLimitIncrease,
-  getCheckOrder,
+  getServiceRequests,
   getProductOpeningRequests,
   authenticate,
   validateResetOTP,

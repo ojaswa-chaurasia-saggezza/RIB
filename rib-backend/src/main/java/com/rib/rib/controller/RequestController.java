@@ -1,5 +1,7 @@
 package com.rib.rib.controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import com.rib.rib.model.CreditCard;
 import com.rib.rib.model.CreditLimitIncrease;
 import com.rib.rib.model.Customer;
 import com.rib.rib.model.OpeningProduct;
+import com.rib.rib.model.Request;
 import com.rib.rib.payload.request.CheckOrderRequest;
 import com.rib.rib.payload.request.CreditLimitIncreaseRequest;
 import com.rib.rib.payload.request.ProductOpeningRequest;
@@ -91,6 +94,19 @@ public class RequestController {
 		
 	}
 	
+	@GetMapping("/serviceRequest/getAllRequests")
+	public List<Request> getAllServiceRequests() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerRepository.findByUsername(auth.getName()).orElseThrow();
+		List<Request> requests = new ArrayList<Request>(customer.getCheckorder());
+		requests.addAll(customer.getCreditLimitIncrease());
+		
+		requests.sort(new SortByDate());
+		
+		return requests;
+		
+	}
+	
 	@GetMapping("/productOpening/getAllRequests")
 	public List<OpeningProduct> getallProductOpeningRequests(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -117,4 +133,14 @@ public class RequestController {
 	}
 	
 
+}
+
+class SortByDate implements Comparator<Request>{
+
+	@Override
+	public int compare(Request o1, Request o2) {
+		// Auto-generated method stub
+		return o2.getDate().compareTo(o1.getDate());
+	}
+	
 }
