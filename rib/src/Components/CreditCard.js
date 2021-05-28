@@ -101,6 +101,9 @@ export default function CreditCard() {
     const [chartData , setChartData] = useState([['category','Amount'],]);
 
     const changeChartData= (startDate, endDate, CREDITCARD) =>{
+        if(!startDate || !endDate)
+            return ;
+
         CustomerService.getCreditCardPFAData(CREDITCARD ?? creditCard,startDate,endDate).then((response)=>{
             console.log(response.data);
             if(response.data)
